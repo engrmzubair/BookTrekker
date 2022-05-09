@@ -1,0 +1,17 @@
+{
+  "name": "book-trekker",
+  "version": "1.0.0",
+  "description": "Development of backend for my commerce app \"BookIT\".",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "engrmzubair",
+  "license": "ISC",
+  "dependencies": {
+    "config": "^3.3.7",
+    "express": "^4.18.1",
+    "mongoose": "^6.3.2"
+  }
+}

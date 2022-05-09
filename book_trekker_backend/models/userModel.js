@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-const crypto = require('crypto');
+const bcrypt = require('bcrypt');
+const config = require('config');
 
 
 const userSchema = new mongoose.Schema({
@@ -25,7 +26,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
-  salt: String,//long string which is used to generate the harsh password
+  salt: Number, //Salt rounds generate long string which is used to create the hashed password
   role: {
     type: Number,//[0,1]
     default: 0 //0 for authenticated user and 1 is for admin
@@ -36,6 +37,35 @@ const userSchema = new mongoose.Schema({
   }
 },
   { timestamps: true }
-)
+);
+
+userSchema.virtual('password')
+  .set(function (password) {
+    this._password = password;
+    this.salt = config.get('saltRounds')
+    this.hashed_password = this.encryptPassword(password);
+
+  })
+  .get(function () {
+    return this._password
+  })
+
+userSchema.methods = {
+  encryptPassword: async function (password) {
+    // if (typeof password !== String) return '';
+    if (!password && typeof password !== String)
+      return this.hashed_password = '';
+
+    return bcrypt.hashSync(this._password, this.salt);
+
+  }
+}
+
+module.exports = mongoose.model('User', userSchema);
+
+
+
+
+
 
 

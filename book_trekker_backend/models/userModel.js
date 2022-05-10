@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const Joi = require('joi');
 const config = require('config');
 
 
@@ -8,6 +9,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     trim: true, //any white spaces in beginning and end will be removed
     required: [ true, "Name is required" ],
+    minlength: 5,
     maxlength: 32
   },
   email: {
@@ -39,11 +41,13 @@ const userSchema = new mongoose.Schema({
   { timestamps: true }
 );
 
+
+//Joi user validation
 userSchema.virtual('password')
   .set(function (password) {
     this._password = password;
     this.salt = config.get('saltRounds')
-    this.hashed_password = this.encryptPassword(password);
+    this.encryptPassword(password);
 
   })
   .get(function () {
@@ -56,12 +60,26 @@ userSchema.methods = {
     if (!password && typeof password !== String)
       return this.hashed_password = '';
 
-    return bcrypt.hashSync(this._password, this.salt);
+    return this.hashed_password = bcrypt.hashSync(this._password, this.salt);
 
   }
 }
 
-module.exports = mongoose.model('User', userSchema);
+
+function validateUser(user) {
+  const schema = Joi.object().keys({
+    name: Joi.string().min(5).max(32).required(),
+    email: Joi.string()
+      .email({ minDomainSegments: 2, tlds: { allow: [ 'com', 'net' ] } }).required(),
+    password: Joi.string().min(5).max(255).required()
+  });
+
+  return schema.validate(user);
+}
+
+
+module.exports.User = mongoose.model('User', userSchema);
+module.exports.validateUser = validateUser;
 
 
 

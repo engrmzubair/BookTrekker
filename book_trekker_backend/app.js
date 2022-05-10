@@ -1,26 +1,39 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 const config = require('config');
 const userRouter = require('./routes/userRouter');
+const { error } = require('./controllers/errorController');
+const AppError = require('./utils/appError');
 
 
 //app
 const app = express();
 
-const database = config.get('db')
+
 
 //db
-mongoose.connect(database)
+mongoose.connect(config.get('db'))
   .then(() => console.log('You are now connected to MongoDB!'))
   .catch(err => console.error('Something went wrong.', err));
 
-//JSON body parser
+//middleware
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(morgan('dev'));
+app.use(cookieParser())
 
 //user routes
 app.use('/api/users', userRouter)
 
+app.all('*', (req, res, next) => {
 
+  next(new AppError(`Can't find ${ req.originalUrl } on this server.`, 404))
+})
+
+//error middleware
+app.use(error)
 const port = config.get('server.port') || 3000;
 
 app.listen(port, () => {

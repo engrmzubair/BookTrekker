@@ -16,17 +16,6 @@ exports.userValidation = (req, res, next) => {
   next()
 }
 
-exports.userRegistered = catchAsync(async (req, res, next) => {
-
-  const usersEmails = await User.find().select('email')
-  const isEmailExist = usersEmails.filter(u => u.email === req.body.email).length !== 0;
-
-  if (isEmailExist)
-    next(new appError('User is already registered!'), 400)
-
-  next();
-});
-
 exports.signup = catchAsync(async (req, res, next) => {
 
   const { error } = validateUser(req.body)

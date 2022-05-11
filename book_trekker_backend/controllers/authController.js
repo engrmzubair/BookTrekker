@@ -1,7 +1,6 @@
 const _ = require('lodash')
-// const jwt = require('jsonwebtoken'); //to generate signed token
 var { expressjwt } = require("express-jwt");
-const { User, validateSignup }
+const { User, validate }
 	= require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const appError = require('../utils/appError');
@@ -12,18 +11,13 @@ const config = require('config');
 
 exports.signupValidation = (req, res, next) => {
 
-	const { error } = validateSignup(req.body)
+	const { error } = validate(req.body)
 	if (error) return next(new appError(error.details[ 0 ].message, 400));
 	next()
 }
 
 
 // .................handlers...................
-
-exports.getUsers = catchAsync(async (req, res) => {
-	const user = await User.find().select('-hashed_password');
-	res.send(user)
-})
 
 exports.signup = catchAsync(async (req, res, next) => {
 
@@ -62,4 +56,9 @@ exports.signout = (req, res) => {
 	res.send("Signed out successfully");
 }
 
+exports.requireSignin = expressjwt({
+	secret: config.get('jwtPrivateKey'),
+	userProperty: "auth",
+	algorithms: [ "HS256" ]
+});
 

@@ -77,9 +77,8 @@ userSchema.methods = {
 
 };
 
-
 //signup validation
-function validateSignup(user) {
+function validate(user) {
   const schema = Joi.object().keys({
     name: Joi.string().min(5).max(32).required(),
     email: Joi.string()
@@ -92,7 +91,7 @@ function validateSignup(user) {
 
 
 module.exports.User = mongoose.model('User', userSchema);
-module.exports.validateSignup = validateSignup;
+module.exports.validate = validate;
 
 
 

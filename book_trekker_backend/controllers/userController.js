@@ -57,5 +57,9 @@ exports.signin = catchAsync(async (req, res, next) => {
 
 })
 
+exports.signout = (req, res) => {
+	res.clearCookie("t");
+	res.send("Signed out successfully");
+}
 
 

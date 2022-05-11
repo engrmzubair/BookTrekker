@@ -6,6 +6,7 @@ const
     signup,
     signupValidation,
     signin,
+    signout,
   }
     = require('../controllers/userController')
 
@@ -14,6 +15,7 @@ const
 router.get('/', getUsers);
 router.post('/signup', [ signupValidation, signup ]);
 router.post('/signin', signin);
+router.get('/signout', signout);
 
 
 module.exports = router;

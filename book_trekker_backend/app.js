@@ -9,8 +9,16 @@ const AppError = require('./utils/appError');
 
 //app
 const app = express();
+console.log("Environment =>", process.env.NODE_ENV)
 
-console.log(app.get('env'))
+
+if (!config.get('jwtPrivateKey')) {
+  throw new Error('FATAL ERROR: jwtPrivateKey is not defined.');
+}
+if (!process.env.NODE_ENV) {
+  throw new Error('FATAL ERROR: environment is not defined.');
+}
+
 
 //catching uncaught exceptions
 process.on('uncaughtException', ex => {

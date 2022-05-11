@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const Joi = require('joi');
 const config = require('config');
 
@@ -57,31 +58,41 @@ userSchema.virtual('password')
 userSchema.methods = {
   encryptPassword: async function (password) {
     // if (typeof password !== String) return '';
-    if (!password && typeof password !== String)
+    if (!password)
       return this.hashed_password = '';
 
     return this.hashed_password = bcrypt.hashSync(this._password, this.salt);
 
+  },
+  validatePassword: async function (user) {
+
+    return await bcrypt.compare(user.password, this.hashed_password);
+
   }
-}
+  ,
+  generateAuthToken: function () {
+    const token = jwt.sign({ _id: this._id, email: this.email, role: this.role }, config.get('jwtPrivateKey'));
+    return token;
+  }
+
+};
 
 
-function validateUser(user) {
+//signup validation
+function validateSignup(user) {
   const schema = Joi.object().keys({
     name: Joi.string().min(5).max(32).required(),
     email: Joi.string()
-      .email({ minDomainSegments: 2, tlds: { allow: [ 'com', 'net' ] } }).required(),
+      .email().required(),
     password: Joi.string().min(5).max(255).required()
   });
-
   return schema.validate(user);
 }
 
 
+
 module.exports.User = mongoose.model('User', userSchema);
-module.exports.validateUser = validateUser;
-
-
+module.exports.validateSignup = validateSignup;
 
 
 

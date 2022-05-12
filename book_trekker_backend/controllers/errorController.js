@@ -1,8 +1,7 @@
-const { send } = require("express/lib/response");
 const AppError = require("../utils/appError");
 
 const handleDuplicateErrorDB = err => {
-  const message = "User is already registered!";
+  const message = "Duplicate key error collection!";
   return new AppError(message, 400);
 }
 const handleUnauthorizedError = err => {
@@ -49,6 +48,7 @@ exports.error = function (err, req, res, next) {
   err.status = err.status || 'error'; // e.g if status code is 500 range is error or if in 400 range is fail
 
   if (process.env.NODE_ENV === 'development') {
+    // res.send()
     sendErrorDev(err, res);
   }
   else if (process.env.NODE_ENV === 'production') {
@@ -57,7 +57,9 @@ exports.error = function (err, req, res, next) {
       error = handleDuplicateErrorDB(err)
       sendErrorProd(error, res)
     }
-    else if (err.code === "credentials_required") {
+    else if
+      (err.code === "credentials_required" ||
+      err.code === "credentials_bad_format") {
       error = handleUnauthorizedError(err)
       sendErrorProd(error, res)
     }

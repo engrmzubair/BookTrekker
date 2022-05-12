@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const config = require('config');
 const authRouter = require('./routes/authRouter');
 const userRouter = require('./routes/userRouter');
+const categoryRouter = require('./routes/categoryRouter');
 const { error } = require('./controllers/errorController');
 const AppError = require('./utils/appError');
 
@@ -41,6 +42,7 @@ app.use(cookieParser())
 //user routes
 app.use('/api/auth', authRouter)
 app.use('/api/secret', userRouter)
+app.use('/api/category', categoryRouter)
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${ req.originalUrl } on this server.`, 404))

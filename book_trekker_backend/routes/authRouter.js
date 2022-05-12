@@ -11,7 +11,6 @@ const
     = require('../controllers/authController')
 
 
-//get all users
 router.post('/signup', [ signupValidation, signup ]);
 router.post('/signin', signin);
 router.get('/signout', signout);

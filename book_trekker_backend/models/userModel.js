@@ -56,7 +56,7 @@ userSchema.virtual('password')
   })
 
 userSchema.methods = {
-  encryptPassword: async function (password) {
+  encryptPassword: function (password) {
     // if (typeof password !== String) return '';
     if (!password)
       return this.hashed_password = '';
@@ -74,7 +74,6 @@ userSchema.methods = {
     const token = jwt.sign({ _id: this._id, email: this.email, role: this.role }, config.get('jwtPrivateKey'));
     return token;
   }
-
 };
 
 //signup validation

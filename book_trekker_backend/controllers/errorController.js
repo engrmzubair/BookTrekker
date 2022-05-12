@@ -5,6 +5,10 @@ const handleDuplicateErrorDB = err => {
   const message = "User is already registered!";
   return new AppError(message, 400);
 }
+const handleUnauthorizedError = err => {
+  const message = "Invalid credentials!";
+  return new AppError(message, 401);
+}
 
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode).json({
@@ -43,6 +47,7 @@ const sendErrorProd = (err, res) => {
 exports.error = function (err, req, res, next) {
   err.statusCode = err.statusCode || 500;
   err.status = err.status || 'error'; // e.g if status code is 500 range is error or if in 400 range is fail
+
   if (process.env.NODE_ENV === 'development') {
     sendErrorDev(err, res);
   }
@@ -52,6 +57,11 @@ exports.error = function (err, req, res, next) {
       error = handleDuplicateErrorDB(err)
       sendErrorProd(error, res)
     }
+    else if (err.code === "credentials_required") {
+      error = handleUnauthorizedError(err)
+      sendErrorProd(error, res)
+    }
+
     sendErrorProd(err, res);
   }
 

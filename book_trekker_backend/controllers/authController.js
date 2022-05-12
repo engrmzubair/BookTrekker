@@ -3,7 +3,7 @@ var { expressjwt } = require("express-jwt");
 const { User, validate }
 	= require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
-const appError = require('../utils/appError');
+const AppError = require('../utils/appError');
 const config = require('config');
 
 
@@ -12,7 +12,7 @@ const config = require('config');
 exports.signupValidation = (req, res, next) => {
 
 	const { error } = validate(req.body)
-	if (error) return next(new appError(error.details[ 0 ].message, 400));
+	if (error) return next(new AppError(error.details[ 0 ].message, 400));
 	next()
 }
 
@@ -33,16 +33,15 @@ exports.signin = catchAsync(async (req, res, next) => {
 	const { email, password } = req.body;
 	const user = await User.findOne({ email });
 
-	if (!user) return next(new appError(`Invalid email or password.`, 400));
+	if (!user) return next(new AppError(`Invalid email or password.`, 400));
 
 	const validPassword = await user.validatePassword(req.body);
 	;
-	if (!validPassword) return next(new appError(`Invalid email or password.`, 400));
+	if (!validPassword) return next(new AppError(`Invalid email or password.`, 400));
 
 	const token = user.generateAuthToken();
 
 	res.cookie("authToken", token, { expire: new Date() + 9999 });
-	// res.cookie("authToken", token, { expires: new Date(Date.now() + 10000) });
 
 	res.json({
 		user: _.pick(user, [ '_id', 'name', 'email' ]),
@@ -62,3 +61,15 @@ exports.requireSignin = expressjwt({
 	algorithms: [ "HS256" ]
 });
 
+exports.isAuth = (req, res, next) => {
+
+	let user = req.profile && req.auth && req.profile._id == req.auth._id;
+	if (!user) next(new AppError("Access denied.", 403));
+	next()
+}
+
+exports.isAdmin = (req, res, next) => {
+
+	if (req.profile.role === 0) next(new AppError("Admin resource! Access denied.", 403));
+	next();
+}

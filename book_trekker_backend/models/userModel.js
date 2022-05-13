@@ -43,7 +43,6 @@ const userSchema = new mongoose.Schema({
 );
 
 
-//Joi user validation
 userSchema.virtual('password')
   .set(function (password) {
     this._password = password;

@@ -10,6 +10,8 @@ exports.categoryValidation = (req, res, next) => {
   next()
 }
 
+
+//route handlers
 exports.createCategory = catchAsync(async (req, res, next) => {
 
   const category = new Category(req.body);
@@ -18,3 +20,5 @@ exports.createCategory = catchAsync(async (req, res, next) => {
 
   res.json({ savedCategory });
 })
+
+// 

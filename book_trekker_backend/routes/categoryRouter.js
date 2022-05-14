@@ -1,6 +1,8 @@
 const express = require('express');
-const { isAdmin, requireSignin } = require('../controllers/authController');
 const router = express.Router();
+
+//import routes
+const { isAdmin, requireSignin } = require('../controllers/authController');
 const { createCategory, categoryValidation } = require('../controllers/categoryController');
 const { userById } = require('../controllers/userController');
 

@@ -8,6 +8,10 @@ const handleUnauthorizedError = err => {
   const message = "Invalid credentials!";
   return new AppError(message, 401);
 }
+const handleSizeLimitError = err => {
+  const message = "File size is larger than 1MB!";
+  return new AppError(message, 400);
+}
 
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode).json({
@@ -61,6 +65,10 @@ exports.error = function (err, req, res, next) {
       (err.code === "credentials_required" ||
       err.code === "credentials_bad_format") {
       error = handleUnauthorizedError(err)
+      sendErrorProd(error, res)
+    }
+    else if (err.code === "LIMIT_FILE_SIZE") {
+      error = handleSizeLimitError(err);
       sendErrorProd(error, res)
     }
 

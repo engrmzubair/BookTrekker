@@ -10,11 +10,10 @@ const { Category } = require('../models/categoryModel');
 
 
 // ..........validation............
-
-const fieldsValidation = req => {
+const fieldsValidation = (req, res, next) => {
 
   // productData object added to req
-  req.productData = { ...req.body, photo: req.file.filename };
+  req.productData = req.file && req.body && { ...req.body, photo: req.file.filename };
 
   // fields validation
   const { error } = validate(req.productData);
@@ -38,12 +37,13 @@ const categoryExists = async (req, res, next) => {
   }
 }
 
+//product validation
 exports.productValidation = async (req, res, next) => {
 
   if (!req.file) next(new AppError('Please attach the product image!', 400));
 
   //fields validation
-  fieldsValidation(req);
+  fieldsValidation(req, res, next);
 
   //category validation
   categoryExists(req, res, next);
@@ -72,10 +72,15 @@ const fileFilter = (req, file, cb) => {
   }
 }
 
+//file size limit to 1MB
+const maxSize = 1 * 1024 * 1024;
+const limits = { fileSize: maxSize }
+
 //multer middleware for parsing multipart form data
 exports.uploadProductPhoto = multer({
   storage: storage,
-  fileFilter
+  fileFilter,
+  limits
 }).single('photo');
 
 
@@ -91,7 +96,6 @@ exports.createProduct = catchAsync(async (req, res, next) => {
 exports.getProductById = catchAsync(async (req, res, next) => {
 
   const _id = req.params.id;
-
   const product = await Product.findOne({ _id })
     .populate({ path: 'category', select: 'name' }); // key to populate
 

@@ -38,16 +38,15 @@ exports.productById = (req, res, next, _id) => {
     req.product = product;
     next();
   })
-}
+};
+
+//route handler for getting all products
+exports.getProducts = catchAsync(async (req, res, next) => {
+  res.send(await Product.find())
+})
 
 //route handler for get product by id
-exports.getProduct = catchAsync(async (req, res, next) => {
-
-  const product = req.product;
-  const imagePath = `${ path.dirname(__dirname) }/public/products/${ product.photo }`
-
-  res.send(product);
-})
+exports.getProduct = (req, res, next) => res.send(req.product);
 
 //route handler for create product
 exports.createProduct = catchAsync(async (req, res, next) => {
@@ -55,6 +54,16 @@ exports.createProduct = catchAsync(async (req, res, next) => {
   await product.save()
   res.send(product);
 })
+
+//route handler for update product
+exports.updateProduct = catchAsync(async (req, res, next) => {
+  res.send('Product updated successfully!')
+})
+//route handler for delete product
+exports.deleteProduct = catchAsync(async (req, res, next) => {
+  res.send('Product deleted successfully!')
+})
+
 
 
 

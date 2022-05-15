@@ -26,6 +26,28 @@ exports.productValidation = async (req, res, next) => {
 //multer middleware for parsing multipart form data
 exports.uploadProductPhoto = multer(multerOptions).single('photo');
 
+//pre middleware for getting product and set in req object
+exports.productById = (req, res, next, _id) => {
+
+  //find product => if found assign it to req object
+  Product.findOne({ _id }).exec((err, product) => {
+
+    // res.send(product)
+    if (!product || err) return next(new AppError('Invalid product id!', 400))
+
+    req.product = product;
+    next();
+  })
+}
+
+//route handler for get product by id
+exports.getProduct = catchAsync(async (req, res, next) => {
+
+  const product = req.product;
+  const imagePath = `${ path.dirname(__dirname) }/public/products/${ product.photo }`
+
+  res.send(product);
+})
 
 //route handler for create product
 exports.createProduct = catchAsync(async (req, res, next) => {
@@ -34,18 +56,5 @@ exports.createProduct = catchAsync(async (req, res, next) => {
   res.send(product);
 })
 
-//route handler for get product by id
-exports.getProductById = catchAsync(async (req, res, next) => {
-
-  const _id = req.params.id;
-  const product = await Product.findOne({ _id })
-    .populate({ path: 'category', select: 'name' }); // key to populate
-
-  if (!product) return next(new AppError("Invalid ProductID!", 400))
-
-  const imagePath = `${ path.dirname(__dirname) }/public/products/${ product.photo }`
-
-  res.send(product);
-})
 
 

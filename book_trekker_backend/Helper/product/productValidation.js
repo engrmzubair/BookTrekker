@@ -8,30 +8,28 @@ const { Category } = require('../../models/categoryModel');
 
 
 // ..........validation............
-const fieldsValidation = (req) => {
-  const { next, file, body } = req;
+const fieldsValidation = (req, next) => {
 
   // productData object added to req
-  req.productData = file && body && { ...body, photo: file.filename };
+  req.productData = req.file && req.body && { ...req.body, photo: req.file.filename };
 
   // fields validation
   const { error } = validate(req.productData);
 
   //if error => throw it to global error handler
   if (error) {
-    fs.unlinkSync(file.path);
+    fs.unlinkSync(req.file.path);
     next(new AppError(error.details[ 0 ].message, 400));
   }
 }
 
 //category validation
-const categoryExists = async req => {
-  const { next, productData, file } = req;
+const categoryExists = async (req, next) => {
   try {
-    const category = await Category.findOne({ _id: productData.category }).exec();
+    const category = await Category.findOne({ _id: req.productData.category }).exec();
 
     if (category && category.name) return next()
-    fs.unlinkSync(file.path);
+    fs.unlinkSync(req.file.path);
     return next(new AppError('Category does not exists!', 404))
   } catch (ex) {
     next(ex)
@@ -39,13 +37,13 @@ const categoryExists = async req => {
 }
 
 //product validation
-exports.validation = req => {
+exports.validation = (req, next) => {
 
   //fields validation
-  fieldsValidation(req);
+  fieldsValidation(req, next);
 
   //category validation
-  categoryExists(req);
+  categoryExists(req, next);
 }
 
 //multer storage

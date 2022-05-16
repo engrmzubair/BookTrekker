@@ -21,7 +21,7 @@ exports.productValidation = async (req, res, next) => {
   if (!req.file) next(new AppError('Please attach the product image!', 400));
 
   //fields validation
-  validation(req);
+  validation(req, next);
 
 }
 
@@ -51,7 +51,6 @@ exports.getProduct = (req, res, next) => res.send(req.product);
 
 //route handler for create product
 exports.createProduct = catchAsync(async (req, res, next) => {
-  res.send("create Product successfully")
   const product = new Product(req.productData)
   await product.save()
   res.send(product);

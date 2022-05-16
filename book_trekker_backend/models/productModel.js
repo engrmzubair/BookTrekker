@@ -49,6 +49,7 @@ function validate(category) {
     price: Joi.number().required(),
     quantity: Joi.number(),
     category: Joi.objectId().required(),
+    sold: Joi.number(),
     photo: Joi.string(),
     shipping: Joi.boolean()
   });

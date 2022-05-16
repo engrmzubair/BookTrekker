@@ -32,18 +32,39 @@ exports.uploadProductPhoto = multer(multerOptions).single('photo');
 exports.productById = (req, res, next, _id) => {
 
   //find product => if found assign it to req object
-  Product.findOne({ _id }).exec((err, product) => {
+  Product.findOne({ _id })
+    .populate({
+      path: 'category', select: 'name'
+    })
+    .exec((err, product) => {
 
-    if (!product || err) return next(new AppError('Invalid product id!', 400))
-    req.product = product;
-    req.photo = product.photo;
-    next();
-  })
+      if (!product || err) return next(new AppError('Invalid product id!', 400))
+      req.product = product;
+      req.photo = product.photo;
+      next();
+    })
 };
 
 //route handler for getting all products
 exports.getProducts = catchAsync(async (req, res, next) => {
-  res.send(await Product.find())
+
+  //extract params from query and declaration
+  let order = req.query.order ? req.query.order : 'asc';
+  let sortBy = req.query.sortBy ? req.query.sortBy : '_id';
+  let limit = req.query.limit ? req.query.limit : 6
+
+
+  //Now fetched products from database
+  const products = await Product.find()
+    .populate({
+      path: 'category',
+      select: "name"
+    })
+    .sort([ [ sortBy, order ] ])
+    .limit(limit)
+    .exec()
+
+  res.send(products)
 })
 
 //route handler for get product by id

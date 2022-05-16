@@ -61,6 +61,7 @@ exports.requireSignin = expressjwt({
 
 exports.isAuth = (req, res, next) => {
 
+
 	let user = req.profile && req.auth && req.profile._id == req.auth._id;
 	if (!user) return next(new AppError("Invalid credentials!", 401));
 	next()
@@ -68,7 +69,6 @@ exports.isAuth = (req, res, next) => {
 
 exports.isAdmin = (req, res, next) => {
 
-	// res.send(req.profile)
 	if (req.profile && req.profile.role === 1)
 		return next();
 

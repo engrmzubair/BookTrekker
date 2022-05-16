@@ -8,40 +8,54 @@ const { Category } = require('../../models/categoryModel');
 
 
 // ..........validation............
-exports.fieldsValidation = (req, res, next) => {
+const fieldsValidation = (req) => {
+  const { next, file, body } = req;
 
   // productData object added to req
-  req.productData = req.file && req.body && { ...req.body, photo: req.file.filename };
+  req.productData = file && body && { ...body, photo: file.filename };
 
   // fields validation
   const { error } = validate(req.productData);
 
   //if error => throw it to global error handler
   if (error) {
-    fs.unlinkSync(req.file.path);
-    next(new AppError(error.details[ 0 ].message, 400))
+    fs.unlinkSync(file.path);
+    next(new AppError(error.details[ 0 ].message, 400));
   }
 }
 
 //category validation
-exports.categoryExists = async (req, res, next) => {
+const categoryExists = async req => {
+  const { next, productData, file } = req;
   try {
-    const category = await Category.findOne({ _id: req.productData.category }).exec();
+    const category = await Category.findOne({ _id: productData.category }).exec();
 
     if (category && category.name) return next()
-    fs.unlinkSync(req.file.path);
+    fs.unlinkSync(file.path);
     return next(new AppError('Category does not exists!', 404))
   } catch (ex) {
     next(ex)
   }
 }
 
+//product validation
+exports.validation = req => {
+
+  //fields validation
+  fieldsValidation(req);
+
+  //category validation
+  categoryExists(req);
+}
+
 //multer storage
 const storage = multer.diskStorage({
+
   destination: function (req, file, cb) {
     cb(null, './public/products')
   },
   filename: function (req, file, cb) {
+
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
     const ext = file.mimetype.split('/')[ 1 ];
     cb(null, file.fieldname + '-' + uniqueSuffix + "." + ext)
@@ -50,6 +64,7 @@ const storage = multer.diskStorage({
 
 //multer file filter (only images are allowed)
 const fileFilter = (req, file, cb) => {
+
   if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
     cb(null, true);
   } else {

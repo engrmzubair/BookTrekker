@@ -12,7 +12,8 @@ const {
   deleteProduct,
   getProducts,
   getRelatedProducts,
-  getProductCategories
+  getProductCategories,
+  productsBySearch
 } = require('../controllers/productController');
 const { isAdmin, requireSignin, isAuth } = require('../controllers/authController');
 const { userById } = require('../controllers/userController');
@@ -24,11 +25,14 @@ const common = [ requireSignin, isAuth, isAdmin, uploadProductPhoto, productVali
 //array of common used middleware for delete controller
 const commonForDelete = [ requireSignin, isAuth, isAdmin ];
 
-// routes
+// routes for reading data
 router.get('/', getProducts);
 router.get('/categories', getProductCategories);
 router.get('/related/:productId', getRelatedProducts);
-router.get('/:productId', getProduct)
+router.get('/:productId', getProduct);
+router.post('/by/search/', productsBySearch);
+
+//routes where authentication and authorization required
 router.post('/create/:userId', [ ...common, createProduct ]);
 router.put('/:productId/:userId', [ ...common, updateProduct ]);
 router.delete('/:productId/:userId', [ ...commonForDelete, deleteProduct ]);

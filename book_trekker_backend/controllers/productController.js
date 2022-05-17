@@ -68,9 +68,9 @@ exports.getProducts = catchAsync(async (req, res, next) => {
 })
 
 //route handler for getting related products
-exports.getRelatedProducts = catchAsync(async (req, res, next) => {
+exports.getRelatedProducts = catchAsync(async (req, res) => {
   let limit = req.query.limit ? req.query.limit : 6;
-
+  next
   const products = await Product.find({ _id: { $ne: req.product }, category: req.product.category })
     .limit(limit)
     .populate('category', 'name')
@@ -79,18 +79,25 @@ exports.getRelatedProducts = catchAsync(async (req, res, next) => {
   res.send(products);
 })
 
+//route handler for getting categories
+exports.getProductCategories = catchAsync(async (req, res) => {
+  const categories = await Product.distinct('category')
+    .exec();
+  res.send(categories)
+})
+
 //route handler for get product by id
-exports.getProduct = (req, res, next) => res.send(req.product);
+exports.getProduct = (req, res) => res.send(req.product);
 
 //route handler for create product
-exports.createProduct = catchAsync(async (req, res, next) => {
+exports.createProduct = catchAsync(async (req, res) => {
   const product = new Product(req.productData)
   await product.save()
   res.send(product);
 })
 
 //route handler for update product
-exports.updateProduct = catchAsync(async (req, res, next) => {
+exports.updateProduct = catchAsync(async (req, res) => {
   const product = req.product;
   const updatedProduct = req.productData;
 
@@ -114,7 +121,7 @@ exports.updateProduct = catchAsync(async (req, res, next) => {
   res.json({ product })
 })
 //route handler for delete product
-exports.deleteProduct = catchAsync(async (req, res, next) => {
+exports.deleteProduct = catchAsync(async (req, res) => {
 
   const product = req.product;
   await product.remove();

@@ -67,6 +67,18 @@ exports.getProducts = catchAsync(async (req, res, next) => {
   res.send(products)
 })
 
+//route handler for getting related products
+exports.getRelatedProducts = catchAsync(async (req, res, next) => {
+  let limit = req.query.limit ? req.query.limit : 6;
+
+  const products = await Product.find({ _id: { $ne: req.product }, category: req.product.category })
+    .limit(limit)
+    .populate('category', 'name')
+    .exec()
+
+  res.send(products);
+})
+
 //route handler for get product by id
 exports.getProduct = (req, res, next) => res.send(req.product);
 

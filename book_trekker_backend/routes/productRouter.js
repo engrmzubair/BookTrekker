@@ -10,7 +10,8 @@ const {
   productById,
   updateProduct,
   deleteProduct,
-  getProducts
+  getProducts,
+  getRelatedProducts
 } = require('../controllers/productController');
 const { isAdmin, requireSignin, isAuth } = require('../controllers/authController');
 const { userById } = require('../controllers/userController');
@@ -24,6 +25,7 @@ const commonForDelete = [ requireSignin, isAuth, isAdmin ];
 
 // routes
 router.get('/', getProducts);
+router.get('/related/:productId', getRelatedProducts);
 router.get('/:productId', getProduct)
 router.post('/create/:userId', [ ...common, createProduct ]);
 router.put('/:productId/:userId', [ ...common, updateProduct ]);

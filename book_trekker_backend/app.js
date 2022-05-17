@@ -14,9 +14,17 @@ const AppError = require('./utils/appError');
 const app = express();
 console.log("Environment =>", process.env.NODE_ENV)
 
-
 if (!config.get('jwtPrivateKey')) {
   throw new Error('FATAL ERROR: jwtPrivateKey is not defined.');
+}
+if (!config.get('cloudinary.cloudName')) {
+  throw new Error('FATAL ERROR: cloudName is not defined.');
+}
+if (!config.get('cloudinary.apiKey')) {
+  throw new Error('FATAL ERROR: apiKey is not defined.');
+}
+if (!config.get('cloudinary.apiSecret')) {
+  throw new Error('FATAL ERROR: apiSecret is not defined.');
 }
 if (!process.env.NODE_ENV) {
   throw new Error('FATAL ERROR: environment is not defined.');
@@ -24,7 +32,6 @@ if (!process.env.NODE_ENV) {
 
 
 //catching uncaught exceptions
-
 process.on("uncaughtException", (err) => {
   console.log("UNCAUGHT EXCEPTION, APP SHUTTING NOW!!");
   console.log(err)
@@ -54,6 +61,7 @@ app.use('/api/product', productRouter)
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${ req.originalUrl } on this server.`, 404))
 })
+
 
 //error middleware
 app.use(error)

@@ -7,7 +7,7 @@ const { userById, getUser } = require('../controllers/userController')
 router.get('/:userId', [ requireSignin, isAuth, getUser ])
 
 //route handler for reading user
-router.param("userId", userById)
+router.param("userId", userById);
 
 
 module.exports = router;

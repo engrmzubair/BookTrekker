@@ -13,7 +13,7 @@ const {
   getProducts,
   getRelatedProducts,
   getProductCategories,
-  productsBySearch
+  productsBySearch,
 } = require('../controllers/productController');
 const { isAdmin, requireSignin, isAuth } = require('../controllers/authController');
 const { userById } = require('../controllers/userController');

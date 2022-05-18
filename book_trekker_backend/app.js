@@ -54,6 +54,7 @@ app.use(cookieParser())
 
 //user routes
 app.use('/api/auth', authRouter)
+app.use('/api/user', userRouter)
 app.use('/api/secret', userRouter)
 app.use('/api/category', categoryRouter)
 app.use('/api/product', productRouter)

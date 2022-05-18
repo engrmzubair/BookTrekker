@@ -13,7 +13,7 @@ const productSchema = new mongoose.Schema({
   },
   description: {
     type: String,
-    required: [ true, "Please provide the description of the product." ],
+    // required: [ true, "Please provide the description of the product." ],
     minlength: 10,
     maxlength: 2000
   },
@@ -33,7 +33,10 @@ const productSchema = new mongoose.Schema({
     ref: "Category",
     required: [ true, "Please provide the category of the product." ]
   },
-  photo: { type: String },
+  photo: {
+    publicId: { type: String },
+    url: { type: String }
+  },
   shipping: {
     type: Boolean
   }
@@ -45,12 +48,15 @@ function validate(category) {
   const schema = Joi.object().keys({
     name: Joi.string().min(5).max(32).required(),
     description: Joi.string()
-      .min(10).max(2000).required(),
+      .min(10).max(2000),
     price: Joi.number().required(),
     quantity: Joi.number(),
     category: Joi.objectId().required(),
     sold: Joi.number(),
-    photo: Joi.string(),
+    photo: {
+      publicId: Joi.string(),
+      url: Joi.string()
+    },
     shipping: Joi.boolean()
   });
   return schema.validate(category);

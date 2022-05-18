@@ -1,19 +1,16 @@
 const multer = require('multer');
-const fs = require('fs');
 
 //imports from other local directories
 const catchAsync = require("../utils/catchAsync");
 const { Product } = require('../models/productModel');
 const AppError = require("../utils/appError");
-const path = require('path');
 const {
   multerOptions,
-  validation
+  validation,
+  deleteImage,
+  getPhoto
 } = require('../Helper/product/productValidation');
-
-
-//image path directory declaration
-const imageDir = `${ path.dirname(__dirname) }/public/products`;
+const { User } = require('../models/userModel');
 
 //product validation from client side
 exports.productValidation = async (req, res, next) => {
@@ -40,7 +37,6 @@ exports.productById = (req, res, next, _id) => {
 
       if (!product || err) return next(new AppError('Invalid product id!', 400))
       req.product = product;
-      req.photo = product.photo;
       next();
     })
 };
@@ -83,7 +79,8 @@ exports.getRelatedProducts = catchAsync(async (req, res) => {
 exports.getProductCategories = catchAsync(async (req, res) => {
   const categories = await Product.distinct('category')
     .exec();
-  res.send(categories)
+
+  res.send(categories);
 })
 
 //route handler for getting products by search
@@ -95,30 +92,22 @@ exports.getProduct = (req, res) => res.send(req.product);
 //route handler for create product
 exports.createProduct = catchAsync(async (req, res) => {
   const product = new Product(req.productData)
-  await product.save()
+  await product.save();
   res.send(product);
 })
 
 //route handler for update product
 exports.updateProduct = catchAsync(async (req, res) => {
-  const product = req.product;
-  const updatedProduct = req.productData;
+  const { photo } = req.product;
 
-  //updating the product
-  product.name = updatedProduct.name;
-  product.description = updatedProduct.description;
-  product.price = updatedProduct.price;
-  product.category = updatedProduct.category;
-  product.photo = updatedProduct.photo;
+  const product = await Product.findOneAndUpdate(
+    { _id: req.product._id },
+    { $set: req.body },
+    { new: true })
 
-  //update product in data base
-  await product.save();
-
-  //image path
-  const imagePath = `${ imageDir }/${ req.photo }`;
 
   //removing prev image
-  fs.existsSync(imagePath) && fs.unlinkSync(imagePath);
+  deleteImage(photo.publicId)
 
   //send updated product to client
   res.json({ product })
@@ -129,10 +118,8 @@ exports.deleteProduct = catchAsync(async (req, res) => {
   const product = req.product;
   await product.remove();
 
-  const imagePath = `${ imageDir }/${ product.photo }`;
-
   //removing prev image
-  fs.existsSync(imagePath) && fs.unlinkSync(imagePath);
+  deleteImage(product.photo.publicId)
 
   res.json({ product });
 });

@@ -1,5 +1,6 @@
-const fs = require('fs');
-const multer = require('multer')
+const cloudinary = require("cloudinary").v2;
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const config = require('config');
 
 //imports from other local directories
 const AppError = require("../../utils/appError");
@@ -7,18 +8,31 @@ const { validate } = require('../../models/productModel');
 const { Category } = require('../../models/categoryModel');
 
 
+// cloudinary.api.delete_resources
+const deleteImage = async image => {
+
+  try {
+    await cloudinary.api.delete_resources(image)
+  } catch (ex) {
+    throw new Error(ex.message);
+  }
+}
+
+
 // ..........validation............
 const fieldsValidation = (req, next) => {
 
   // productData object added to req
-  req.productData = req.file && req.body && { ...req.body, photo: req.file.filename };
+  req.productData = req.file && req.body && { ...req.body, photo: { publicId: req.file.filename, url: req.file.path } };
 
   // fields validation
   const { error } = validate(req.productData);
 
   //if error => throw it to global error handler
   if (error) {
-    fs.unlinkSync(req.file.path);
+
+    //removing prev image
+    deleteImage(req.file.filename);
     next(new AppError(error.details[ 0 ].message, 400));
   }
 }
@@ -29,7 +43,9 @@ const categoryExists = async (req, next) => {
     const category = await Category.findOne({ _id: req.productData.category }).exec();
 
     if (category && category.name) return next()
-    fs.unlinkSync(req.file.path);
+
+    deleteImage(req.file.filename);
+
     return next(new AppError('Category does not exists!', 404))
   } catch (ex) {
     next(ex)
@@ -46,19 +62,21 @@ exports.validation = (req, next) => {
   categoryExists(req, next);
 }
 
-//multer storage
-const storage = multer.diskStorage({
 
-  destination: function (req, file, cb) {
-    cb(null, './public/products')
+//cloudinary configuration
+cloudinary.config({
+  cloud_name: config.get('cloudinary.cloudName'),
+  api_key: config.get('cloudinary.apiKey'),
+  api_secret: config.get('cloudinary.apiSecret'),
+});
+
+//cloudinary storage instantiated
+const storage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: {
+    folder: "BOOK_TREKKER/PRODUCTS",
   },
-  filename: function (req, file, cb) {
-
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    const ext = file.mimetype.split('/')[ 1 ];
-    cb(null, file.fieldname + '-' + uniqueSuffix + "." + ext)
-  }
-})
+});
 
 //multer file filter (only images are allowed)
 const fileFilter = (req, file, cb) => {
@@ -82,3 +100,5 @@ exports.multerOptions = {
   limits
 }
 
+
+module.exports.deleteImage = deleteImage;

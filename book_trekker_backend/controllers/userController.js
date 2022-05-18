@@ -1,5 +1,6 @@
 const { User } = require("../models/userModel");
 const AppError = require("../utils/appError");
+const catchAsync = require("../utils/catchAsync");
 
 
 exports.userById = (req, res, next, id) => {
@@ -12,6 +13,14 @@ exports.userById = (req, res, next, id) => {
   });
 
 };
+
+// router handlers for reading, writing updating and deleting user
+exports.getUser = (req, res, next) => {
+  req.profile.hashed_password = undefined
+  req.profile.salt = undefined
+  res.json(req.profile)
+}
+
 
 
 

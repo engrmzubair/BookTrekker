@@ -1,12 +1,16 @@
-import { Counter } from './features/counter/Counter';
+import React from 'react';
 import './App.css';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import Menu from './features/core/Menu';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Hello World</h1>
-      <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptate ipsum quidem autem animi excepturi fugiat dolor voluptatum nisi quaerat consequuntur, neque numquam cumque saepe temporibus nulla non asperiores doloremque ducimus?</p>
-    </div>
+    <React.Fragment>
+      <Menu />
+
+      <h1>Hello.</h1>
+
+    </React.Fragment>
   );
 }
 

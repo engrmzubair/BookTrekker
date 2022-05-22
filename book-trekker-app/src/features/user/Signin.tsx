@@ -1,10 +1,14 @@
 import React from 'react'
+import Menu from '../core/Menu'
 
 type Props = {}
 
 const Signin = (props: Props) => {
   return (
-    <h1>Signin</h1>
+    <div>
+      <Menu />
+      <h1>Signin</h1>
+    </div>
   )
 }
 

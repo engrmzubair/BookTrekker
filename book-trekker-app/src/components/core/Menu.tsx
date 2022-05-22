@@ -22,7 +22,6 @@ const Menu = () => {
 
           </Nav>
 
-
         </Navbar.Collapse>
       </Container>
     </Navbar>

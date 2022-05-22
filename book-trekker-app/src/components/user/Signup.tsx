@@ -1,14 +1,17 @@
 import React from 'react';
 import Menu from '../core/Menu';
+import Layout from '../core/Layout';
 
 type Props = {}
 
 const Signup = (props: Props) => {
+
   return (
-    <div>
+    <React.Fragment>
       <Menu />
-      <h1>Signup</h1>
-    </div>
+      <Layout title="Signup" description="Signup to Book TreKKer.">
+      </Layout>
+    </React.Fragment>
   );
 }
 

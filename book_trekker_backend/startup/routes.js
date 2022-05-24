@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 const authRouter = require('../routes/authRouter');
 const userRouter = require('../routes/userRouter');
 const categoryRouter = require('../routes/categoryRouter');
@@ -15,7 +16,8 @@ module.exports = (app) => {
   app.use(express.json());
   app.use(express.urlencoded({ extended: false }));
   app.use(morgan('dev'));
-  app.use(cookieParser())
+  app.use(cookieParser());
+  app.use(cors())
 
   //user routes
   app.use('/api/auth', authRouter)

@@ -1,6 +1,6 @@
 import { Form } from 'react-bootstrap'
 import React from 'react'
-import { HandleChange } from '../user/Signup'
+import { Formik } from '../user/Signup'
 
 
 type Props = {
@@ -9,11 +9,15 @@ type Props = {
   type: string,
   placeholder: string,
   formText?: string,
-  handleChange: HandleChange
-
+  error?: string,
+  name: string
+  formik: Formik
 }
 
-const Input = ({ value, label, type, placeholder, formText, handleChange }: Props) => {
+const Input = ({ value, label, type, name, error, placeholder, formText, formik }: Props) => {
+
+  const className = `form-control ${error && "is-invalid"}`
+
   return (
     <React.Fragment>
 
@@ -21,15 +25,22 @@ const Input = ({ value, label, type, placeholder, formText, handleChange }: Prop
         <Form.Label>{ label }</Form.Label>
 
         <input
-          onChange={ e => handleChange(label, e) }
-          className="form-control"
+          onChange={ formik.handleChange }
+          className={ className }
           value={ value }
+          name={ name }
           type={ type }
           placeholder={ placeholder } />
 
-        { formText && <Form.Text className="text-muted">
+        { !error && formText && <Form.Text className="text-muted">
           { formText }
         </Form.Text> }
+
+
+        <Form.Control.Feedback type="invalid">
+          { error }
+        </Form.Control.Feedback>
+
       </Form.Group>
 
 

@@ -1,49 +1,63 @@
-import { Form, Button, Container } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import Input from '../common/Input';
-import { HandleChange, Values } from './Signup';
+import { Formik } from './Signup';
 
 type Props = {
-  values: Values,
-  handleChange: HandleChange
+  formik: Formik
 }
 
-const SignupForm = ({ values, handleChange }: Props) => {
-
+const SignupForm = ({ formik }: Props) => {
+  const { name, email, password } = formik.values;
+  const { handleSubmit, errors } = formik;
 
   return (
-    <Container className='row m-4'>
-      <Form className='col-md-6 m-auto'>
+    <div
+      className='row my-4 bg-secondary w-100 p-5'>
+      <Form
+        noValidate
+        className='col-md-6 m-auto bg-light p-4 rounded-3'
+        onSubmit={ handleSubmit }>
 
         <Input
-          value={ values.name }
-          handleChange={ handleChange }
+          value={ name }
+          formik={ formik }
+          name="name"
           label='Name'
           type='text'
           placeholder='Enter Name'
+          error={ errors.name }
         />
 
         <Input
-          value={ values.email }
-          handleChange={ handleChange }
+          value={ email }
+          formik={ formik }
+          name='email'
           label='Email'
           type='email'
           placeholder='Enter Email'
           formText="We'll never share your email with anyone else."
+          error={ errors.email }
         />
 
         <Input
-          value={ values.password }
-          handleChange={ handleChange }
+          value={ password }
+          formik={ formik }
+          name="password"
           label='Password'
           type='password'
           placeholder='Enter Password'
+          error={ errors.password }
         />
 
-        <Button className='w-100' variant="primary" type="submit">
+        <Button
+          // onClick={ handleReset }
+          className='w-100'
+          variant="primary"
+          type="submit">
           Submit
         </Button>
       </Form>
-    </Container>
+    </div>
   )
 }
 

@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { useFormik, FormikProps } from "formik";
+import * as Yup from "yup";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import http from '../../services/httpService';
 import Menu from '../core/Menu';
 import Layout from '../core/Layout';
 import SignupForm from './SignupForm';
-import { useFormik, FormikProps } from "formik";
-import * as Yup from "yup";
 import { API } from '../../config';
-
 
 
 export interface FormValues {
@@ -17,8 +19,6 @@ export interface FormValues {
 export type Formik = FormikProps<FormValues>
 
 const Signup = () => {
-
-  const [error, setError] = useState<string>('')
 
   const formik: Formik =
 
@@ -44,39 +44,25 @@ const Signup = () => {
 
     try {
 
-      const res = await axios.post(`${API}/auth/signup`, values)
-      setError('')
-      console.log(res.data);
-    } catch (ex: any) {
+      const res = await http.post(`${API}/auth/signup`, values)
+      formik.resetForm()
+      console.log(res && res.data);
+    } catch (err: any) {
 
-      console.log(ex)
-
-      if
-        ((ex.response &&
-          ex.response.status === 500 &&
-          ex.response.data.error.code === 11000) ||
-        (ex.response &&
-          ex.response.status === 400)) {
-        console.log("User is already registered! Please signin.")
-        setError("User is already registered! Please signin.")
-      } else {
-        console.log('An unexpected error occur!');
-        setError('An unexpected error occur!')
-      }
+      if (err.response && err.response.data && err.response.data.message)
+        toast.error(err.response.data.message, { theme: 'dark' })
     }
 
   }
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <Menu />
       <Layout
         title="Signup"
         description="Signup to Book TreKKer."
       />
-
-      <h1>{ error || "no error" }</h1>
-
       <SignupForm
         formik={ formik }
       />

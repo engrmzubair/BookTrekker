@@ -12,7 +12,7 @@ const SignupForm = ({ formik }: Props) => {
 
   return (
     <div
-      className='row my-4 bg-secondary w-100 p-5'>
+      className='row my-2 w-100 p-5'>
       <Form
         noValidate
         className='col-md-6 m-auto bg-light p-4 rounded-3'

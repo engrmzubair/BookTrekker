@@ -16,7 +16,8 @@ type Props = {
 
 const Input = ({ value, label, type, name, error, placeholder, formText, formik }: Props) => {
 
-  const className = `form-control ${error && "is-invalid"}`
+  const className = `form-control ${error ? "is-invalid" : "is-valid"
+    }`
 
   return (
     <React.Fragment>

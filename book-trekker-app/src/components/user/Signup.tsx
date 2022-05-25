@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import Menu from '../core/Menu';
 import Layout from '../core/Layout';
@@ -18,6 +18,7 @@ export type Formik = FormikProps<FormValues>
 
 const Signup = () => {
 
+  const [error, setError] = useState<string>('')
 
   const formik: Formik =
 
@@ -44,18 +45,27 @@ const Signup = () => {
     try {
 
       const res = await axios.post(`${API}/auth/signup`, values)
+      setError('')
       console.log(res.data);
-    } catch (error: any) {
-      console.log(error.response.data.message)
+    } catch (ex: any) {
+
+      console.log(ex)
+
+      if
+        ((ex.response &&
+          ex.response.status === 500 &&
+          ex.response.data.error.code === 11000) ||
+        (ex.response &&
+          ex.response.status === 400)) {
+        console.log("User is already registered! Please signin.")
+        setError("User is already registered! Please signin.")
+      } else {
+        console.log('An unexpected error occur!');
+        setError('An unexpected error occur!')
+      }
     }
 
-
-
-
-
   }
-
-
 
   return (
     <React.Fragment>
@@ -64,6 +74,9 @@ const Signup = () => {
         title="Signup"
         description="Signup to Book TreKKer."
       />
+
+      <h1>{ error || "no error" }</h1>
+
       <SignupForm
         formik={ formik }
       />

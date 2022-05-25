@@ -8,7 +8,9 @@ const config = require('config');
 
 
 // ................validators..................
-exports.signupValidation = (req, res, next) => {
+exports.signupValidation = async (req, res, next) => {
+	const user = await User.findOne({ email: req.body.email });
+	if (user) return next(new AppError("User is already registered! Please signin.", 400))
 
 	const { error } = validate(req.body)
 	if (error) return next(new AppError(error.details[ 0 ].message, 400));

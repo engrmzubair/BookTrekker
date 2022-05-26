@@ -1,6 +1,7 @@
 import { Form } from 'react-bootstrap'
 import React from 'react'
-import { Formik } from '../user/signup/FormikConfig';
+import { FormikSignin } from '../user/signin/SigninFormikConfig';
+import { FormikSignup } from '../user/signup/SignupFormikConfig';
 
 type Props = {
   value: string
@@ -10,7 +11,7 @@ type Props = {
   formText?: string,
   error?: string,
   name: string
-  formik: Formik
+  formik: FormikSignin | FormikSignup
 }
 
 const Input = ({ value, label, type, name, error, placeholder, formText, formik }: Props) => {

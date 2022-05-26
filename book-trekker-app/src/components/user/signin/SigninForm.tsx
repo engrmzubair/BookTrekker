@@ -1,14 +1,14 @@
-import { Form } from 'react-bootstrap';
+import { Form, } from 'react-bootstrap';
 import Input from '../../common/Input';
-import { FormikSignup } from './SignupFormikConfig';
 import ButtonComp from '../../common/ButtonComp';
+import { FormikSignin } from './SigninFormikConfig';
 
 type Props = {
-  formik: FormikSignup
+  formik: FormikSignin
 }
 
-const SignupForm = ({ formik }: Props) => {
-  const { name, email, password } = formik.values;
+const SigninForm = ({ formik }: Props) => {
+  const { email, password } = formik.values;
   const { handleSubmit, errors } = formik;
 
   return (
@@ -17,16 +17,6 @@ const SignupForm = ({ formik }: Props) => {
       noValidate
       className=' mt-2 p-4 rounded-3'
       onSubmit={ handleSubmit }>
-
-      <Input
-        value={ name }
-        formik={ formik }
-        name="name"
-        label='Name'
-        type='text'
-        placeholder='Enter Name'
-        error={ errors.name }
-      />
 
       <Input
         value={ email }
@@ -59,4 +49,4 @@ const SignupForm = ({ formik }: Props) => {
   )
 }
 
-export default SignupForm
+export default SigninForm

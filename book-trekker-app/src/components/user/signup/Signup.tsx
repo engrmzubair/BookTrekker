@@ -5,13 +5,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import CardComponent from '../../common/CardComponent';
 import Menu from '../../core/Menu';
 import SignupForm from './SignupForm';
-import { FormikConfig } from './FormikConfig';
+import { SignupFormikConfig } from './SignupFormikConfig';
 
 
 const Signup = () => {
 
-  //formik configuration configuration
-  const formik = FormikConfig()
+  //formik configuration for signup form
+  const formik = SignupFormikConfig()
 
 
   return (

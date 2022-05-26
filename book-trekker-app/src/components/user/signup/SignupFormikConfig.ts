@@ -11,11 +11,11 @@ export interface FormValues {
   email: string;
   password: string;
 }
-export type Formik = FormikProps<FormValues>
+export type FormikSignup = FormikProps<FormValues>
 
-export const FormikConfig = () => {
+export const SignupFormikConfig = () => {
 
-  const formik: Formik =
+  const formik: FormikSignup =
 
     useFormik<FormValues>({
 

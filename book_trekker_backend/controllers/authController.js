@@ -41,12 +41,7 @@ exports.signin = catchAsync(async (req, res, next) => {
 
 	const token = user.generateAuthToken();
 
-	res.cookie("authToken", token, { expire: new Date() + 9999 });
-
-	res.json({
-		user: _.pick(user, [ '_id', 'name', 'email' ]),
-		token
-	});
+	res.header('x-auth-token', token).send(_.pick(user, [ '_id', 'name', 'email' ]));
 
 })
 

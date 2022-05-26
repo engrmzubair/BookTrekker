@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import http from '../../services/httpService';
+import CardComponent from '../common/CardComponent';
 import Menu from '../core/Menu';
 import Layout from '../core/Layout';
 import SignupForm from './SignupForm';
@@ -58,15 +59,19 @@ const Signup = () => {
   return (
     <React.Fragment>
       <ToastContainer />
+
       <Menu />
-      <Layout
+
+      <CardComponent
         title="Signup"
-        description="Signup to Book TreKKer."
-      />
-      <SignupForm
-        formik={ formik }
-      />
-    </React.Fragment>
+        subtitle="Signup to Book TreKKer."
+      >
+        <SignupForm
+          formik={ formik }
+        />
+      </CardComponent>
+
+    </React.Fragment >
   );
 }
 

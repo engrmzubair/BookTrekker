@@ -1,6 +1,6 @@
 import { Form, Button } from 'react-bootstrap';
-import Input from '../common/Input';
-import { Formik } from './Signup';
+import Input from '../../common/Input';
+import { Formik } from './FormikConfig';
 
 type Props = {
   formik: Formik

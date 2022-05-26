@@ -1,7 +1,6 @@
 import { Form } from 'react-bootstrap'
 import React from 'react'
-import { Formik } from '../user/Signup'
-
+import { Formik } from '../user/signup/FormikConfig';
 
 type Props = {
   value: string
@@ -33,10 +32,11 @@ const Input = ({ value, label, type, name, error, placeholder, formText, formik 
           type={ type }
           placeholder={ placeholder } />
 
-        { !error && formText && <Form.Text className="text-muted">
-          { formText }
-        </Form.Text> }
-
+        { !error &&
+          formText &&
+          <Form.Text className="text-muted">
+            { formText }
+          </Form.Text> }
 
         <Form.Control.Feedback type="invalid">
           { error }

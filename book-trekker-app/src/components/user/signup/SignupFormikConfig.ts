@@ -1,7 +1,6 @@
 import { useFormik, FormikProps } from "formik";
 import { NavigateFunction } from "react-router-dom";
 import * as Yup from "yup";
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import http from '../../../services/httpService';
@@ -47,11 +46,7 @@ export const SignupFormikConfig = (navigate: NavigateFunction) => {
 
       navigate('../signin')
 
-    } catch (err: any) {
-
-      if (err.response && err.response.data && err.response.data.message)
-        toast.error(err.response.data.message, { theme: 'dark' })
-    }
+    } catch (err: any) { }
 
   }
   return formik;

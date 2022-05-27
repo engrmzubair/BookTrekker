@@ -11,7 +11,7 @@ export interface UserState {
   }
 }
 
-type User = {
+export interface User {
   _id: string;
   name: string;
   email: string;
@@ -20,7 +20,6 @@ type User = {
 const initialState: UserState = {
   user: { currentUser: undefined }
 };
-
 
 export const userSlice = createSlice({
   name: 'user',

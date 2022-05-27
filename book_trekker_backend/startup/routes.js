@@ -17,9 +17,7 @@ module.exports = (app) => {
   app.use(express.urlencoded({ extended: false }));
   app.use(morgan('dev'));
   app.use(cookieParser());
-  app.use(cors({
-    exposedHeaders: [ 'x-auth-token' ]
-  }))
+  app.use(cors())
 
   //user routes
   app.use('/api/auth', authRouter)

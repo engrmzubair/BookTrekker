@@ -5,12 +5,16 @@ import { useNavigate } from "react-router-dom";
 import { SigninFormikConfig } from './SigninFormikConfig';
 import { ToastContainer } from 'react-toastify';
 import SigninForm from './SigninForm';
+import { useAppDispatch } from '../../../app/hooks';
 
 
 const Signin = () => {
 
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
   //formik configuration for signup form
-  const formik = SigninFormikConfig(useNavigate());
+  const formik = SigninFormikConfig(navigate, dispatch);
 
   return (
     <React.Fragment>

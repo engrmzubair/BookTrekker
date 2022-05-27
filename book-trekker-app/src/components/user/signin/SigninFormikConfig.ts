@@ -1,11 +1,12 @@
 import { useFormik, FormikProps } from "formik";
 import { NavigateFunction } from "react-router-dom";
 import * as Yup from "yup";
-import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import http from '../../../services/httpService';
 import { API } from '../../../config';
+import { saveUser } from "../userSlice";
+
 
 export interface FormValues {
   email: string;
@@ -13,7 +14,7 @@ export interface FormValues {
 }
 export type FormikSignin = FormikProps<FormValues>
 
-export const SigninFormikConfig = (navigate: NavigateFunction) => {
+export const SigninFormikConfig = (navigate: NavigateFunction, dispatch: any) => {
 
   const formik: FormikSignin =
 
@@ -44,6 +45,8 @@ export const SigninFormikConfig = (navigate: NavigateFunction) => {
       localStorage.setItem('bookTrekker_token', token)
 
       console.log("User ", res.data);
+
+      dispatch(saveUser(res.data))
 
       navigate("../", { replace: true });
     } catch (err: any) { }

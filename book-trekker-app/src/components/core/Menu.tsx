@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 const Menu = () => {
   return (
 
-    <Navbar bg="light" variant="light" expand="lg" sticky="top">
+    <Navbar bg="secondary" variant="dark" expand="lg" sticky="top">
       <Container>
         <NavLink className="navbar-brand" to="/">Book-TreKKer</NavLink>
 

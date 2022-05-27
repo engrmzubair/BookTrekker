@@ -42,7 +42,7 @@ export const SigninFormikConfig = (navigate: NavigateFunction) => {
       const token = res.headers['x-auth-token']
 
       //store token in localStorage
-      localStorage.setItem('token', token)
+      localStorage.setItem('bookTrekker_token', token)
 
       console.log("User ", res.data);
 

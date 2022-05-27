@@ -41,13 +41,17 @@ exports.signin = catchAsync(async (req, res, next) => {
 
 	const token = user.generateAuthToken();
 
-	res.header('x-auth-token', token).send(_.pick(user, [ '_id', 'name', 'email' ]));
+	res
+		.header("x-auth-token", token)
+		.send(_.pick(user, [ "_id", "name", "email" ]));
+
 
 })
 
 exports.signout = (req, res) => {
-	res.clearCookie("t");
-	res.send("Signed out successfully");
+	res
+		.header('x-auth-token', undefined)
+		.send("Signed out successfully");
 }
 
 exports.requireSignin = expressjwt({

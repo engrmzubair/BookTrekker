@@ -36,7 +36,6 @@ export const SigninFormikConfig = (navigate: NavigateFunction) => {
   const signin = async (values: FormValues) => {
 
     try {
-
       const res = await http.post(`${API}/auth/signin`, values)
 
       const token = res.headers['x-auth-token']
@@ -47,12 +46,8 @@ export const SigninFormikConfig = (navigate: NavigateFunction) => {
       console.log("User ", res.data);
 
       navigate("../", { replace: true });
+    } catch (err: any) { }
 
-    } catch (err: any) {
-
-      if (err.response && err.response.data && err.response.data.message)
-        toast.error(err.response.data.message, { theme: 'dark' })
-    }
 
   }
   return formik;

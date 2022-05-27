@@ -1,10 +1,12 @@
 import { useFormik, FormikProps } from "formik";
+import { NavigateFunction } from "react-router-dom";
 import * as Yup from "yup";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import http from '../../../services/httpService';
 import { API } from '../../../config';
+
 
 export interface FormValues {
   name: string;
@@ -13,7 +15,7 @@ export interface FormValues {
 }
 export type FormikSignup = FormikProps<FormValues>
 
-export const SignupFormikConfig = () => {
+export const SignupFormikConfig = (navigate: NavigateFunction) => {
 
   const formik: FormikSignup =
 
@@ -40,8 +42,11 @@ export const SignupFormikConfig = () => {
     try {
 
       const res = await http.post(`${API}/auth/signup`, values)
-      formik.resetForm()
+
       console.log(res && res.data);
+
+      navigate('../signin')
+
     } catch (err: any) {
 
       if (err.response && err.response.data && err.response.data.message)

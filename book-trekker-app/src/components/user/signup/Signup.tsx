@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom";
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -10,8 +11,10 @@ import { SignupFormikConfig } from './SignupFormikConfig';
 
 const Signup = () => {
 
+  let navigate = useNavigate();
+
   //formik configuration for signup form
-  const formik = SignupFormikConfig()
+  const formik = SignupFormikConfig(navigate)
 
 
   return (

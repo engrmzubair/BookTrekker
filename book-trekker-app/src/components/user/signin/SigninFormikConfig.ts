@@ -1,4 +1,5 @@
 import { useFormik, FormikProps } from "formik";
+import { NavigateFunction } from "react-router-dom";
 import * as Yup from "yup";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,7 +13,7 @@ export interface FormValues {
 }
 export type FormikSignin = FormikProps<FormValues>
 
-export const SigninFormikConfig = () => {
+export const SigninFormikConfig = (navigate: NavigateFunction) => {
 
   const formik: FormikSignin =
 
@@ -37,8 +38,16 @@ export const SigninFormikConfig = () => {
     try {
 
       const res = await http.post(`${API}/auth/signin`, values)
-      // formik.resetForm()
-      console.log(res && res.data);
+
+      const token = res.headers['x-auth-token']
+
+      //store token in localStorage
+      localStorage.setItem('token', token)
+
+      console.log("User ", res.data);
+
+      navigate("../", { replace: true });
+
     } catch (err: any) {
 
       if (err.response && err.response.data && err.response.data.message)

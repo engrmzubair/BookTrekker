@@ -5,6 +5,7 @@ import Menu from './components/core/Menu';
 import Layout from './components/core/Layout';
 
 function App() {
+
   return (
     <React.Fragment>
       <Menu />

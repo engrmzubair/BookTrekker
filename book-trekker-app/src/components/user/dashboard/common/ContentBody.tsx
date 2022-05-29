@@ -1,6 +1,5 @@
 import React from 'react'
 import { useAppSelector } from '../../../../app/hooks';
-
 import CardComponent from '../../../common/CardComponent';
 import ListGroupComp from '../../../common/ListGroupComp';
 import { currentUser } from '../../userSlice';
@@ -13,6 +12,8 @@ const ContentBody = (props: Props) => {
 
   const role = user && user.role === 1 ? "Admin" : "Registered User"
 
+  const title = (role === 'Admin') ? "Admin Information" : "User Information";
+
   const userInfo = (user && [user.name, user.email, role]) || []
 
   const purchaseHistory: any[] = ["Not purchase anything yet!"];
@@ -20,7 +21,7 @@ const ContentBody = (props: Props) => {
   return (
     <React.Fragment>
       <CardComponent
-        title='User Information'
+        title={ title }
         className="bg-warning text-dark mt-2 mb-4"
         headTextPosition="text-start"
       >

@@ -1,10 +1,11 @@
 import React from 'react'
+import DashboardLayout from './common/DashboardLayout'
 
 type Props = {}
 
 const AdminDashboard = (props: Props) => {
   return (
-    <div>Dashboard</div>
+    <DashboardLayout />
   )
 }
 

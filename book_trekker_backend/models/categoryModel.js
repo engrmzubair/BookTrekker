@@ -8,7 +8,7 @@ const categorySchema = new mongoose.Schema({
     required: [ true, "Name is required" ],
     minlength: 5,
     maxlength: 32,
-    unique: true
+    lowercase: true
   },
 },
   { timestamps: true }

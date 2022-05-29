@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useAppSelector } from '../../app/hooks'
 import { currentUser } from '../user/userSlice';
-import UserDashboard from "../user/dashboard/user/UserDashboard";
+import UserDashboard from "../user/dashboard/UserDashboard";
 
 const Protected = () => {
   const user = useAppSelector(currentUser)

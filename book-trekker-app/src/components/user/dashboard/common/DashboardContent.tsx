@@ -2,10 +2,7 @@ import React from 'react'
 import ContentBody from './ContentBody';
 import ContentLinks from './ContentLinks';
 
-
-
 const DashboardContent = () => {
-
 
   return (
     <React.Fragment>

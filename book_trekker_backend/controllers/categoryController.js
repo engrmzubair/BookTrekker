@@ -3,10 +3,22 @@ const { Category, validate } = require('../models/categoryModel');
 const AppError = require("../utils/appError");
 
 // ..........validation............
-exports.categoryValidation = (req, res, next) => {
+exports.categoryValidation = async (req, res, next) => {
 
   const { error } = validate(req.body);
-  if (error) next(new AppError(error.details[ 0 ].message, 400))
+  if (error) return next(new AppError(error.details[ 0 ].message, 400))
+
+  const categoryName = req.body.name.toLowerCase();
+
+  try {
+    const category = await Category.findOne({ name: req.body.name })
+
+    if (category) return next(new AppError('Category already exist!', 400))
+  } catch (ex) {
+    next(ex)
+  }
+
+
   next()
 }
 

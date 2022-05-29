@@ -4,6 +4,7 @@ import { Card } from 'react-bootstrap';
 type Props = {
   title?: string,
   subtitle?: string,
+  headTextPosition?: "text-center" | "text-start" | "text-end",
   className?: string
   children?: React.ReactNode
 }
@@ -11,28 +12,25 @@ type Props = {
 const CardComponent = ({ title,
   subtitle,
   children,
-  className = "col-lg-6 bg-light m-auto"
+  className = "bg-light m-auto",
+  headTextPosition = "text-center"
+
 }:
   Props) => {
 
   return (
     <React.Fragment>
-      <div
-        className='row my-2 w-100 p-4'>
-        <Card className={ className }>
-          <Card.Body >
-            <Card.Title
-              style={ { fontSize: "2.25rem" } }
-              className="text-center"
-            >{ title }
-            </Card.Title>
-            <Card.Subtitle className="mb-2 text-center text-muted">{ subtitle }</Card.Subtitle>
+      <Card className={ className }>
+        <Card.Header
+          style={ { fontSize: "2.25rem" } }
+          className={ headTextPosition }
+        >{ title }
+          <Card.Subtitle className={ `mb-2 text-muted ${headTextPosition}` }>{ subtitle }</Card.Subtitle>
+        </Card.Header>
 
-            { children }
+        { children }
 
-          </Card.Body>
-        </Card>
-      </div>
+      </Card>
     </React.Fragment>
   )
 }

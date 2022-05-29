@@ -1,7 +1,7 @@
 import { Navigate } from "react-router-dom";
 import { useAppSelector } from '../../app/hooks'
 import { currentUser } from '../user/userSlice';
-import UserDashboard from "../user/dashboard/UserDashboard";
+import UserDashboard from "../user/dashboard/user/UserDashboard";
 import AdminDashboard from '../user/dashboard/admin/AdminDashboard';
 
 type Props = {}

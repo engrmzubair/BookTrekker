@@ -4,11 +4,12 @@ import { ListGroup } from 'react-bootstrap';
 type Props = {
   items: (string)[] | any[],
   variant?: string,
+  href?: string,
   className?: string,
 }
 
 const ListGroupComp = ({
-  items, variant = 'dark', className = 'm-4'
+  items, variant = 'light', className = 'm-4'
 }
   : Props) => {
 
@@ -19,7 +20,11 @@ const ListGroupComp = ({
     <React.Fragment>
       <ListGroup className={ className }>
 
-        { items.map((item, i) => < ListGroup.Item variant={ variant } key={ i } > { item }</ListGroup.Item>) }
+        { items.map((item, i) => < ListGroup.Item className='py-3'
+          variant={ variant }
+          key={ i } >
+          { item }
+        </ListGroup.Item>) }
 
       </ListGroup>
     </React.Fragment >

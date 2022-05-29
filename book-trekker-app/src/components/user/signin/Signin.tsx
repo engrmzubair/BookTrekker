@@ -26,6 +26,7 @@ const Signin = () => {
       <CardComponent
         title="Signin"
         subtitle="Signin to Book TreKKer."
+        className='w-50 m-auto mt-5'
       >
         <SigninForm
           formik={ formik }

@@ -14,13 +14,13 @@ const Layout = ({
 }: Props) => {
   return (
     <div className="mt-4 p-5 bg-light rounded">
-      <Container>
+      <div className="container-fluid">
         <h1>{ title }</h1>
         <p className='lead'>{ description }</p>
         <div>
           { children }
         </div>
-      </Container>
+      </div>
     </div>
   )
 }

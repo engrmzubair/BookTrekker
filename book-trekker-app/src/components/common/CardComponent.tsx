@@ -18,7 +18,7 @@ const CardComponent = ({ title,
   return (
     <React.Fragment>
       <div
-        className='row my-2 w-100 p-5'>
+        className='row my-2 w-100 p-4'>
         <Card className={ className }>
           <Card.Body >
             <Card.Title

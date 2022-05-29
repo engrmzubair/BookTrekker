@@ -22,7 +22,7 @@ const Menu = () => {
 
             <NavLink className="nav-link" to="/">Home</NavLink>
 
-            { user && <NavLink className="nav-link" to="/dashboard">Dashboard</NavLink> }
+            { user && <NavLink className="nav-link" to="/user/dashboard">Dashboard</NavLink> }
 
             { !user && (
               <React.Fragment>

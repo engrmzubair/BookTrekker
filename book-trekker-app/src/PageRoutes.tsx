@@ -4,22 +4,20 @@ import NotFound from './components/core/NotFound';
 import App from './App';
 import Signin from './components/user/signin/Signin';
 import Signout from './components/user/signout/Signout';
-import Dashboard from './components/user/Dashboard';
 import Protected from './components/auth/Protected';
-
+import AdminProtected from './components/auth/AdminProtected';
 
 const PageRoutes = () => {
   return (
 
     <Routes>
-      {/* <Protected><Dashboard /></Protected> */ }
       <Route path="/" element={ <App /> } />
       <Route path="signup" element={ <Signup /> } />
       <Route path="signin" element={ <Signin /> } />
       <Route path="signout" element={ <Signout /> } />
-      <Route path="dashboard" element={ <Protected >
-        <Dashboard />
-      </Protected> } />
+      <Route path="/user/dashboard" element={ <Protected /> } />
+      <Route path="/admin/dashboard" element={ <AdminProtected /> } />
+
       <Route path="*" element={ <NotFound /> } />
     </Routes >
   )

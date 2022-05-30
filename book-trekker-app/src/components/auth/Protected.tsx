@@ -1,9 +1,12 @@
+import { ReactElement } from 'react'
 import { Navigate } from "react-router-dom";
 import { useAppSelector } from '../../app/hooks'
 import { currentUser } from '../user/userSlice';
 import UserDashboard from "../user/dashboard/UserDashboard";
 
-const Protected = () => {
+type Props = { children?: ReactElement }
+
+const Protected = ({ children }: Props) => {
   const user = useAppSelector(currentUser)
 
   const isAdmin = user && user.role === 1;
@@ -13,6 +16,8 @@ const Protected = () => {
 
   if (isAdmin)
     return <Navigate to='/admin/dashboard' replace={ true } />
+
+  if (children) return children
 
   return <UserDashboard />
 

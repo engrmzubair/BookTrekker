@@ -2,7 +2,6 @@ import { useFormik, FormikProps } from "formik";
 import { NavigateFunction } from "react-router-dom";
 import * as Yup from "yup";
 import 'react-toastify/dist/ReactToastify.css';
-
 import http from '../../../services/httpService';
 import { API } from '../../../config';
 import { saveUser } from "../userSlice";

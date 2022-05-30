@@ -2,6 +2,7 @@ import { Form } from 'react-bootstrap'
 import React from 'react'
 import { FormikSignin } from '../user/signin/SigninFormikConfig';
 import { FormikSignup } from '../user/signup/SignupFormikConfig';
+import { FormikAddCat } from '../adminResource/category/AddCatFormikConfig';
 
 type Props = {
   value: string
@@ -10,8 +11,8 @@ type Props = {
   placeholder: string,
   formText?: string,
   error?: string,
-  name: string
-  formik: FormikSignin | FormikSignup
+  name: string,
+  formik: FormikSignin | FormikSignup | FormikAddCat
 }
 
 const Input = ({ value, label, type, name, error, placeholder, formText, formik }: Props) => {

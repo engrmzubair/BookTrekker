@@ -32,15 +32,16 @@ const AddCatFormikConfig = (navigate: NavigateFunction, user: User | undefined) 
 
   const createCategory = async (values: FormValues) => {
 
-    // alert(JSON.stringify(user))
     try {
-      const res = await http.post(`${API}/category/create/${user && user._id}`, values)
+      const res = await http.post(`${API}/category/create/${user?._id}`, values)
 
       toast.success("New category added")
 
+      formik.resetForm();
+
       console.log("Category ", res.data);
 
-      // navigate("../", { replace: true });
+
     } catch (err: any) { }
 
 

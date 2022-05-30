@@ -4,6 +4,8 @@ import { FormikSignin } from '../user/signin/SigninFormikConfig';
 import { FormikSignup } from '../user/signup/SignupFormikConfig';
 import { FormikAddCat } from '../adminResource/category/AddCatFormikConfig';
 
+export type formikForInput = FormikSignin | FormikSignup | FormikAddCat;
+
 type Props = {
   value: string
   label: string,
@@ -12,7 +14,7 @@ type Props = {
   formText?: string,
   error?: string,
   name: string,
-  formik: FormikSignin | FormikSignup | FormikAddCat
+  formik: formikForInput
 }
 
 const Input = ({ value, label, type, name, error, placeholder, formText, formik }: Props) => {

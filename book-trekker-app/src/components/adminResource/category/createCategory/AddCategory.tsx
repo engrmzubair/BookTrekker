@@ -1,12 +1,12 @@
 import React from 'react'
-import { useNavigate } from "react-router-dom";
 import AddCatFormikConfig from './AddCatFormikConfig';
 import { ToastContainer } from 'react-toastify';
-import CardComponent from '../../common/CardComponent';
-import Menu from '../../core/Menu';
+import CardComponent from '../../../common/CardComponent';
+import Menu from '../../../core/Menu';
 import AddCatForm from './AddCatForm';
-import { useAppSelector } from '../../../app/hooks';
-import { currentUser } from '../../user/userSlice';
+import { useNavigate } from "react-router-dom";
+import { useAppSelector } from '../../../../app/hooks';
+import { currentUser } from '../../../user/userSlice';
 
 type Props = {}
 

@@ -31,7 +31,17 @@ axios.interceptors.request.use(req => {
   return req
 })
 
+const multipartPost = (values: any, url: string) => {
+  return axios({
+    method: 'post',
+    url,
+    data: values,
+    headers: { 'Content-Type': 'multipart/form-data' }
+  })
+}
+
 export default {
+  multipartPost,
   get: axios.get,
   post: axios.post,
   delete: axios.delete,

@@ -6,7 +6,8 @@ import Signin from './components/user/signin/Signin';
 import Signout from './components/user/signout/Signout';
 import Protected from './components/auth/Protected';
 import AdminProtected from './components/auth/AdminProtected';
-import AddCategory from './components/adminResource/category/AddCategory';
+import AddCategory from './components/adminResource/category/createCategory/AddCategory';
+import AddProduct from './components/adminResource/product/createProduct/AddProduct';
 
 const PageRoutes = () => {
   return (
@@ -22,6 +23,11 @@ const PageRoutes = () => {
       <Route path="/create/category" element={
         <AdminProtected >
           <AddCategory />
+        </AdminProtected> } />
+
+      <Route path="/create/product" element={
+        <AdminProtected >
+          <AddProduct />
         </AdminProtected> } />
 
       <Route path="*" element={ <NotFound /> } />

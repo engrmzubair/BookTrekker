@@ -1,10 +1,10 @@
 import { useFormik, FormikProps } from "formik";
 import { NavigateFunction } from "react-router-dom";
 import * as Yup from "yup";
-import http from '../../../services/httpService';
-import { API } from '../../../config';
+import http from '../../../../services/httpService';
+import { API } from '../../../../config';
 import { toast } from 'react-toastify';
-import { User } from "../../user/userSlice";
+import { User } from "../../../user/userSlice";
 
 
 export interface FormValues {

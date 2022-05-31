@@ -2,25 +2,28 @@ import { Form } from 'react-bootstrap'
 import React from 'react'
 import { FormikSignin } from '../user/signin/SigninFormikConfig';
 import { FormikSignup } from '../user/signup/SignupFormikConfig';
-import { FormikAddCat } from '../adminResource/category/AddCatFormikConfig';
+import { FormikAddCat } from '../adminResource/category/createCategory/AddCatFormikConfig';
+import { FormikAddProd } from '../adminResource/product/createProduct/AddProdFormikConfig';
 
-export type formikForInput = FormikSignin | FormikSignup | FormikAddCat;
+export type formikForInput = FormikSignin | FormikSignup | FormikAddCat | FormikAddProd;
 
 type Props = {
-  value: string
+  value?: string | number,
   label: string,
   type: string,
   placeholder: string,
   formText?: string,
   error?: string,
   name: string,
+  accept?: string,
   formik: formikForInput
 }
 
-const Input = ({ value, label, type, name, error, placeholder, formText, formik }: Props) => {
+const Input = ({ value, label, type, name, error, accept, placeholder, formText, formik }: Props) => {
 
-  const className = `form-control ${error ? "is-invalid" : "is-valid"
-    }`
+  const className = `form-control ${error && "is-invalid"}`
+
+  const isFile = type === 'file';
 
   return (
     <React.Fragment>
@@ -29,8 +32,12 @@ const Input = ({ value, label, type, name, error, placeholder, formText, formik 
         <Form.Label>{ label }</Form.Label>
 
         <input
-          onChange={ formik.handleChange }
+          onChange={ !isFile ? formik.handleChange : e => {
+
+            formik.setFieldValue('photo', e.target.files?.length && e.target.files[0], false)
+          } }
           className={ className }
+          accept={ accept }
           value={ value }
           name={ name }
           type={ type }

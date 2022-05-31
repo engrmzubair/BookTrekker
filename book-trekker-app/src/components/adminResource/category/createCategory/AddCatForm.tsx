@@ -1,6 +1,6 @@
 import { Form, } from 'react-bootstrap';
-import Input from '../../common/Input';
-import ButtonComp from '../../common/ButtonComp';
+import Input from '../../../common/Input';
+import ButtonComp from '../../../common/ButtonComp';
 import { FormikAddCat } from './AddCatFormikConfig';
 
 type Props = {

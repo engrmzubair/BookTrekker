@@ -12,7 +12,7 @@ export interface FormValues {
   description: string,
   price: number,
   quantity: number,
-  category: string[],
+  category: string,
   photo: File | undefined,
   sold: number,
   shipping: boolean
@@ -39,7 +39,7 @@ const AddProdFormikConfig = (navigate: NavigateFunction, user: User | undefined)
         description: "",
         price: 0,
         quantity: 0,
-        category: [],
+        category: '',
         photo: undefined,
         sold: 0,
         shipping: false

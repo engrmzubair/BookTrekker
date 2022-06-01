@@ -6,7 +6,8 @@ import TextArea from '../../../common/TextArea';
 import CheckBox from '../../../common/CheckBox';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { getCategories, status } from '../../category/categorySlice';
+import { categories, getCategories, status } from '../../category/categorySlice';
+import SelectComp from '../../../common/SelectComp';
 
 
 type Props = {
@@ -18,18 +19,15 @@ const AddProdFrom = ({ formik }: Props) => {
     name,
     description,
     price,
-    quantity,
     category,
-    sold,
-    shipping,
-    photo
-
   } = formik.values;
 
   const { handleSubmit, errors } = formik;
 
   const dispatch = useAppDispatch();
   const categoryStatus = useAppSelector(status);
+  const cat = useAppSelector(categories);
+
 
   useEffect(() => {
 
@@ -85,17 +83,15 @@ const AddProdFrom = ({ formik }: Props) => {
         error={ errors.price }
       />
 
-      <Form.Group className="mb-3" controlId="formBasicCheckbox">
-        <Form.Label>Categories</Form.Label>
-        <Form.Select aria-label="Default select example">
-          <option>Open this select menu</option>
+      <SelectComp
+        name="category"
+        value={ category }
+        label='Categories'
+        categories={ cat }
+        formik={ formik }
+        error={ errors.category }
 
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
-        </Form.Select>
-      </Form.Group>
-
+      />
 
       <CheckBox
         name='shipping'

@@ -38,7 +38,12 @@ exports.categoryById = (req, res, next, _id) => {
 };
 
 //route handler for getting all products
-exports.getCategories = catchAsync(async (req, res, next) => res.send(await Category.find()));
+exports.getCategories = catchAsync(async (req, res, next) => {
+  const categories = await Category
+    .find()
+    .select('_id name')
+  res.send(categories)
+});
 
 //route handler for get category by id
 exports.getCategory = (req, res, next) => res.send(req.category);

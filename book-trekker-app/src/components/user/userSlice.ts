@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
+// import { API } from '../../config';
 
 export interface UserState {
   currentUser: {
@@ -39,6 +40,7 @@ export const userSlice = createSlice({
       state.currentUser = undefined;
     },
   },
+
 
 });
 

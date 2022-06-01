@@ -4,6 +4,9 @@ import ButtonComp from '../../../common/ButtonComp';
 import { FormikAddProd } from './AddProdFormikConfig';
 import TextArea from '../../../common/TextArea';
 import CheckBox from '../../../common/CheckBox';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
+import { getCategories, status } from '../../category/categorySlice';
 
 
 type Props = {
@@ -24,6 +27,16 @@ const AddProdFrom = ({ formik }: Props) => {
   } = formik.values;
 
   const { handleSubmit, errors } = formik;
+
+  const dispatch = useAppDispatch();
+  const categoryStatus = useAppSelector(status);
+
+  useEffect(() => {
+
+    if (categoryStatus === "idle")
+      dispatch(getCategories());
+
+  }, [categoryStatus, dispatch])
 
 
   return (
@@ -76,6 +89,7 @@ const AddProdFrom = ({ formik }: Props) => {
         <Form.Label>Categories</Form.Label>
         <Form.Select aria-label="Default select example">
           <option>Open this select menu</option>
+
           <option value="1">One</option>
           <option value="2">Two</option>
           <option value="3">Three</option>

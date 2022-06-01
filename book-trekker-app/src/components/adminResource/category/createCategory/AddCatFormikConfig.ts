@@ -5,6 +5,7 @@ import http from '../../../../services/httpService';
 import { API } from '../../../../config';
 import { toast } from 'react-toastify';
 import { User } from "../../../user/userSlice";
+import { addCategory } from "../categorySlice";
 
 
 export interface FormValues {
@@ -12,7 +13,7 @@ export interface FormValues {
 }
 export type FormikAddCat = FormikProps<FormValues>
 
-const AddCatFormikConfig = (navigate: NavigateFunction, user: User | undefined) => {
+const AddCatFormikConfig = (dispatch: any, user: User | undefined) => {
 
   const formik: FormikAddCat =
 
@@ -33,13 +34,15 @@ const AddCatFormikConfig = (navigate: NavigateFunction, user: User | undefined) 
   const createCategory = async (values: FormValues) => {
 
     try {
-      const res = await http.post(`${API}/category/create/${user?._id}`, values)
+      const { data } = await http.post(`${API}/category/create/${user?._id}`, values)
 
-      toast.success("New category added")
+      dispatch(addCategory(data))
+
+      toast.success(`${data.name} category added`)
 
       formik.resetForm();
 
-      console.log("Category ", res.data);
+      console.log("Category ", data);
 
 
     } catch (err: any) { }

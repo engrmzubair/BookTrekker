@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom';
 import Signup from './components/user/signup/Signup';
 import NotFound from './components/core/NotFound';
@@ -8,8 +9,28 @@ import Protected from './components/auth/Protected';
 import AdminProtected from './components/auth/AdminProtected';
 import AddCategory from './components/adminResource/category/createCategory/AddCategory';
 import AddProduct from './components/adminResource/product/createProduct/AddProduct';
+import { useAppDispatch, useAppSelector } from './app/hooks';
+import { getProfile, userStatus } from './components/user/userSlice';
+import { categoryStatus, fetchCategories } from './components/adminResource/category/categorySlice';
+
 
 const PageRoutes = () => {
+
+  const dispatch = useAppDispatch();
+  const uStatus = useAppSelector(userStatus);
+  const cStatus = useAppSelector(categoryStatus);
+  const jwt = localStorage.getItem('bookTrekker_token');
+
+  useEffect(() => {
+
+    if (jwt && uStatus === 'idle')
+      dispatch(getProfile());
+
+    if (cStatus === "idle")
+      dispatch(fetchCategories())
+
+  }, []);
+
   return (
 
     <Routes>

@@ -3,7 +3,7 @@ const { requireSignin, isAuth, isAdmin } = require('../controllers/authControlle
 const router = express.Router();
 const { userById, getUser, getProfile } = require('../controllers/userController')
 
-
+//route handler for getting profile;
 router.get('/me', [ requireSignin, getProfile ])
 
 //route handler for reading user

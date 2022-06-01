@@ -4,10 +4,6 @@ import { Provider } from 'react-redux';
 import { store } from './app/store';
 import PageRoutes from './PageRoutes';
 import 'react-toastify/dist/ReactToastify.css';
-import { persistStore } from 'redux-persist';
-import { PersistGate } from 'redux-persist/integration/react';
-//...
-let persistor = persistStore(store);
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -16,9 +12,7 @@ root.render(
 
   <BrowserRouter>
     <Provider store={ store }>
-      <PersistGate persistor={ persistor }>
-        <PageRoutes />
-      </PersistGate>
+      <PageRoutes />
     </Provider>
   </BrowserRouter>
 

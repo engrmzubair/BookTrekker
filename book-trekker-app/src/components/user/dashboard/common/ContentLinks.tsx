@@ -22,7 +22,7 @@ const ContentLinks = () => {
     { name: "Update Profile", link: "/profile/update" },
   ]
   const adminLinks = [
-    { name: "Creat Categories", link: "/create/category" },
+    { name: "Creat Category", link: "/create/category" },
     { name: "Create Product", link: "/create/product" },
   ]
 

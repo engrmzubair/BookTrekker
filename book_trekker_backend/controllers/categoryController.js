@@ -1,6 +1,7 @@
 const catchAsync = require("../utils/catchAsync");
 const { Category, validate } = require('../models/categoryModel');
 const AppError = require("../utils/appError");
+const _ = require('lodash');
 
 // ..........validation............
 exports.categoryValidation = async (req, res, next) => {
@@ -53,7 +54,8 @@ exports.getCategory = (req, res, next) => res.send(req.category);
 exports.createCategory = catchAsync(async (req, res, next) => {
   const category = new Category(req.body)
   await category.save()
-  res.send(category);
+
+  res.send(_.pick(category, [ "_id", "name" ]));
 })
 
 //route handler for update category

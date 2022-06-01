@@ -3,20 +3,21 @@ import { ToastContainer } from 'react-toastify';
 import CardComponent from '../../../common/CardComponent';
 import Menu from '../../../core/Menu';
 import AddProdFrom from './AddProdFrom';
-import { useNavigate } from "react-router-dom";
-import { useAppSelector } from '../../../../app/hooks';
-import { currentUser } from '../../../user/userSlice';
+import { useAppSelector, useAppDispatch } from '../../../../app/hooks';
 import AddProdFormikConfig from './AddProdFormikConfig';
+import { currentUser } from '../../../user/userSlice';
 
 type Props = {}
 
 const AddProduct = (props: Props) => {
 
+  const dispatch = useAppDispatch()
   const user = useAppSelector(currentUser)
-  const navigate = useNavigate()
+
+  const params = { dispatch, user }
 
   //formik configuration for add category
-  const formik = AddProdFormikConfig(navigate, user);
+  const formik = AddProdFormikConfig(params);
   return (
     <React.Fragment>
 
@@ -25,7 +26,7 @@ const AddProduct = (props: Props) => {
       <Menu />
 
       <CardComponent
-        title="Add Category"
+        title="Add Product"
         className='w-50 m-auto mt-5'
       >
         <AddProdFrom

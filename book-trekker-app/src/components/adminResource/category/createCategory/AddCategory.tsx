@@ -4,8 +4,7 @@ import { ToastContainer } from 'react-toastify';
 import CardComponent from '../../../common/CardComponent';
 import Menu from '../../../core/Menu';
 import AddCatForm from './AddCatForm';
-import { useNavigate } from "react-router-dom";
-import { useAppSelector } from '../../../../app/hooks';
+import { useAppSelector, useAppDispatch } from '../../../../app/hooks';
 import { currentUser } from '../../../user/userSlice';
 
 type Props = {}
@@ -13,10 +12,10 @@ type Props = {}
 const AddCategory = (props: Props) => {
 
   const user = useAppSelector(currentUser)
-  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
 
   //formik configuration for add category
-  const formik = AddCatFormikConfig(navigate, user);
+  const formik = AddCatFormikConfig(dispatch, user);
 
 
   return (

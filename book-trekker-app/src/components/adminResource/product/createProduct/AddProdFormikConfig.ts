@@ -1,10 +1,8 @@
 import { useFormik, FormikProps } from "formik";
-import { NavigateFunction } from "react-router-dom";
 import * as Yup from "yup";
 import http from '../../../../services/httpService';
 import { API } from '../../../../config';
 import { toast } from 'react-toastify';
-import { User } from "../../../user/userSlice";
 
 
 export interface FormValues {
@@ -28,7 +26,7 @@ const SUPPORTED_FORMATS = [
   "image/png"
 ];
 
-const AddProdFormikConfig = (navigate: NavigateFunction, user: User | undefined) => {
+const AddProdFormikConfig = ({ dispatch, user }: any) => {
 
   const formik: FormikAddProd =
 
@@ -74,16 +72,15 @@ const AddProdFormikConfig = (navigate: NavigateFunction, user: User | undefined)
 
     try {
 
-      // const url = `${API}/product/create/${user?._id}`
+      const url = `${API}/product/create/${user?._id}`
 
-      // const res = await http.multipartPost(values, url)
+      const { data } = await http.multipartPost(values, url);
 
-      toast.success("New product added")
-      console.log(values)
+      toast.success(`${data.name} product added`)
 
-      // formik.resetForm();
+      formik.resetForm();
 
-      // console.log("Product: ", res.data);
+      console.log("Product: ", data);
 
     } catch (err: any) { }
 

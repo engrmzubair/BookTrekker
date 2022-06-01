@@ -1,36 +1,12 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import rootReducer from './combineReducer';
-import storage from 'redux-persist/lib/storage'
-import {
-  persistReducer,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from 'redux-persist';
 
-//config redux-persist
-const persistConfig = {
-  key: 'root',
-  storage
-}
-
-// persistent reducer
-const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 
 export const store = configureStore({
   reducer: {
-    root: persistedReducer
+    root: rootReducer
   },
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    })
 });
 
 export type AppDispatch = typeof store.dispatch;

@@ -4,8 +4,8 @@ import { API } from '../../../config';
 import http from '../../../services/httpService'
 
 
-export const getCategories = createAsyncThunk(
-  'category/getCategories',
+export const fetchCategories = createAsyncThunk(
+  'category/fetchCategories',
   async () => {
     const url = `${API}/category/`
     const { data } = await http.get(url)
@@ -39,41 +39,36 @@ export const categorySlice = createSlice({
   initialState,
   reducers: {
 
-    // categoryById: (state, action: PayloadAction<Category>) => {
-    //   state.currentUser = action.payload;
-    // },
+    addCategory: (state, action: PayloadAction<Category>) => {
+      state.categories?.push(action.payload)
+    },
 
   },
   extraReducers: (builder) => {
     builder
-      .addCase(getCategories.pending, (state) => {
-        state.status = 'loading';
-      })
 
-      .addCase(getCategories.fulfilled, (state, action) => {
+      .addCase(fetchCategories.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.categories = action.payload;
 
       })
-      .addCase(getCategories.rejected, (state) => {
-        state.status = 'failed';
-      });
+
 
   },
 
 });
 
-// export const { saveUser, removeUser } = userSlice.actions;
+export const { addCategory } = categorySlice.actions;
 
 
-export const status = (state: RootState) => state.root.category.status;
+export const categoryStatus = (state: RootState) => state.root.category.status;
 
-export const categoryById = (id: string) => (state: RootState) => {
+export const getCategoryById = (id: string) => (state: RootState) => {
   const categories = state.root.category.categories;
   return categories?.find(c => c._id === id)
 }
 
-export const categories = (state: RootState) => state.root.category.categories;
+export const getCategories = (state: RootState) => state.root.category.categories;
 
 
 export default categorySlice.reducer;

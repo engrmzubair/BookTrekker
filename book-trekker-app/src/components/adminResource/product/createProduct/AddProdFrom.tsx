@@ -4,9 +4,8 @@ import ButtonComp from '../../../common/ButtonComp';
 import { FormikAddProd } from './AddProdFormikConfig';
 import TextArea from '../../../common/TextArea';
 import CheckBox from '../../../common/CheckBox';
-import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../../../app/hooks';
-import { categories, getCategories, status } from '../../category/categorySlice';
+import { useAppSelector } from '../../../../app/hooks';
+import { getCategories } from '../../category/categorySlice';
 import SelectComp from '../../../common/SelectComp';
 
 
@@ -23,18 +22,7 @@ const AddProdFrom = ({ formik }: Props) => {
   } = formik.values;
 
   const { handleSubmit, errors } = formik;
-
-  const dispatch = useAppDispatch();
-  const categoryStatus = useAppSelector(status);
-  const cat = useAppSelector(categories);
-
-
-  useEffect(() => {
-
-    if (categoryStatus === "idle")
-      dispatch(getCategories());
-
-  }, [categoryStatus, dispatch])
+  const cat = useAppSelector(getCategories);
 
 
   return (

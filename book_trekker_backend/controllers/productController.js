@@ -92,8 +92,14 @@ exports.getProduct = (req, res) => res.send(req.product);
 //route handler for create product
 exports.createProduct = catchAsync(async (req, res) => {
   const product = new Product(req.productData)
+
   await product.save();
-  res.send(product);
+
+  const newProduct = await Product
+    .findById(product._id)
+    .populate('category', 'name _id')
+
+  res.send(newProduct);
 })
 
 //route handler for update product

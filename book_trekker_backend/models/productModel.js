@@ -9,7 +9,7 @@ const productSchema = new mongoose.Schema({
     trim: true, //any white spaces in beginning and end will be removed
     required: [ true, "Please provide the name of the product." ],
     minlength: 5,
-    maxlength: 32
+    maxlength: 60
   },
   description: {
     type: String,
@@ -46,7 +46,7 @@ const productSchema = new mongoose.Schema({
 
 function validate(category) {
   const schema = Joi.object().keys({
-    name: Joi.string().min(5).max(32).required(),
+    name: Joi.string().min(5).max(60).required(),
     description: Joi.string()
       .min(10).max(2000),
     price: Joi.number().required(),

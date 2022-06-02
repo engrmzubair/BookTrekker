@@ -6,8 +6,8 @@ import http from '../../../services/httpService'
 
 export const fetchProducts = createAsyncThunk(
   'category/fetchProducts',
-  async (sortBy: "sold" | "arrival") => {
-    const url = `${API}/product/`
+  async (sortBy: "sold" | "createdAt") => {
+    const url = `${API}/product?sortBy=${sortBy}&order=desc&limit=6`
     const { data } = await http.get(url)
     return data;
   }
@@ -20,6 +20,7 @@ export interface Product {
     url: string
   },
   _id: string,
+  description: string,
   name: string,
   price: number,
   sold: number,
@@ -80,7 +81,10 @@ export const productSlice = createSlice({
 // export const { addProduct } = productSlice.actions;
 
 
-export const productStatus = (state: RootState) => state.root.category.status;
+export const productStatus = (state: RootState) => ({
+  sellStatus: state.root.product.statusSell,
+  arrivalStatus: state.root.product.statusArrival
+})
 
 
 export const getProducts = (sortBy: "sold" | "arrival") => (state: RootState) => {

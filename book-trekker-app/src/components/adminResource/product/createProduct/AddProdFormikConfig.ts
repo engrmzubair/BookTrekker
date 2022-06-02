@@ -44,7 +44,7 @@ const AddProdFormikConfig = ({ dispatch, user }: any) => {
 
       },
       validationSchema: Yup.object().shape({
-        name: Yup.string().min(5).max(32).required(),
+        name: Yup.string().min(5).max(60).required(),
         description: Yup.string()
           .min(10).max(2000).required(),
         price: Yup.number().min(5).required(),

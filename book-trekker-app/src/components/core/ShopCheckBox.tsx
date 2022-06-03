@@ -1,12 +1,14 @@
 import React, { useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { Category } from '../adminResource/category/categorySlice'
+import { HandleFilters } from './Shop'
 
 type Props = {
-  categories: Category[] | undefined
+  categories: Category[] | undefined,
+  handleFilters: HandleFilters
 }
 
-const ShopCheckBox = ({ categories }: Props) => {
+const ShopCheckBox = ({ categories, handleFilters }: Props) => {
 
   const [checked, setChecked] = useState<string[]>([]);
 
@@ -19,8 +21,8 @@ const ShopCheckBox = ({ categories }: Props) => {
     else
       newCheckedCategoryId.splice(index, 1)
 
-    console.log(newCheckedCategoryId)
-    setChecked(newCheckedCategoryId)
+    setChecked(newCheckedCategoryId);
+    handleFilters(newCheckedCategoryId, "categories")
   }
 
 

@@ -21,6 +21,7 @@ const Menu = () => {
           <Nav className="ms-auto">
 
             <NavLink className="nav-link" to="/">Home</NavLink>
+            <NavLink className="nav-link" to="/shop">Shop</NavLink>
 
             { user && <NavLink className="nav-link" to="/user/dashboard">Dashboard</NavLink> }
 

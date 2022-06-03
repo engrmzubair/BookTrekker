@@ -9,7 +9,7 @@ exports.categoryValidation = async (req, res, next) => {
   const { error } = validate(req.body);
   if (error) return next(new AppError(error.details[ 0 ].message, 400))
 
-  const categoryName = req.body.name.toLowerCase();
+  const categoryName = req.body.name.toUpperCase();
 
   try {
     const category = await Category.findOne({ name: req.body.name })

@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { Container } from 'react-bootstrap';
 import ProductCard from '../user/dashboard/common/ProductCard';
 import { getCategories } from '../adminResource/category/categorySlice';
+import ShopCheckBox from './ShopCheckBox';
 
 function Shop() {
 
@@ -19,10 +20,13 @@ function Shop() {
         description="Search books of your choice." >
       </Layout>
 
-      <div className="row">
+      <div className="row m-4">
 
         <div className="col-md-4">
-          left sidebar
+          <h4>Filter by categories</h4>
+          <ShopCheckBox
+            categories={ categories }
+          />
         </div>
         <div className="col-md-8">
           right

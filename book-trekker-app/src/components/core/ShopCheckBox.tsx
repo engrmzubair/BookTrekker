@@ -34,7 +34,8 @@ const ShopCheckBox = ({ categories, handleFilters }: Props) => {
         <div key={ i } className="form-check my-2">
           <input
             onChange={ handleToggle(c._id) }
-            className="form-check-input" type="checkbox" />
+            className="form-check-input"
+            type="checkbox" />
           <label className="form-check-label" >
             { c.name }
           </label>

@@ -6,14 +6,16 @@ import { Container } from 'react-bootstrap';
 import ProductCard from '../user/dashboard/common/ProductCard';
 import { getCategories } from '../adminResource/category/categorySlice';
 import ShopCheckBox from './ShopCheckBox';
+import { prices } from './fixedPrices';
+import ShopRadio from './ShopRadio';
 
 type MyFilters = {
   filters: {
     categories: string[],
-    price: string[]
+    price: number[]
   }
 }
-export type HandleFilters = (filters: string[], filterBy: "categories" | "price") => void
+export type HandleFilters = (filters: any[], filterBy: "categories" | "price") => void
 
 function Shop() {
 
@@ -49,6 +51,11 @@ function Shop() {
           <h4>Filter by categories</h4>
           <ShopCheckBox
             categories={ categories }
+            handleFilters={ handleFilters }
+          />
+          <h4>Filter by prices</h4>
+          <ShopRadio
+            prices={ prices }
             handleFilters={ handleFilters }
           />
         </div>

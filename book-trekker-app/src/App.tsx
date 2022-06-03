@@ -6,6 +6,7 @@ import Layout from './components/core/Layout';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import { fetchProducts, getProducts, productStatus } from './components/adminResource/product/productSlice';
 import ProductCard from './components/user/dashboard/common/ProductCard';
+import { Container } from 'react-bootstrap';
 
 function App() {
   const productsBySell = useAppSelector(getProducts('sold'));
@@ -30,10 +31,15 @@ function App() {
         title="Book TreKKer"
         description="E-Commerce App for web development courses and books." >
       </Layout>
+      <Container className='my-5'>
+        <h1 className='my-4'>New Arrival</h1>
+        <ProductCard products={ productsByArrival } />
+        <h1 className='my-4'>Best Sellers</h1>
+        <ProductCard products={ productsBySell } />
+      </Container>
 
-      <ProductCard products={ productsBySell } />
 
-    </React.Fragment>
+    </React.Fragment >
   );
 }
 

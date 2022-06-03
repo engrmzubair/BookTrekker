@@ -5,15 +5,17 @@ import { Button } from 'react-bootstrap';
 type Props = {
   variant: string,
   type?: "button" | "submit" | "reset" | undefined,
-  text: string
+  text: string,
+  className?: string
+
 }
 
-const ButtonComp = ({ variant, type, text }: Props) => {
+const ButtonComp = ({ className = "w-100 mb-3", variant, type, text }: Props) => {
   return (
 
     <React.Fragment>
       <Button
-        className='w-100 mb-3'
+        className={ className }
         variant={ variant }
         type={ type }
       >

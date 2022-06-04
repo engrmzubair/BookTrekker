@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from './app/hooks';
 import { fetchProducts, getProducts, productStatus } from './components/adminResource/product/productSlice';
 import ProductCard from './components/user/dashboard/common/ProductCard';
 import { Container } from 'react-bootstrap';
+import Search from './components/core/Search';
 
 function App() {
   const productsBySell = useAppSelector(getProducts('sold'));
@@ -31,6 +32,7 @@ function App() {
         title="Book TreKKer"
         description="E-Commerce App for web development courses and books." >
       </Layout>
+      <Search />
       <Container className='my-5'>
         <h1 className='my-4'>New Arrival</h1>
         <ProductCard products={ productsByArrival } />

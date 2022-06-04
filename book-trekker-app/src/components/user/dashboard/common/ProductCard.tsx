@@ -23,7 +23,7 @@ const ProductCard = ({ products, className = 'col-lg-4 col-md-6 col-xl-4 my-3 te
               className="h-100">
               <Card.Img
                 variant="top"
-                className='card-img-top'
+                className='card-img-top mt-3'
                 src={ p.photo.url } />
               <Card.Body>
                 <Card.Title

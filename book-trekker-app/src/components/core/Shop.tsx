@@ -2,20 +2,21 @@ import React, { useEffect, useState } from 'react';
 import Menu from './Menu';
 import Layout from './Layout';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
-import { Container } from 'react-bootstrap';
+import { Button, Container } from 'react-bootstrap';
 import ProductCard from '../user/dashboard/common/ProductCard';
 import { getCategories } from '../adminResource/category/categorySlice';
 import ShopCheckBox from './ShopCheckBox';
 import { prices } from './fixedPrices';
 import ShopRadio from './ShopRadio';
-import { getProductsBySearch } from '../adminResource/product/productSlice';
+import { addProductsBySearch, getProductsBySearch } from '../adminResource/product/productSlice';
 import { fetchProductsBySearch } from './apiCore';
 
+export type Filter = {
+  category: string[],
+  price: number[]
+}
 type MyFilters = {
-  filters: {
-    category: string[],
-    price: number[]
-  }
+  filters: Filter
 }
 export type HandleFilters = (filters: any[], filterBy: "category" | "price") => void
 
@@ -26,7 +27,8 @@ function Shop() {
 
   const dispatch = useAppDispatch()
 
-  const [limit, setLimit] = useState<number>(6);
+  const [limit] = useState<number>(6);
+  const [size, setSize] = useState<number>(0);
   const [skip, setSkip] = useState<number>(0);
   const [myFilters, setMyFilters] =
     useState<MyFilters>({
@@ -46,14 +48,39 @@ function Shop() {
     console.log("Shop: ", myFilters, filterBy);
   }
 
+  const loadFilteredResult = async (filters: Filter) => {
+    const { data } = await fetchProductsBySearch(limit, skip, filters);
+
+    dispatch(addProductsBySearch(data.data))
+    setSize(data.size);
+  }
+
+
+  const loadMore = async () => {
+    const filters = { ...myFilters.filters };
+
+    const toSkip = skip + limit;
+
+    const { data } = await fetchProductsBySearch(limit, toSkip, filters);
+
+    const newProducts = filterResults?.concat(data.data);
+    const newSize = newProducts?.length;
+
+    if (newSize) {
+      setSize(newSize);
+      setSkip(toSkip)
+    }
+
+    newProducts && dispatch(addProductsBySearch(newProducts));
+  }
+
+
   useEffect(() => {
 
-    const filters = { ...myFilters.filters }
-    const filtersParams = { limit, skip, filters }
-    fetchProductsBySearch(filtersParams, dispatch)
+    const filters = { ...myFilters.filters };
+    loadFilteredResult(filters)
 
-  }, [limit, skip, myFilters, dispatch])
-
+  }, [myFilters])
 
   return (
     <React.Fragment>
@@ -63,9 +90,10 @@ function Shop() {
         description="Search books of your choice." >
       </Layout>
 
+
       <div className="row ms-4 my-4">
 
-        <div className="col-md-3">
+        <div className="col-md-3 mt-4">
           <h4>Filter by categories</h4>
           <ShopCheckBox
             categories={ categories }
@@ -78,10 +106,19 @@ function Shop() {
           />
         </div>
         <div className="col-md-8">
-          <Container className='my-4'>
+          <Container className='my-3 text-center'>
             <ProductCard
               className='col-md-6 my-3 text-center'
               products={ filterResults } />
+
+            { size > 0 && size >= limit && <Button
+              className='mt-3'
+              variant="primary"
+              onClick={ loadMore }
+            >
+              Load More
+            </Button> }
+
           </Container>
         </div>
       </div>

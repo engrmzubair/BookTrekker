@@ -4,12 +4,13 @@ import { FormikSignin } from '../user/signin/SigninFormikConfig';
 import { FormikSignup } from '../user/signup/SignupFormikConfig';
 import { FormikAddCat } from '../adminResource/category/createCategory/AddCatFormikConfig';
 import { FormikAddProd } from '../adminResource/product/createProduct/AddProdFormikConfig';
+import { FormikSearch } from '../core/Search';
 
-export type formikForInput = FormikSignin | FormikSignup | FormikAddCat | FormikAddProd;
+export type formikForInput = FormikSignin | FormikSignup | FormikAddCat | FormikAddProd | FormikSearch;
 
 type Props = {
   value?: string | number,
-  label: string,
+  label?: string,
   type: string,
   placeholder: string,
   formText?: string,
@@ -42,6 +43,7 @@ const Input = ({ value, label, type, name, error, accept, placeholder, formText,
           name={ name }
           type={ type }
           placeholder={ placeholder } />
+
 
         { !error &&
           formText &&

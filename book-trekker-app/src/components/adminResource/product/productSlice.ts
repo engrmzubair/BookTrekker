@@ -36,6 +36,7 @@ export interface Product {
 export interface ProductState {
   productsBySell: Product[] | undefined;
   productsByArrival: Product[] | undefined;
+  productsBySearch: Product[] | undefined;
   statusSell: 'idle' | 'succeeded';
   statusArrival: 'idle' | 'succeeded';
 }
@@ -44,6 +45,7 @@ export interface ProductState {
 const initialState: ProductState = {
   productsByArrival: undefined,
   productsBySell: undefined,
+  productsBySearch: undefined,
   statusSell: 'idle',
   statusArrival: 'idle'
 };
@@ -53,9 +55,10 @@ export const productSlice = createSlice({
   initialState,
   reducers: {
 
-    // addProduct: (state, action: PayloadAction<Product>) => {
-    //   state.products?.push(action.payload)
-    // },
+    addProductsBySearch: (state, action: PayloadAction<Product[]>) => {
+
+      state.productsBySearch = action.payload
+    }
 
   },
   extraReducers: (builder) => {
@@ -78,7 +81,7 @@ export const productSlice = createSlice({
 
 });
 
-// export const { addProduct } = productSlice.actions;
+export const { addProductsBySearch } = productSlice.actions;
 
 
 export const productStatus = (state: RootState) => ({
@@ -92,6 +95,8 @@ export const getProducts = (sortBy: "sold" | "arrival") => (state: RootState) =>
     return state.root.product.productsBySell
   return state.root.product.productsByArrival
 }
+
+export const getProductsBySearch = (state: RootState) => state.root.product.productsBySearch;
 
 
 export default productSlice.reducer;

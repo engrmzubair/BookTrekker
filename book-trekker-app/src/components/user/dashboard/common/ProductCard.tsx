@@ -6,9 +6,10 @@ import ButtonComp from '../../../common/ButtonComp';
 
 type Props = {
   products: Product[] | undefined;
+  className?: string
 }
 
-const ProductCard = ({ products }: Props) => {
+const ProductCard = ({ products, className = 'col-lg-4 col-md-6 col-xl-4 my-3 text-center' }: Props) => {
 
 
   return (
@@ -17,7 +18,7 @@ const ProductCard = ({ products }: Props) => {
 
 
         { products?.map((p, i) => (
-          <div key={ i } className='col-lg-4 col-md-6 col-xl-4 my-3 text-center' >
+          <div key={ i } className={ className } >
             <Card
               className="h-100">
               <Card.Img
@@ -29,6 +30,9 @@ const ProductCard = ({ products }: Props) => {
                   style={ { height: "3rem" } }>{ p.name }</Card.Title>
                 <Card.Text style={ { height: "11rem" } }>
                   { p.description.substring(0, 230) } ...
+                </Card.Text>
+                <Card.Text className="text-muted mb-0">
+                  Category: { p.category.name }
                 </Card.Text>
                 <Card.Text className="text-muted mb-0">
                   Price: { p.price }

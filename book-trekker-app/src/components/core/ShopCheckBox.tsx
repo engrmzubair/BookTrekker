@@ -22,7 +22,7 @@ const ShopCheckBox = ({ categories, handleFilters }: Props) => {
       newCheckedCategoryId.splice(index, 1)
 
     setChecked(newCheckedCategoryId);
-    handleFilters(newCheckedCategoryId, "categories")
+    handleFilters(newCheckedCategoryId, "category")
   }
 
 

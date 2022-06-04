@@ -83,8 +83,6 @@ exports.getProductCategories = catchAsync(async (req, res) => {
   res.send(categories);
 })
 
-//route handler for getting products by search
-exports.productsBySearch = catchAsync(async (req, res) => res.send('Hey!'))
 
 //route handler for get product by id
 exports.getProduct = (req, res) => res.send(req.product);
@@ -157,7 +155,7 @@ exports.productsBySearch = catchAsync(async (req, res) => {
     }
   }
   const data = await Product.find(findArgs)
-    .populate('category')
+    .populate('category', "name _id")
     .sort([ [ sortBy, order ] ])
     .skip(skip)
     .limit(limit)

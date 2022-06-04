@@ -56,7 +56,6 @@ export const productSlice = createSlice({
   reducers: {
 
     addProductsBySearch: (state, action: PayloadAction<Product[]>) => {
-
       state.productsBySearch = action.payload
     }
 

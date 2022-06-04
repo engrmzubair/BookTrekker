@@ -13,7 +13,7 @@ const Layout = ({
   children
 }: Props) => {
   return (
-    <div className="mt-4 p-5 bg-light rounded">
+    <div className="mt-4 p-5 bg-light rounded layoutAnimation">
       <div className="container-fluid">
         <h1>{ title }</h1>
         <p className='lead'>{ description }</p>

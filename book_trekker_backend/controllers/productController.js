@@ -92,7 +92,6 @@ exports.getProducts = catchAsync(async (req, res, next) => {
 //route handler for getting related products
 exports.getRelatedProducts = catchAsync(async (req, res) => {
   let limit = req.query.limit ? req.query.limit : 6;
-  next
   const products = await Product.find({ _id: { $ne: req.product }, category: req.product.category })
     .limit(limit)
     .populate('category', 'name')

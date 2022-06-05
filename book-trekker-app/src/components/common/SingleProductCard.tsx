@@ -1,24 +1,36 @@
 import React from 'react'
-import { Card, Col, Container, Row, Table, Badge } from 'react-bootstrap'
+import { Card, Col, Container, Row, Table, Badge, ListGroup } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
 import { Product } from '../adminResource/product/productSlice'
 import ButtonComp from './ButtonComp'
 import moment from 'moment'
+import ProductCard from '../user/dashboard/common/ProductCard'
 
-type Props = { product: Product | undefined }
+type Props = {
+  product: Product | undefined,
+  relatedProducts: Product[] | undefined
+}
 
-const SingleProductCard = ({ product }: Props) => {
+const SingleProductCard = ({ product, relatedProducts }: Props) => {
 
-  console.log(product && product.shipping);
   const showStock = () => {
     if (product && product.quantity > 0)
       return <Badge pill bg='primary' className='p-2'>In Stock</Badge>
     else
       return <Badge pill bg='primary' className='p-2'>Out of Stock</Badge>
   }
+
+  const showShipping = () => {
+
+    if (product && product.shipping)
+      return 'Yes'
+    else
+      return "No"
+  }
+
   return (
     <Container className='my-5'>
-      <Row className="justify-content-md-center">
+      <Row className="justify-content-md-start">
         <Col md={ 8 }>
           <Card
           // className="h-100"
@@ -63,7 +75,7 @@ const SingleProductCard = ({ product }: Props) => {
                   </tr>
                   <tr>
                     <td className='p-3'>Shipping</td>
-                    <td className='p-3'>{ product?.shipping }</td>
+                    <td className='p-3'>{ showShipping() }</td>
                   </tr>
                 </tbody>
 
@@ -78,6 +90,32 @@ const SingleProductCard = ({ product }: Props) => {
 
             </Card.Body>
           </Card>
+        </Col>
+        <Col md={ 4 }>
+
+          <h4>Related Courses</h4>
+
+          <ListGroup>
+
+            { relatedProducts?.map((p, i) => <ListGroup.Item
+
+              key={ i }
+              action>
+
+              <NavLink
+                className="nav-link"
+                to={ `/product/${p._id}` }>
+                { p.name }
+              </NavLink>
+
+            </ListGroup.Item>
+
+            ) }
+
+          </ListGroup>
+
+
+
         </Col>
       </Row>
     </Container>

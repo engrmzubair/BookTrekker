@@ -12,6 +12,14 @@ export const fetchProducts = createAsyncThunk(
     return data;
   }
 );
+export const fetchProductById = createAsyncThunk(
+  'category/fetchProductById',
+  async (id: string) => {
+    const url = `${API}/product/${id}`
+    const { data } = await http.get(url)
+    return data;
+  }
+);
 
 export interface Product {
 
@@ -39,6 +47,7 @@ export interface ProductState {
   productsBySearch: Product[] | undefined;
   statusSell: 'idle' | 'succeeded';
   statusArrival: 'idle' | 'succeeded';
+  product: Product | undefined;
 }
 
 
@@ -46,6 +55,7 @@ const initialState: ProductState = {
   productsByArrival: undefined,
   productsBySell: undefined,
   productsBySearch: undefined,
+  product: undefined,
   statusSell: 'idle',
   statusArrival: 'idle'
 };
@@ -75,6 +85,9 @@ export const productSlice = createSlice({
         }
 
       })
+      .addCase(fetchProductById.fulfilled, (state, action) => {
+        state.product = action.payload;
+      })
 
   },
 
@@ -96,6 +109,8 @@ export const getProducts = (sortBy: "sold" | "arrival") => (state: RootState) =>
 }
 
 export const getProductsBySearch = (state: RootState) => state.root.product.productsBySearch;
+
+export const getProductsById = (state: RootState) => state.root.product.product;
 
 
 export default productSlice.reducer;

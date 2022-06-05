@@ -13,6 +13,7 @@ import AddProduct from './components/adminResource/product/createProduct/AddProd
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import { getProfile, userStatus } from './components/user/userSlice';
 import { categoryStatus, fetchCategories } from './components/adminResource/category/categorySlice';
+import Product from './components/core/Product';
 
 
 const PageRoutes = () => {
@@ -52,6 +53,8 @@ const PageRoutes = () => {
         <AdminProtected >
           <AddProduct />
         </AdminProtected> } />
+
+      <Route path="/product/:productId" element={ <Product /> } />
 
       <Route path="*" element={ <NotFound /> } />
     </Routes >

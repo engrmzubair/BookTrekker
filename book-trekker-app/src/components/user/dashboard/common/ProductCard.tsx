@@ -9,7 +9,9 @@ type Props = {
   className?: string
 }
 
-const ProductCard = ({ products, className = 'col-lg-4 col-md-6 col-xl-4 my-3 text-center' }: Props) => {
+const ProductCard = ({
+  products,
+  className = 'col-lg-4 col-md-6 col-xl-4 my-3 text-center' }: Props) => {
 
   return (
     <React.Fragment>
@@ -35,7 +37,7 @@ const ProductCard = ({ products, className = 'col-lg-4 col-md-6 col-xl-4 my-3 te
                   Price: { p.price }
                 </Card.Text>
 
-                <NavLink className="nav-link" to="/">
+                <NavLink className="nav-link" to={ `/product/${p._id}` }>
                   View Product
                 </NavLink>
 

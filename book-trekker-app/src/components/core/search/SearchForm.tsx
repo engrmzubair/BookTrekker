@@ -27,7 +27,7 @@ const SearchForm = ({ formik, categories }: Props) => {
           <div className='input-group input-group-lg'>
             <div className='input-group ms-1 '>
               <select
-                className='btn me-3 ms-5 btn-light'
+                className='btn me-3 ms-5 btn-light mb-3'
                 name='category'
                 onChange={ formik.handleChange }
               >
@@ -45,7 +45,7 @@ const SearchForm = ({ formik, categories }: Props) => {
 
               <span >
                 <input
-                  className='form-control px-5'
+                  className='form-control px-5 mb-3'
                   name='search'
                   placeholder='Search products by name...'
                   onChange={ formik.handleChange }

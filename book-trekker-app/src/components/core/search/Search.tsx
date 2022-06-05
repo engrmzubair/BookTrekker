@@ -53,7 +53,6 @@ const Search = (props: Props) => {
 
 
   });
-  console.log(products, typeof products);
 
   return (
     <React.Fragment>

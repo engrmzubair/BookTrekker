@@ -14,6 +14,7 @@ const {
   getRelatedProducts,
   getProductCategories,
   productsBySearch,
+  searchedProducts,
 } = require('../controllers/productController');
 const { isAdmin, requireSignin, isAuth } = require('../controllers/authController');
 const { userById } = require('../controllers/userController');
@@ -29,6 +30,7 @@ const commonForDelete = [ requireSignin, isAuth, isAdmin ];
 router.get('/', getProducts);
 router.get('/categories', getProductCategories);
 router.get('/related/:productId', getRelatedProducts);
+router.get('/search', searchedProducts);
 router.get('/:productId', getProduct);
 router.post('/by/search/', productsBySearch);
 

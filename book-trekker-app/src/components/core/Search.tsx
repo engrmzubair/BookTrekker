@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useFormik, FormikProps } from 'formik';
 import { Container, Form } from 'react-bootstrap';
 import Icon from '@reacticons/bootstrap-icons';
 import { getCategories } from '../adminResource/category/categorySlice';
 import SelectComp from '../common/SelectComp';
-
+import { fetchList } from './apiCore';
+import { Product } from '../adminResource/product/productSlice';
 
 export interface FormValue {
   search: string;
@@ -19,8 +20,15 @@ export type FormikSearch = FormikProps<FormValue>
 
 type Props = {}
 
+type Searched = {
+  data: Product[] | undefined,
+  searched: boolean
+}
+
 const Search = (props: Props) => {
   const categories = useAppSelector(getCategories);
+  const [data, setData] =
+    useState<Searched>({ data: undefined, searched: false })
 
   const formik: FormikSearch = useFormik<FormValue>({
 
@@ -29,7 +37,18 @@ const Search = (props: Props) => {
       category: 'All'
     },
 
-    onSubmit: values => {
+    onSubmit: async values => {
+
+      try {
+        const res = await fetchList(values);
+        console.log(res)
+
+        setData({ ...res.data, searched: true });
+
+      } catch (error) {
+
+      }
+
       console.log(values);
       console.log('submitted');
     },

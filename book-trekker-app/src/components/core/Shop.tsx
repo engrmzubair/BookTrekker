@@ -61,17 +61,22 @@ function Shop() {
 
     const toSkip = skip + limit;
 
-    const { data } = await fetchProductsBySearch(limit, toSkip, filters);
+    try {
+      const { data } = await fetchProductsBySearch(limit, toSkip, filters);
 
-    const newProducts = filterResults?.concat(data.data);
-    const newSize = newProducts?.length;
+      const newProducts = filterResults?.concat(data.data);
+      const newSize = newProducts?.length;
 
-    if (newSize) {
-      setSize(newSize);
-      setSkip(toSkip)
+      if (newSize) {
+        setSize(newSize);
+        setSkip(toSkip)
+      }
+
+      newProducts && dispatch(addProductsBySearch(newProducts));
+
+    } catch (ex) {
+
     }
-
-    newProducts && dispatch(addProductsBySearch(newProducts));
   }
 
 

@@ -41,6 +41,33 @@ exports.productById = (req, res, next, _id) => {
     })
 };
 
+//route handler for getting searched products
+exports.searchedProducts = catchAsync(async (req, res, next) => {
+
+  const query = {};
+  const { search, category } = req.query;
+
+  if (search) {
+    query.name = { $regex: search, $options: 'i' };
+
+    if (category && category !== 'All')
+      query.category = category
+  }
+
+  // now find the products based on the query
+
+  const products = await Product
+    .find(query)
+    .populate({
+      path: 'category',
+      select: "name"
+    })
+    .exec()
+
+  res.send(products)
+
+})
+
 //route handler for getting all products
 exports.getProducts = catchAsync(async (req, res, next) => {
 

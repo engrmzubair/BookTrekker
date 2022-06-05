@@ -40,7 +40,7 @@ const ProductCard = ({
                 </Card.Text>
 
                 <NavLink className="nav-link" to={ `/product/${p._id}` }>
-                  View Product
+                  View Course
                 </NavLink>
 
                 <ButtonComp

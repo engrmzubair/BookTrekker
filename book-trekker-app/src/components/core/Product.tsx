@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
-import { fetchProductById, getProductsById } from '../adminResource/product/productSlice'
+import { fetchProductById, fetchRelatedProducts, getProductsById, getRelatedProducts } from '../adminResource/product/productSlice'
 import SingleProductCard from '../common/SingleProductCard'
 import Layout from './Layout'
 import Menu from './Menu'
@@ -11,12 +11,15 @@ type Props = {}
 const Product = (props: Props) => {
 
   const product = useAppSelector(getProductsById)
+  const relatedProducts = useAppSelector(getRelatedProducts)
   const dispatch = useAppDispatch();
   const { productId } = useParams()
 
   useEffect(() => {
-    if (productId)
+    if (productId) {
       dispatch(fetchProductById(productId))
+      dispatch(fetchRelatedProducts(productId))
+    }
   }, [productId])
 
   return (
@@ -29,7 +32,9 @@ const Product = (props: Props) => {
 
       <SingleProductCard
         product={ product }
+        relatedProducts={ relatedProducts }
       />
+
     </React.Fragment >
   )
 }

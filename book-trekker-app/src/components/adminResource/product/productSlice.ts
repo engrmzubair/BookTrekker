@@ -14,8 +14,16 @@ export const fetchProducts = createAsyncThunk(
 );
 export const fetchProductById = createAsyncThunk(
   'category/fetchProductById',
-  async (id: string) => {
-    const url = `${API}/product/${id}`
+  async (productId: string) => {
+    const url = `${API}/product/${productId}`
+    const { data } = await http.get(url)
+    return data;
+  }
+);
+export const fetchRelatedProducts = createAsyncThunk(
+  'category/fetchRelatedProducts',
+  async (productId: string) => {
+    const url = `${API}/product/related/${productId}`
     const { data } = await http.get(url)
     return data;
   }
@@ -47,6 +55,7 @@ export interface ProductState {
   productsBySell: Product[] | undefined;
   productsByArrival: Product[] | undefined;
   productsBySearch: Product[] | undefined;
+  relatedProducts: Product[] | undefined;
   statusSell: 'idle' | 'succeeded';
   statusArrival: 'idle' | 'succeeded';
   product: Product | undefined;
@@ -57,6 +66,7 @@ const initialState: ProductState = {
   productsByArrival: undefined,
   productsBySell: undefined,
   productsBySearch: undefined,
+  relatedProducts: undefined,
   product: undefined,
   statusSell: 'idle',
   statusArrival: 'idle'
@@ -90,6 +100,9 @@ export const productSlice = createSlice({
       .addCase(fetchProductById.fulfilled, (state, action) => {
         state.product = action.payload;
       })
+      .addCase(fetchRelatedProducts.fulfilled, (state, action) => {
+        state.relatedProducts = action.payload;
+      })
 
   },
 
@@ -113,6 +126,7 @@ export const getProducts = (sortBy: "sold" | "arrival") => (state: RootState) =>
 export const getProductsBySearch = (state: RootState) => state.root.product.productsBySearch;
 
 export const getProductsById = (state: RootState) => state.root.product.product;
+export const getRelatedProducts = (state: RootState) => state.root.product.relatedProducts;
 
 
 export default productSlice.reducer;

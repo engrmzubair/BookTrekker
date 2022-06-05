@@ -51,11 +51,13 @@ const SearchForm = ({ formik, categories }: Props) => {
                   onChange={ formik.handleChange }
                 />
               </span>
-              <button
-                type='submit'
-                className='input-group-text btn btn-light ms-3'>
-                <Icon name='search' /> Search
-              </button>
+              <span>
+                <button
+                  type='submit'
+                  className='form-control btn btn-light ms-3'>
+                  <Icon name='search' /> Search
+                </button>
+              </span>
             </div>
 
           </div>

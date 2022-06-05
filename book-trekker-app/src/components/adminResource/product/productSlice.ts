@@ -32,10 +32,12 @@ export interface Product {
   name: string,
   price: number,
   sold: number,
+  quantity: number,
   category: {
     _id: string,
     name: string
   },
+  shipping: boolean,
   createdAt: string,
   updatedAt: string,
   __v: 0

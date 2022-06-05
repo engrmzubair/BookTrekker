@@ -28,6 +28,7 @@ const AddProduct = (props: Props) => {
       <CardComponent
         title="Add Product"
         className='w-50 m-auto mt-5'
+        primary={ true }
       >
         <AddProdFrom
           formik={ formik }

@@ -4,12 +4,20 @@
   height: 20vw;
   object-fit:contain;
   position: relative;
+  background-color: rgba(100, 131, 122, 0.835);
+  padding: 1rem;
 }
+
 
 .layoutAnimation {
   background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
+}
+
+.headerBackground{
+  background-color: #2b6595;
+  color: white;
 }
 
 @keyframes gradient {

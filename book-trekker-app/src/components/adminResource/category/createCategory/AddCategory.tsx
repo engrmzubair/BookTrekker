@@ -28,6 +28,7 @@ const AddCategory = (props: Props) => {
       <CardComponent
         title="Add Category"
         className='w-50 m-auto mt-5'
+        primary={ true }
       >
         <AddCatForm
           formik={ formik }

@@ -31,7 +31,7 @@ const ContentLinks = () => {
     <React.Fragment>
       <CardComponent
         title={ `${LinksTittle}` }
-        className="bg-light mt-2 mb-4"
+        className="bg-info mt-2 mb-4"
         headTextPosition='text-start'
       >
         <ListGroup>

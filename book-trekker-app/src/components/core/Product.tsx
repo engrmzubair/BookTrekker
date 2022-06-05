@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { fetchProductById, getProductsById } from '../adminResource/product/productSlice'
+import SingleProductCard from '../common/SingleProductCard'
 import Layout from './Layout'
 import Menu from './Menu'
 
@@ -23,10 +24,12 @@ const Product = (props: Props) => {
       <Menu />
       <Layout
         title={ product?.name }
-        description={ product?.description } >
+        description={ `${product?.description?.substring(0, 100)} ...` } >
       </Layout>
-      {/* <h1>{ product?.name }</h1> */ }
 
+      <SingleProductCard
+        product={ product }
+      />
     </React.Fragment >
   )
 }

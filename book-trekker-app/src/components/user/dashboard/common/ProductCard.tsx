@@ -26,7 +26,9 @@ const ProductCard = ({
                 src={ p.photo.url } />
               <Card.Body>
                 <Card.Title
-                  style={ { height: "3rem" } }>{ p.name }</Card.Title>
+                  style={ { height: "4.5rem" } }
+                  className=" headerBackground p-3 my-3"
+                >{ p.name }</Card.Title>
                 <Card.Text style={ { height: "11rem" } }>
                   { p.description.substring(0, 230) } ...
                 </Card.Text>

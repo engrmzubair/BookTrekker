@@ -26,6 +26,7 @@ const Signup = () => {
         title="Signup"
         subtitle="Signup to Book TreKKer."
         className='w-50 m-auto mt-5'
+        primary={ true }
       >
         <SignupForm
           formik={ formik }

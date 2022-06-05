@@ -11,12 +11,9 @@ type Props = {
 
 const ProductCard = ({ products, className = 'col-lg-4 col-md-6 col-xl-4 my-3 text-center' }: Props) => {
 
-
   return (
     <React.Fragment>
       <div className='row'>
-
-
         { products?.map((p, i) => (
           <div key={ i } className={ className } >
             <Card

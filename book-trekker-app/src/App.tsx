@@ -7,7 +7,7 @@ import { useAppDispatch, useAppSelector } from './app/hooks';
 import { fetchProducts, getProducts, productStatus } from './components/adminResource/product/productSlice';
 import ProductCard from './components/user/dashboard/common/ProductCard';
 import { Container } from 'react-bootstrap';
-import Search from './components/core/Search';
+import Search from './components/core/search/Search';
 
 function App() {
   const productsBySell = useAppSelector(getProducts('sold'));

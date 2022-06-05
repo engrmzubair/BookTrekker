@@ -47,13 +47,12 @@ exports.searchedProducts = catchAsync(async (req, res, next) => {
   const query = {};
   const { search, category } = req.query;
 
-  if (search) {
+  if (search)
     query.name = { $regex: search, $options: 'i' };
 
-    if (category && category !== 'All')
-      query.category = category
-  }
 
+  if (category && category !== 'All')
+    query.category = category
   // now find the products based on the query
 
   const products = await Product

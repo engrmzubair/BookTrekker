@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom';
 import Signup from './components/user/signup/Signup';
 import NotFound from './components/core/NotFound';
-import Shop from './components/core/Shop';
+import Shop from './components/core/search/Shop';
 import App from './App';
 import Signin from './components/user/signin/Signin';
 import Signout from './components/user/signout/Signout';

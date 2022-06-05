@@ -1,6 +1,6 @@
 import http from "../../services/httpService"
 import { API } from '../../config';
-import { Filter } from "./Shop";
+import { Filter } from "./search/Shop";
 import queryString from 'query-string'
 
 

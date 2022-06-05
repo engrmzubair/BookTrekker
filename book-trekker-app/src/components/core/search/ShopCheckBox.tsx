@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Form } from 'react-bootstrap'
-import { Category } from '../adminResource/category/categorySlice'
+import { Category } from '../../adminResource/category/categorySlice'
 import { HandleFilters } from './Shop'
 
 type Props = {

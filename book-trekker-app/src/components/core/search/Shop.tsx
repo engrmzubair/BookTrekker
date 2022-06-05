@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import Menu from './Menu';
-import Layout from './Layout';
-import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import Menu from '../Menu';
+import Layout from '../Layout';
+import { useAppDispatch, useAppSelector } from '../../../app/hooks';
 import { Button, Container } from 'react-bootstrap';
-import ProductCard from '../user/dashboard/common/ProductCard';
-import { getCategories } from '../adminResource/category/categorySlice';
+import ProductCard from '../../user/dashboard/common/ProductCard';
+import { getCategories } from '../../adminResource/category/categorySlice';
 import ShopCheckBox from './ShopCheckBox';
-import { prices } from './fixedPrices';
+import { prices } from '../fixedPrices';
 import ShopRadio from './ShopRadio';
-import { addProductsBySearch, getProductsBySearch } from '../adminResource/product/productSlice';
-import { fetchProductsBySearch } from './apiCore';
+import { addProductsBySearch, getProductsBySearch } from '../../adminResource/product/productSlice';
+import { fetchProductsBySearch } from '../apiCore';
 
 export type Filter = {
   category: string[],

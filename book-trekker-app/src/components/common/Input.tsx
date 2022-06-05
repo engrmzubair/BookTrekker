@@ -4,7 +4,7 @@ import { FormikSignin } from '../user/signin/SigninFormikConfig';
 import { FormikSignup } from '../user/signup/SignupFormikConfig';
 import { FormikAddCat } from '../adminResource/category/createCategory/AddCatFormikConfig';
 import { FormikAddProd } from '../adminResource/product/createProduct/AddProdFormikConfig';
-import { FormikSearch } from '../core/Search';
+import { FormikSearch } from '../core/search/Search';
 
 export type formikForInput = FormikSignin | FormikSignup | FormikAddCat | FormikAddProd | FormikSearch;
 

@@ -6,6 +6,7 @@ import ProductCard from '../../user/dashboard/common/ProductCard';
 import Layout from '../Layout';
 import Menu from '../Menu';
 import { getCart } from './cartHelpers';
+import Checkout from './Checkout';
 
 type Props = {}
 
@@ -25,7 +26,7 @@ const Cart = (props: Props) => {
   const showItems = () => {
     return (
       <div
-        style={ { marginTop: "5%" } }
+        style={ { marginTop: "2.5rem" } }
       >
         <h2>Your cart has { items?.length } items.</h2>
         <hr />
@@ -70,6 +71,22 @@ const Cart = (props: Props) => {
             { items && items.length > 0 ? showItems() : noItems() }
 
           </div>
+
+
+          <div className="col-md-4">
+            <div
+              style={ { marginTop: "2.5rem" } }
+            >
+              <h2>Your cart Summary</h2>
+              <hr />
+
+              <Checkout
+                products={ items }
+              />
+
+            </div>
+          </div>
+
         </Row>
 
 

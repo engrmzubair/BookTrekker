@@ -1,8 +1,9 @@
 import React from 'react'
 import { NavLink } from 'react-router-dom'
-import { Card } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
 import { Product } from '../../../adminResource/product/productSlice';
-import ButtonComp from '../../../common/ButtonComp';
+import { addItem } from '../../../core/cart/cartHelpers';
+import { useNavigate } from 'react-router-dom';
 
 type Props = {
   products: Product[] | undefined;
@@ -12,6 +13,17 @@ type Props = {
 const ProductCard = ({
   products,
   className = 'col-lg-4 col-md-6 col-xl-4 my-3 text-center' }: Props) => {
+
+
+  const navigate = useNavigate()
+
+  const addToCart = (p: Product) => {
+    addItem(p, handleRedirect)
+  }
+
+  const handleRedirect = () => {
+    navigate('/cart')
+  }
 
   return (
     <React.Fragment>
@@ -43,11 +55,13 @@ const ProductCard = ({
                   View Course
                 </NavLink>
 
-                <ButtonComp
+                <Button
                   variant="success"
-                  text="Add to cart"
-                  className='w-100'
-                />
+                  className="w-100"
+                  onClick={ () => addToCart(p) }
+
+                >Add to cart
+                </Button>
 
               </Card.Body>
             </Card>

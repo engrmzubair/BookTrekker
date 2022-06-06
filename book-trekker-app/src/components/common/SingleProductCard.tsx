@@ -1,10 +1,9 @@
 import React from 'react'
-import { Card, Col, Container, Row, Table, Badge, ListGroup } from 'react-bootstrap'
-import { NavLink } from 'react-router-dom'
+import { Card, Col, Container, Row, Table, Badge, ListGroup, Button } from 'react-bootstrap'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { Product } from '../adminResource/product/productSlice'
-import ButtonComp from './ButtonComp'
 import moment from 'moment'
-import ProductCard from '../user/dashboard/common/ProductCard'
+import { addItem } from '../core/cart/cartHelpers'
 
 type Props = {
   product: Product | undefined,
@@ -12,6 +11,16 @@ type Props = {
 }
 
 const SingleProductCard = ({ product, relatedProducts }: Props) => {
+
+  const navigate = useNavigate()
+
+  const addToCart = (p: Product) => {
+    addItem(p, handleRedirect)
+  }
+
+  const handleRedirect = () => {
+    navigate('../../cart')
+  }
 
   const showStock = () => {
     if (product && product.quantity > 0)
@@ -81,12 +90,13 @@ const SingleProductCard = ({ product, relatedProducts }: Props) => {
 
               </Table>
 
-
-              <ButtonComp
+              <Button
                 variant="success"
-                text="Add to cart"
-                className='w-100'
-              />
+                className="w-100"
+                onClick={ () => { product && addToCart(product) } }
+
+              >Add to cart
+              </Button>
 
             </Card.Body>
           </Card>

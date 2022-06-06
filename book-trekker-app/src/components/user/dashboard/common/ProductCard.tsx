@@ -7,11 +7,13 @@ import { useNavigate } from 'react-router-dom';
 
 type Props = {
   products: Product[] | undefined;
-  className?: string
+  className?: string,
+  addedToCart?: boolean;
 }
 
 const ProductCard = ({
   products,
+  addedToCart,
   className = 'col-lg-4 col-md-6 col-xl-4 my-3 text-center' }: Props) => {
 
 
@@ -19,6 +21,9 @@ const ProductCard = ({
 
   const addToCart = (p: Product) => {
     addItem(p, handleRedirect)
+  }
+  const removeFromCart = (p: Product) => {
+    console.log(p?.name);
   }
 
   const handleRedirect = () => {
@@ -55,13 +60,21 @@ const ProductCard = ({
                   View Course
                 </NavLink>
 
-                <Button
+                { !addedToCart && <Button
                   variant="success"
                   className="w-100"
-                  onClick={ () => addToCart(p) }
+                  onClick={ (e) => addToCart(p) }
 
                 >Add to cart
-                </Button>
+                </Button> }
+
+                { addedToCart && <Button
+                  variant="success"
+                  className="w-100"
+                  onClick={ (e) => removeFromCart(p) }
+
+                >Remove from cart
+                </Button> }
 
               </Card.Body>
             </Card>

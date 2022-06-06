@@ -33,3 +33,11 @@ export const itemTotal = () => {
     if (localStorage.getItem(cartKey))
       return JSON.parse(localStorage.getItem(cartKey) || "[]")?.length;
 }
+export const getCart = (): Product[] | undefined => {
+
+  if (typeof window !== 'undefined') {
+    if (localStorage.getItem(cartKey))
+      return JSON.parse(localStorage.getItem(cartKey) || "[]");
+  }
+  return undefined
+}

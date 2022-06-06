@@ -1,9 +1,10 @@
 import { Product } from "../../adminResource/product/productSlice";
 
+const cartKey = 'bookTrekker_cart'
+
 export const addItem = (item: Product, next: any) => {
 
   let cart: any[] = [];
-  const cartKey = 'bookTrekker_cart'
 
   if (typeof window !== 'undefined') {
 
@@ -19,15 +20,16 @@ export const addItem = (item: Product, next: any) => {
 
     cart = Array.from(new Set(cart.map((p: Product) => p._id))).map(id => cart.find((p: Product) => p._id === id))
 
-    localStorage.setItem(cartKey, JSON.stringify(cart))
+    localStorage.setItem(cartKey, JSON.stringify(cart || "[]"))
 
     next()
 
   }
+}
 
+export const itemTotal = () => {
 
-
-
-
-
-} 
+  if (typeof window !== 'undefined')
+    if (localStorage.getItem(cartKey))
+      return JSON.parse(localStorage.getItem(cartKey) || "[]")?.length;
+}

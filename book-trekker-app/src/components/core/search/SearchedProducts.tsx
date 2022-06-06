@@ -16,7 +16,7 @@ const SearchedProducts = ({ products, searched }: Props) => {
       return `Found ${products.length} ${length === 1 ? "product" : "products"}`;
     }
     if (searched && products && products.length < 1) {
-      return `No products found`;
+      return `No product found`;
     }
   }
 

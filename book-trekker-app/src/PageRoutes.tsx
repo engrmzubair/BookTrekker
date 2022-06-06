@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from './app/hooks';
 import { getProfile, userStatus } from './components/user/userSlice';
 import { categoryStatus, fetchCategories } from './components/adminResource/category/categorySlice';
 import Product from './components/core/Product';
+import Cart from './components/core/cart/Cart';
 
 
 const PageRoutes = () => {
@@ -39,6 +40,7 @@ const PageRoutes = () => {
       <Route path="/" element={ <App /> } />
       <Route path="signup" element={ <Signup /> } />
       <Route path="shop" element={ <Shop /> } />
+      <Route path="cart" element={ <Cart /> } />
       <Route path="signin" element={ <Signin /> } />
       <Route path="signout" element={ <Signout /> } />
       <Route path="/user/dashboard" element={ <Protected /> } />

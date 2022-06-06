@@ -1,8 +1,9 @@
 import React from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container, Badge } from 'react-bootstrap';
 import { NavLink } from 'react-router-dom'
 import { useAppSelector } from '../../app/hooks';
 import { currentUser } from '../user/userSlice';
+import { itemTotal } from './cart/cartHelpers';
 
 const Menu = () => {
 
@@ -22,6 +23,13 @@ const Menu = () => {
 
             <NavLink className="nav-link" to="/">Home</NavLink>
             <NavLink className="nav-link" to="/shop">Shop</NavLink>
+            <NavLink className="nav-link" to="/cart">
+              Cart <sup>
+                <Badge pill bg="info">
+                  { itemTotal() }
+                </Badge>
+              </sup>
+            </NavLink>
 
             { user && <NavLink className="nav-link" to="/user/dashboard">Dashboard</NavLink> }
 

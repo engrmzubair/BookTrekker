@@ -40,6 +40,7 @@ export interface Product {
   name: string,
   price: number,
   sold: number,
+  count?: number,
   quantity: number,
   category: {
     _id: string,

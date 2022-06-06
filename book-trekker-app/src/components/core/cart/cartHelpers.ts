@@ -41,3 +41,40 @@ export const getCart = (): Product[] | undefined => {
   }
   return undefined
 }
+
+export const updateItem = (id: string, count: number) => {
+
+  let cart: any[] = [];
+  if (typeof window !== 'undefined') {
+    if (localStorage.getItem(cartKey))
+      cart = JSON.parse(localStorage.getItem(cartKey) || "[]");
+
+    cart.map((p, i) => {
+      if (p._id === id) {
+        cart[i].count = count;
+      }
+      return p
+    })
+
+    localStorage.setItem(cartKey, JSON.stringify(cart))
+
+  }
+}
+export const removeItem = (id: string, count: number) => {
+
+  let cart: any[] = [];
+  if (typeof window !== 'undefined') {
+    if (localStorage.getItem(cartKey))
+      cart = JSON.parse(localStorage.getItem(cartKey) || "[]");
+
+    cart.map((p, i) => {
+      if (p._id === id) {
+        cart[i].count = count;
+      }
+      return p
+    })
+
+    localStorage.setItem(cartKey, JSON.stringify(cart))
+
+  }
+}

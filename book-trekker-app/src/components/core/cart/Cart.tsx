@@ -12,11 +12,13 @@ type Props = {}
 const Cart = (props: Props) => {
 
   const [items, setItems] = useState<Product[] | undefined>(undefined);
+  const [count, setCount] = useState<number>(1);
+
 
   useEffect(() => {
     const products = getCart()
     products && setItems(products)
-  }, [])
+  }, [count])
 
   const showItems = () => {
     return (
@@ -30,6 +32,8 @@ const Cart = (props: Props) => {
           products={ items }
           addedToCart={ true }
           className="col-md-6 my-3 text-center"
+          count={ count }
+          setCount={ setCount }
         />
       </div>)
   }

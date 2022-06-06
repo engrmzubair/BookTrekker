@@ -2,9 +2,9 @@ import React, { useState } from 'react'
 import { NavLink } from 'react-router-dom'
 import { Button, Card, Table } from 'react-bootstrap';
 import { Product } from '../../../adminResource/product/productSlice';
-import { addItem, updateItem, removeItem } from '../../../core/cart/cartHelpers';
+import { addItem, updateItem, removeItem, itemTotal } from '../../../core/cart/cartHelpers';
 import { useNavigate } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
+import { toast, ToastContainer } from 'react-toastify';
 
 type Props = {
   products: Product[] | undefined;
@@ -12,6 +12,7 @@ type Props = {
   addedToCart?: boolean;
   count?: number;
   setCount?: React.Dispatch<React.SetStateAction<number>>;
+  setLength?: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const ProductCard = ({
@@ -19,6 +20,7 @@ const ProductCard = ({
   addedToCart,
   count,
   setCount,
+  setLength,
   className = 'col-lg-4 col-md-6 col-xl-4 my-3 text-center' }: Props) => {
 
   const navigate = useNavigate()
@@ -28,7 +30,11 @@ const ProductCard = ({
   }
   const removeFromCart = (p: Product) => {
 
-    console.log(p?.name);
+    removeItem(p._id);
+
+    setLength && setLength(itemTotal())
+    console.log(`Remove item ${p.name}`);
+    toast.info(`Item ${p.name} removed from cart.`, { theme: 'dark' })
   }
 
   const handleRedirect = () => {

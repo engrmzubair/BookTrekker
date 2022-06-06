@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, ListGroup, Row } from 'react-bootstrap';
+import { Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { Product } from '../../adminResource/product/productSlice';
 import ProductCard from '../../user/dashboard/common/ProductCard';
@@ -13,12 +13,14 @@ const Cart = (props: Props) => {
 
   const [items, setItems] = useState<Product[] | undefined>(undefined);
   const [count, setCount] = useState<number>(1);
+  const [length, setLength] = useState<number>(1);
 
 
   useEffect(() => {
-    const products = getCart()
-    products && setItems(products)
-  }, [count])
+
+    setItems(getCart)
+
+  }, [count, length])
 
   const showItems = () => {
     return (
@@ -34,6 +36,7 @@ const Cart = (props: Props) => {
           className="col-md-6 my-3 text-center"
           count={ count }
           setCount={ setCount }
+          setLength={ setLength }
         />
       </div>)
   }

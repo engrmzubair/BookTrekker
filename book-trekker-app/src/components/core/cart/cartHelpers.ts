@@ -60,19 +60,15 @@ export const updateItem = (id: string, count: number) => {
 
   }
 }
-export const removeItem = (id: string, count: number) => {
+export const removeItem = (id: string) => {
 
   let cart: any[] = [];
+
   if (typeof window !== 'undefined') {
     if (localStorage.getItem(cartKey))
       cart = JSON.parse(localStorage.getItem(cartKey) || "[]");
 
-    cart.map((p, i) => {
-      if (p._id === id) {
-        cart[i].count = count;
-      }
-      return p
-    })
+    cart = cart.filter(p => p._id !== id)
 
     localStorage.setItem(cartKey, JSON.stringify(cart))
 

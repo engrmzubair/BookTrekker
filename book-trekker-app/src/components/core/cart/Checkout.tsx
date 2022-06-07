@@ -5,7 +5,10 @@ import { useAppSelector } from '../../../app/hooks'
 import { Product } from '../../adminResource/product/productSlice'
 import { currentUser } from '../../user/userSlice'
 import { getBraintreeClientToken } from '../apiCore';
-import DropIn from "braintree-web-drop-in-react"
+import DropIn, { IDropInProps } from "braintree-web-drop-in-react"
+import { toast } from 'react-toastify';
+
+
 
 type Props = {
 
@@ -13,22 +16,29 @@ type Props = {
 }
 
 type Data = {
-  clientToken: string | null,
-  success: boolean,
-  instance?: {},
+  clientToken?: string | null,
+  success?: boolean,
+  instance?: any,
+  error?: string
   address?: ''
 
 }
+// type Instance = {
+//   requestPaymentMethod?: () => Promise<any>
+//   clearSelectedPaymentMethod?: () => void
+// }
 
 const Checkout = ({ products }: Props) => {
 
 
   const user = useAppSelector(currentUser);
+  // let instance: DropIn;
 
   const [data, setData] = useState<Data>({
     success: false,
     clientToken: null,
     instance: {},
+    error: '',
     address: ''
   })
 
@@ -40,7 +50,7 @@ const Checkout = ({ products }: Props) => {
     const success = res?.data.success;
 
     if (clientToken && success)
-      setData({ clientToken, success })
+      setData({ ...data, clientToken, success })
 
   }
 
@@ -60,16 +70,39 @@ const Checkout = ({ products }: Props) => {
       }, 0)
 
   }
+  const buy = () => {
+    //send the nonce to your server
+    //nonce = data.instance.requestPaymentMethod()
+    let nonce;
+    let getNonce = data.instance.requestPaymentMethod()
+      .then((data: any) => {
+        console.log(data)
+        nonce = data.nonce;
+
+        console.log("send nonce and total to process: ", nonce, getTotal());
+      })
+      .catch((error: any) => {
+        console.log('drop error:', error)
+        setData({ ...data, error: error.message })
+      })
+  }
+  if (data.error)
+    toast.error(data.error, { theme: "dark" });
 
   const showDropIn = () => {
     return <div>
       { data.clientToken !== null && products && products.length > 0 && (
         <div>
           <DropIn
-            options={ { authorization: data.clientToken } }
-            onInstance={ (instance) => (data.instance = instance) }
+            options={ {
+              authorization: data.clientToken,
+            } }
+            onInstance={ (instance) => setData({ ...data, instance }) }
           />
-          <button className='btn btn-success w-100'>Pay</button>
+          <button
+            className='btn btn-success w-100'
+            onClick={ buy }
+          >Pay</button>
         </div>
       ) }
     </div>

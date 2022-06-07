@@ -4,6 +4,11 @@
     "api_key": "",
     "api_secret": ""
   },
+  "braintree": {
+    "marchantId": "",
+    "publicKey": "",
+    "privateKey": ""
+  },
   "server": {
     "port": 5000
   },

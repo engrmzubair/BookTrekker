@@ -4,7 +4,7 @@
   "description": "Development of backend for my commerce app \"BookIT\".",
   "main": "app.js",
   "scripts": {
-    "start": "bookTrekker_cloudName=tracky bookTrekker_apiKey=643353417551732 bookTrekker_apiSecret=m6kiLoN8SLo06khvSzwpKP03-L8  bookTrekker_jwtPrivateKey='Pakistan' NODE_ENV=development nodemon app.js",
+    "start": "bookTrekker_brainTree_merchantId='hk5cq7pgtdtthscm' bookTrekker_brainTree_publicKey='x33rtp2nc2h2mkf4' bookTrekker_brainTree_privateKey='a02b2b4806261b8a3ab9cb21045c8d09' bookTrekker_cloudName=tracky bookTrekker_apiKey=643353417551732 bookTrekker_apiSecret=m6kiLoN8SLo06khvSzwpKP03-L8  bookTrekker_jwtPrivateKey='Pakistan' NODE_ENV=development nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "engrmzubair",

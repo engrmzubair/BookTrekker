@@ -16,6 +16,15 @@ module.exports = () => {
   if (!config.get('cloudinary.apiSecret')) {
     throw new Error('FATAL ERROR: apiSecret is not defined.');
   }
+  if (!config.get('braintree.marchantId')) {
+    throw new Error('FATAL ERROR: marchantId is not defined.');
+  }
+  if (!config.get('braintree.publicKey')) {
+    throw new Error('FATAL ERROR: brainTree_publicKey is not defined.');
+  }
+  if (!config.get('braintree.privateKey')) {
+    throw new Error('FATAL ERROR: brainTree_privateKey is not defined.');
+  }
   if (!process.env.NODE_ENV) {
     throw new Error('FATAL ERROR: environment is not defined.');
   }

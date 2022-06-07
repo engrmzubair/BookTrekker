@@ -5,7 +5,7 @@
     "apiSecret": "bookTrekker_apiSecret"
   },
   "braintree": {
-    "marchantId": "bookTrekker_brainTree_merchantId",
+    "merchantId": "bookTrekker_brainTree_merchantId",
     "publicKey": "bookTrekker_brainTree_publicKey",
     "privateKey": "bookTrekker_brainTree_privateKey"
   },

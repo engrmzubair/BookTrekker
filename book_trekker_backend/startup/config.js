@@ -16,7 +16,7 @@ module.exports = () => {
   if (!config.get('cloudinary.apiSecret')) {
     throw new Error('FATAL ERROR: apiSecret is not defined.');
   }
-  if (!config.get('braintree.marchantId')) {
+  if (!config.get('braintree.merchantId')) {
     throw new Error('FATAL ERROR: marchantId is not defined.');
   }
   if (!config.get('braintree.publicKey')) {

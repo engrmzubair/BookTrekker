@@ -5,7 +5,7 @@
     "api_secret": ""
   },
   "braintree": {
-    "marchantId": "",
+    "merchantId": "",
     "publicKey": "",
     "privateKey": ""
   },

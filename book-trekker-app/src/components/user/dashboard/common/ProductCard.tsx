@@ -10,7 +10,6 @@ type Props = {
   products: Product[] | undefined;
   className?: string,
   addedToCart?: boolean;
-  count?: number;
   setCount?: React.Dispatch<React.SetStateAction<number>>;
   setLength?: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -18,7 +17,6 @@ type Props = {
 const ProductCard = ({
   products,
   addedToCart,
-  count,
   setCount,
   setLength,
   className = 'col-lg-4 col-md-6 col-xl-4 my-3 text-center' }: Props) => {
@@ -95,7 +93,7 @@ const ProductCard = ({
                     type="number"
                     className="form-control"
                     placeholder="Quantity"
-                    value={ count }
+                    min={ 1 }
                     onChange={ (e) => handleChange(p._id, parseInt(e.target.value)) }
                   />
                 </div> }

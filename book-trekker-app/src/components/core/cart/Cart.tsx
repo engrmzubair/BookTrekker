@@ -35,7 +35,6 @@ const Cart = (props: Props) => {
           products={ items }
           addedToCart={ true }
           className="col-md-6 my-3 text-center"
-          count={ count }
           setCount={ setCount }
           setLength={ setLength }
         />

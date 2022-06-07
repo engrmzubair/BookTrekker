@@ -19,3 +19,53 @@ exports.generateToken = catchAsync(async function (req, res) {
   res.send(response)
 }
 );
+
+//process payment
+exports.processPayment = catchAsync(async function (req, res) {
+
+  let nonceFromTheClient = req.body.paymentMethodNonce;
+  let amountFromTheClient = req.body.payment;
+
+  //charge
+  let newTransaction = await gateway.transaction.sale({
+    amount: amountFromTheClient, paymentMethodNonce: nonceFromTheClient, options: {
+      // This option requests the funds from the transaction once it has been
+      // authorized successfully
+      submitForSettlement: true,
+
+    }
+  })
+
+  res.json(newTransaction)
+
+  // try {
+  //   // Use the payment method nonce here
+  //   var nonceFromTheClient = req.body.paymentMethodNonce;
+  //   // Create a new transaction for $10
+  //   var newTransaction = gateway.transaction.sale(
+  //     {
+  //       amount: "10.00",
+  //       paymentMethodNonce: nonceFromTheClient,
+  //       options: {
+  //         // This option requests the funds from the transaction once it has been
+  //         // authorized successfully
+  //         submitForSettlement: true,
+  //       },
+  //     },
+  //     function (error, result) {
+  //       if (result) {
+  //         res.send(result);
+  //       } else {
+  //         res.status(500).send(error);
+  //       }
+  //     }
+  //   );
+  // } catch (err) {
+  //   // Deal with an error
+  //   console.log(err);
+  //   res.send(err);
+  // }
+});
+
+
+

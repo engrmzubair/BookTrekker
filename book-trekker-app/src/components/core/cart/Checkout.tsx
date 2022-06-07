@@ -49,6 +49,8 @@ const Checkout = ({ products }: Props) => {
     const clientToken = res?.data.clientToken;
     const success = res?.data.success;
 
+    console.log("Token status: ", success);
+
     if (clientToken && success)
       setData({ ...data, clientToken, success })
 
@@ -56,6 +58,7 @@ const Checkout = ({ products }: Props) => {
 
   useEffect(() => {
     const userId = user?._id
+    console.log("userId: ", userId);
     userId && getToken(userId)
 
   }, [user?._id])

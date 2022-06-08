@@ -24,11 +24,12 @@ const Menu = () => {
             <NavLink className="nav-link" to="/">Home</NavLink>
             <NavLink className="nav-link" to="/shop">Shop</NavLink>
             <NavLink className="nav-link" to="/cart">
-              Cart <sup>
+              Cart
+              { itemTotal() > 0 && <sup>
                 <Badge pill bg="info">
                   { itemTotal() }
                 </Badge>
-              </sup>
+              </sup> }
             </NavLink>
 
             { user && <NavLink className="nav-link" to="/user/dashboard">Dashboard</NavLink> }

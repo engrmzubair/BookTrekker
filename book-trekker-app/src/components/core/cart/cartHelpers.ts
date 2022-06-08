@@ -74,3 +74,11 @@ export const removeItem = (id: string) => {
 
   }
 }
+
+export const emptyCart = (next: any) => {
+
+  if (typeof window !== 'undefined') {
+    localStorage.removeItem(cartKey);
+    next()
+  }
+}

@@ -6,12 +6,14 @@ import { currentUser } from '../../user/userSlice'
 import { getBraintreeClientToken, processPayment } from '../apiCore';
 import DropIn from "braintree-web-drop-in-react"
 import { toast } from 'react-toastify';
+import { emptyCart, itemTotal } from './cartHelpers'
 
 
 
 type Props = {
 
-  products: Product[] | undefined
+  products: Product[] | undefined,
+  setLength: React.Dispatch<React.SetStateAction<number>>
 }
 
 type Data = {
@@ -20,16 +22,11 @@ type Data = {
   address?: ''
 
 }
-// type Instance = {
-//   requestPaymentMethod?: () => Promise<any>
-//   clearSelectedPaymentMethod?: () => void
-// }
 
-const Checkout = ({ products }: Props) => {
+const Checkout = ({ products, setLength }: Props) => {
 
 
   const user = useAppSelector(currentUser);
-  // let instance: DropIn;
 
   const [data, setData] = useState<Data>({
     clientToken: null,
@@ -79,8 +76,15 @@ const Checkout = ({ products }: Props) => {
 
         if (res && res.data) {
 
-          if (res.data.success)
+          if (res.data.success) {
             toast.success("Thanks! your payment was successful!", { theme: "colored" });
+
+            emptyCart(() => {
+              console.log("Payment success and empty cart.")
+              setLength(itemTotal());
+            })
+
+          }
 
           if (!res.data.success)
             toast.error(res.data.message, { theme: "colored" });
@@ -101,6 +105,9 @@ const Checkout = ({ products }: Props) => {
           <DropIn
             options={ {
               authorization: data.clientToken,
+              // paypal: {
+              //   flow: "vault"
+              // }
             } }
             onInstance={ (instance) => setData({ ...data, instance }) }
           />

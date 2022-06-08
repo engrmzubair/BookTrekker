@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 import { Product } from '../../adminResource/product/productSlice';
 import ProductCard from '../../user/dashboard/common/ProductCard';
 import Layout from '../Layout';
@@ -16,10 +17,9 @@ const Cart = (props: Props) => {
   const [count, setCount] = useState<number>(1);
   const [length, setLength] = useState<number>(1);
 
-
   useEffect(() => {
 
-    setItems(getCart)
+    setItems(getCart())
 
   }, [count, length])
 
@@ -47,7 +47,10 @@ const Cart = (props: Props) => {
         style={ { marginTop: "5%" } }
       >
         <h2>
-          Your cart is empty. <br /><Link to="/shop">
+          Your cart is empty. <br />
+          <Link
+            style={ { textDecoration: "none" } }
+            to="/shop">
             <small> Continue Shopping.</small>
           </Link>
         </h2>
@@ -57,6 +60,7 @@ const Cart = (props: Props) => {
 
   return (
     <React.Fragment>
+      <ToastContainer />
       <Menu />
 
       <Layout
@@ -72,7 +76,7 @@ const Cart = (props: Props) => {
           </div>
 
 
-          <div className="col-md-4">
+          { length > 0 && <div className="col-md-4">
             <div
               style={ { marginTop: "2.5rem" } }
             >
@@ -81,10 +85,11 @@ const Cart = (props: Props) => {
 
               <Checkout
                 products={ items }
+                setLength={ setLength }
               />
 
             </div>
-          </div>
+          </div> }
 
         </Row>
 

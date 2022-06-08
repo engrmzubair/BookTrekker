@@ -28,7 +28,7 @@ const Checkout = ({ products, setLength }: Props) => {
 
   const user = useAppSelector(currentUser);
   const [loading, setLoading] = useState<boolean>(false);
-  const [color, setColor] = useState<string>("#F5A623");
+  const [color, setColor] = useState<string>("#417505");
 
   const [data, setData] = useState<Data>({
     clientToken: null,
@@ -64,6 +64,8 @@ const Checkout = ({ products, setLength }: Props) => {
       }, 0)
 
   }
+
+
   const buy = async () => {
     setLoading(true)
     //send the nonce to your server
@@ -84,9 +86,18 @@ const Checkout = ({ products, setLength }: Props) => {
             toast.success("Thanks! your payment was successful!", { theme: "colored" });
 
             //create order for future reference
+            const specProducts = products?.map(p => {
+              return ({
+                product: p._id,
+                name: p.name,
+                price: p.price,
+                count: p.count
+              })
+            })
+
 
             const orderData = {
-              products,
+              products: specProducts,
               transaction_id: res.data.transaction.id,
               amount: payment,
               address: data.address
@@ -168,7 +179,7 @@ const Checkout = ({ products, setLength }: Props) => {
 
   return (
     <div >
-      <h2>Total amount: ${ getTotal() }</h2>
+      <h2 className='fs-3'>Total amount: ${ getTotal() }</h2>
 
       { user && <div className='w-100 mt-3'>{ showDropIn() }</div> }
       { !user &&

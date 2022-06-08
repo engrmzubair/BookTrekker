@@ -6,7 +6,7 @@ import { Product } from '../../adminResource/product/productSlice';
 import ProductCard from '../../user/dashboard/common/ProductCard';
 import Layout from '../Layout';
 import Menu from '../Menu';
-import { getCart } from './cartHelpers';
+import { getCart, itemTotal } from './cartHelpers';
 import Checkout from './Checkout';
 
 type Props = {}
@@ -44,14 +44,14 @@ const Cart = (props: Props) => {
   const noItems = () => {
     return (
       <div
-        style={ { marginTop: "5%" } }
+        style={ { marginTop: "5%", textAlign: "center" } }
       >
         <h2>
           Your cart is empty. <br />
           <Link
-            style={ { textDecoration: "none" } }
+            style={ { textDecoration: "none", textAlign: "center" } }
             to="/shop">
-            <small> Continue Shopping.</small>
+            <button className='btn btn-info fs-3 py-3 my-4 w-75'> Continue Shopping.</button>
           </Link>
         </h2>
       </div>
@@ -76,7 +76,7 @@ const Cart = (props: Props) => {
           </div>
 
 
-          { length > 0 && <div className="col-md-4">
+          { itemTotal() > 0 && <div className="col-md-4">
             <div
               style={ { marginTop: "2.5rem" } }
             >

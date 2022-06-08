@@ -1,11 +1,10 @@
-import { AxiosResponse } from 'axios'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAppSelector } from '../../../app/hooks'
 import { Product } from '../../adminResource/product/productSlice'
 import { currentUser } from '../../user/userSlice'
-import { getBraintreeClientToken } from '../apiCore';
-import DropIn, { IDropInProps } from "braintree-web-drop-in-react"
+import { getBraintreeClientToken, processPayment } from '../apiCore';
+import DropIn from "braintree-web-drop-in-react"
 import { toast } from 'react-toastify';
 
 
@@ -17,9 +16,7 @@ type Props = {
 
 type Data = {
   clientToken?: string | null,
-  success?: boolean,
   instance?: any,
-  error?: string
   address?: ''
 
 }
@@ -35,10 +32,8 @@ const Checkout = ({ products }: Props) => {
   // let instance: DropIn;
 
   const [data, setData] = useState<Data>({
-    success: false,
     clientToken: null,
     instance: {},
-    error: '',
     address: ''
   })
 
@@ -49,16 +44,13 @@ const Checkout = ({ products }: Props) => {
     const clientToken = res?.data.clientToken;
     const success = res?.data.success;
 
-    console.log("Token status: ", success);
-
     if (clientToken && success)
-      setData({ ...data, clientToken, success })
+      setData({ ...data, clientToken })
 
   }
 
   useEffect(() => {
     const userId = user?._id
-    console.log("userId: ", userId);
     userId && getToken(userId)
 
   }, [user?._id])
@@ -73,24 +65,34 @@ const Checkout = ({ products }: Props) => {
       }, 0)
 
   }
-  const buy = () => {
+  const buy = async () => {
     //send the nonce to your server
     //nonce = data.instance.requestPaymentMethod()
-    let nonce;
-    let getNonce = data.instance.requestPaymentMethod()
-      .then((data: any) => {
-        console.log(data)
-        nonce = data.nonce;
+    try {
+      const payment = getTotal()
+      const { nonce } = await data.instance.requestPaymentMethod();
 
-        console.log("send nonce and total to process: ", nonce, getTotal());
-      })
-      .catch((error: any) => {
-        console.log('drop error:', error)
-        setData({ ...data, error: error.message })
-      })
+      const paymentData = { paymentMethodNonce: nonce, payment };
+
+      if (user && user._id) {
+        const res = await processPayment(user._id, paymentData);
+
+        if (res && res.data) {
+
+          if (res.data.success)
+            toast.success("Thanks! your payment was successful!", { theme: "colored" });
+
+          if (!res.data.success)
+            toast.error(res.data.message, { theme: "colored" });
+        }
+      }
+
+
+    } catch (error: any) {
+      toast.error(error.message, { theme: "colored" });
+    }
   }
-  if (data.error)
-    toast.error(data.error, { theme: "dark" });
+
 
   const showDropIn = () => {
     return <div>

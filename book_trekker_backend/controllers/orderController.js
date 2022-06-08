@@ -6,7 +6,7 @@ const catchAsync = require("../utils/catchAsync");
 exports.createOrder = catchAsync(async (req, res) => {
 
 
-  req.body.user = req.profile._id
+  req.body.user = req.profile._id;
 
   const order = new Order(req.body);
   const data = await order.save();

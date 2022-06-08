@@ -7,6 +7,7 @@ const userRouter = require('../routes/userRouter');
 const categoryRouter = require('../routes/categoryRouter');
 const productRouter = require('../routes/productRouter');
 const brainTreeRouter = require('../routes/braintreeRouter');
+const orderRouter = require('../routes/orderRouter');
 const { error } = require('../controllers/errorController');
 const AppError = require('../utils/appError');
 
@@ -27,6 +28,7 @@ module.exports = (app) => {
   app.use('/api/category', categoryRouter)
   app.use('/api/product', productRouter)
   app.use('/api/braintree', brainTreeRouter)
+  app.use('/api/order', orderRouter)
 
   app.all('*', (req, res, next) => {
     next(new AppError(`Can't find ${ req.originalUrl } on this server.`, 404))

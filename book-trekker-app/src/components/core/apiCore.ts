@@ -44,4 +44,12 @@ export const processPayment = async (userId: string, paymentData: any) => {
 
   }
 }
+export const createOrder = async (userId: string, orderData: any) => {
+
+  try {
+    return await http.post(`${API}/order/create/${userId}`, orderData)
+  } catch (error) {
+
+  }
+}
 

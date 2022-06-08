@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom'
 import { useAppSelector } from '../../../app/hooks'
 import { Product } from '../../adminResource/product/productSlice'
 import { currentUser } from '../../user/userSlice'
-import { getBraintreeClientToken, processPayment } from '../apiCore';
+import { getBraintreeClientToken, processPayment, createOrder } from '../apiCore';
 import DropIn from "braintree-web-drop-in-react"
 import { toast } from 'react-toastify';
 import { emptyCart, itemTotal } from './cartHelpers'
+import PropagateLoader from "react-spinners/PropagateLoader";
 
 
 
@@ -19,14 +20,15 @@ type Props = {
 type Data = {
   clientToken?: string | null,
   instance?: any,
-  address?: ''
+  address?: string,
 
 }
 
 const Checkout = ({ products, setLength }: Props) => {
 
-
   const user = useAppSelector(currentUser);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [color, setColor] = useState<string>("#F5A623");
 
   const [data, setData] = useState<Data>({
     clientToken: null,
@@ -63,6 +65,7 @@ const Checkout = ({ products, setLength }: Props) => {
 
   }
   const buy = async () => {
+    setLoading(true)
     //send the nonce to your server
     //nonce = data.instance.requestPaymentMethod()
     try {
@@ -75,9 +78,29 @@ const Checkout = ({ products, setLength }: Props) => {
         const res = await processPayment(user._id, paymentData);
 
         if (res && res.data) {
+          console.log("processPayment: ", res)
 
           if (res.data.success) {
             toast.success("Thanks! your payment was successful!", { theme: "colored" });
+
+            //create order for future reference
+
+            const orderData = {
+              products,
+              transaction_id: res.data.transaction.id,
+              amount: payment,
+              address: data.address
+            }
+
+            try {
+              const orderRes = await createOrder(user._id, orderData)
+              console.log('Create order: ', orderRes)
+
+            } catch (error) {
+              console.log(error);
+            }
+
+            setLoading(false);
 
             emptyCart(() => {
               console.log("Payment success and empty cart.")
@@ -97,11 +120,34 @@ const Checkout = ({ products, setLength }: Props) => {
     }
   }
 
+  const handleAddress = (value: string) => {
+
+    setData({ ...data, address: value })
+  }
+
+  const showLoader = () => {
+    return (
+      <div className="PropagateLoader my-3  py-3 text-center">
+        <PropagateLoader color={ color } loading={ loading } size={ 20 } />
+      </div>)
+  }
 
   const showDropIn = () => {
     return <div>
       { data.clientToken !== null && products && products.length > 0 && (
         <div>
+          { showLoader() }
+          <div className="form-group mb-3">
+            <label className='text-muted'>Delivery address:</label>
+            <textarea
+              onChange={ (e) => handleAddress(e.target.value) }
+              className="form-control"
+              value={ data.address }
+              placeholder="Type your delivery address here..."
+            />
+          </div>
+
+
           <DropIn
             options={ {
               authorization: data.clientToken,

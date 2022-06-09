@@ -14,4 +14,13 @@ exports.createOrder = catchAsync(async (req, res) => {
   res.json(data);
 })
 
-exports.sayHello = (req, res) => res.send("hello")
+exports.getOrders = catchAsync(async (req, res) => {
+
+  const orders = await Order
+    .find()
+    .populate('user', "_id, name, email")
+    .sort('-createdAt')
+    .exec()
+
+  res.json(orders)
+})

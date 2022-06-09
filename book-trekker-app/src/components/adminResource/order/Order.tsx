@@ -12,6 +12,7 @@ type Product = {
   _id: String,
   price: Number,
   count: Number,
+  name: String,
   createdAt: String,
   updatedAt: String
 
@@ -70,6 +71,18 @@ const Order = (props: Props) => {
       )
   }
 
+  const showTableRow = (key: string, value: string, useMoment?: boolean) => {
+    return (
+      <tr>
+        <td className='p-3 fs-5 fw-bold'>{ key }</td>
+
+        <td className='p-3 fs-5'>
+          { !useMoment ? value : moment(value).fromNow() }
+        </td>
+      </tr>
+    )
+  }
+
   useEffect(() => {
     loadOrders();
 
@@ -102,30 +115,14 @@ const Order = (props: Props) => {
 
                   <Table bordered striped className='text-start'>
                     <tbody>
-                      <tr>
-                        <td className='p-3 fs-5 fw-bold'>Status</td>
-                        <td className='p-3 fs-5'>{ o.status } </td>
-                      </tr>
-                      <tr>
-                        <td className='p-3 fs-5 fw-bold'>Transaction Id</td>
-                        <td className='p-3 fs-5'>{ o.transaction_id }</td>
-                      </tr>
-                      <tr>
-                        <td className='p-3 fs-5 fw-bold'>Amount</td>
-                        <td className='p-3 fs-5'>{ `$${o.amount}` }</td>
-                      </tr>
-                      <tr>
-                        <td className='p-3 fs-5 fw-bold'>Ordered By</td>
-                        <td className='p-3 fs-5'>{ o.user.name }</td>
-                      </tr>
-                      <tr>
-                        <td className='p-3 fs-5 fw-bold'>Ordered On</td>
-                        <td className='p-3 fs-5'>{ moment(`${o.createdAt}`).fromNow() }</td>
-                      </tr>
-                      <tr>
-                        <td className='p-3 fs-5 fw-bold'>Delivery Address</td>
-                        <td className='p-3 fs-5'>{ o.address }</td>
-                      </tr>
+
+                      { showTableRow("Status", o.status) }
+                      { showTableRow("Transaction Id", `${o.transaction_id}`) }
+                      { showTableRow("Amount", `$${o.amount}`) }
+                      { showTableRow("Ordered By", `${o.user.name}`) }
+                      { showTableRow("Ordered On", `${o.createdAt}`, true) }
+                      { showTableRow("Delivery Address", `${o.address}`) }
+
                     </tbody>
                   </Table>
 
@@ -133,6 +130,29 @@ const Order = (props: Props) => {
                     Total products in the order: { o.products.length }
 
                   </h3>
+
+                  { o.products.map((p, i) => {
+                    return (
+                      <div
+                        style={ { border: "1px solid indigo" } }
+
+                      >
+                        <Table
+                          bordered
+                          striped
+                          className='text-start table-success'
+                        >
+                          <tbody>
+                            { showTableRow("Product Name", `${p.name}`) }
+                            { showTableRow("Product Price", `$${p.price}`) }
+                            { showTableRow("Product Total", `${p.count}`) }
+                            { showTableRow("Product Id", `${p._id}`) }
+
+                          </tbody>
+                        </Table>
+                      </div>
+                    )
+                  }) }
 
                 </div>
               )
@@ -142,7 +162,7 @@ const Order = (props: Props) => {
           </div>
         </Row>
       </Container>
-    </React.Fragment>
+    </React.Fragment >
   )
 }
 

@@ -108,6 +108,7 @@ const Checkout = ({ products, setLength }: Props) => {
               console.log('Create order: ', orderRes)
 
             } catch (error) {
+              setLoading(false);
               console.log(error);
             }
 
@@ -127,6 +128,7 @@ const Checkout = ({ products, setLength }: Props) => {
 
 
     } catch (error: any) {
+      setLoading(false);
       toast.error(error.message, { theme: "colored" });
     }
   }

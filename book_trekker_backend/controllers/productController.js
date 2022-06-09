@@ -99,6 +99,23 @@ exports.getRelatedProducts = catchAsync(async (req, res) => {
 
   res.send(products);
 })
+exports.decreaseQuantity = catchAsync(async (req, res, next) => {
+
+  let bulkOps = req.body.products.map(p => {
+
+    return {
+      updateOne: {
+        filter: { _id: p.product },
+        update: { $inc: { quantity: -p.count, sold: +p.count } }
+      }
+    }
+  })
+
+  await Product.bulkWrite(bulkOps, {})
+
+  next()
+
+})
 
 //route handler for getting categories
 exports.getProductCategories = catchAsync(async (req, res) => {

@@ -4,10 +4,11 @@ const { userById, addOrderToUserHistory } = require('../controllers/userControll
 const router = express.Router();
 
 const { createOrder, sayHello } = require('../controllers/orderController');
+const { decreaseQuantity } = require('../controllers/productController');
 
 
 
-router.post('/create/:userId', [ requireSignin, isAuth, addOrderToUserHistory, createOrder ])
+router.post('/create/:userId', [ requireSignin, isAuth, addOrderToUserHistory, decreaseQuantity, createOrder ])
 router.get('/hello', [ sayHello ])
 
 

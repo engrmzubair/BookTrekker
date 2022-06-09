@@ -15,7 +15,7 @@ const CartItemSchema = new mongoose.Schema({
   count: Number,
 
 },
-  { timestamps: true }
+  { timestamps: false }
 );
 
 const CartItem = mongoose.model("CartItem", CartItemSchema);
@@ -39,24 +39,12 @@ const OrderSchema = new mongoose.Schema({
 const Order = mongoose.model("Order", OrderSchema);
 
 
-//validation of cartItem
-function validateCartItem(cartItem) {
-  const schema = Joi.object().keys({
-    product: Joi.objectId(),
-    name: Joi.string(),
-    price: Joi.number()
-    ,
-    count: Joi.number()
-  });
-  return schema.validate(cartItem);
-}
-
 //validation of order
 function validateOrder(order) {
   const schema = Joi.object().keys({
     products: Joi.array()
       .items({
-        product: Joi.objectId(),
+        _id: Joi.objectId(),
         name: Joi.string(),
         price: Joi.number()
         ,

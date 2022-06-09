@@ -21,7 +21,7 @@ exports.addOrderToUserHistory = catchAsync(async (req, res, next) => {
 
   req.body.products.forEach(p => {
     history.push({
-      _id: p.product,
+      _id: p._id,
       name: p.name,
       quantity: p.count,
       transaction_id: req.body.transaction_id,

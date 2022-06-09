@@ -18,7 +18,7 @@ exports.getOrders = catchAsync(async (req, res) => {
 
   const orders = await Order
     .find()
-    .populate('user', "_id, name, email")
+    .populate('user', "name email")
     .sort('-createdAt')
     .exec()
 

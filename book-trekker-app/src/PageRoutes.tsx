@@ -9,6 +9,7 @@ import Signout from './components/user/signout/Signout';
 import Protected from './components/auth/Protected';
 import AdminProtected from './components/auth/AdminProtected';
 import AddCategory from './components/adminResource/category/createCategory/AddCategory';
+import Order from './components/adminResource/order/Order';
 import AddProduct from './components/adminResource/product/createProduct/AddProduct';
 import { useAppDispatch, useAppSelector } from './app/hooks';
 import { getProfile, userStatus } from './components/user/userSlice';
@@ -49,6 +50,10 @@ const PageRoutes = () => {
       <Route path="/create/category" element={
         <AdminProtected >
           <AddCategory />
+        </AdminProtected> } />
+      <Route path="/admin/orders" element={
+        <AdminProtected >
+          <Order />
         </AdminProtected> } />
 
       <Route path="/create/product" element={

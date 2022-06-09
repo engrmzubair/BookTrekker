@@ -52,4 +52,12 @@ export const createOrder = async (userId: string, orderData: any) => {
 
   }
 }
+export const getOrders = async (userId: string) => {
+
+  try {
+    return await http.get(`${API}/order/get/${userId}`)
+  } catch (error) {
+
+  }
+}
 

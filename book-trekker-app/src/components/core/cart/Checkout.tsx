@@ -88,7 +88,7 @@ const Checkout = ({ products, setLength }: Props) => {
             //create order for future reference
             const specProducts = products?.map(p => {
               return ({
-                product: p._id,
+                _id: p._id,
                 name: p.name,
                 price: p.price,
                 count: p.count

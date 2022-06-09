@@ -22,8 +22,9 @@ const ContentLinks = () => {
     { name: "Update Profile", link: "/profile/update" },
   ]
   const adminLinks = [
-    { name: "Creat Category", link: "/create/category" },
+    { name: "Create Category", link: "/create/category" },
     { name: "Create Product", link: "/create/product" },
+    { name: "View Orders", link: "/admin/orders" },
   ]
 
   const links: Links = isAdmin ? adminLinks : userLinks;

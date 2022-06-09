@@ -25,6 +25,7 @@ const AddCategory = (props: Props) => {
 
       <Menu />
 
+
       <CardComponent
         title="Add Category"
         className='w-50 m-auto mt-5'

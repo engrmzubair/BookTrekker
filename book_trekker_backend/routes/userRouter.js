@@ -9,7 +9,7 @@ router.get('/me', [ requireSignin, getProfile ])
 //get user by id ;
 router.get('/:userId', [ requireSignin, isAuth, getUserById ])
 
-router.put('/:userId', [ requireSignin, isAuth, isAdmin, updateUser ])
+router.put('/:userId', [ requireSignin, isAuth, updateUser ])
 
 //route handler for reading user
 router.param("userId", userById);

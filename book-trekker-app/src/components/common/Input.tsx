@@ -5,8 +5,9 @@ import { FormikSignup } from '../user/signup/SignupFormikConfig';
 import { FormikAddCat } from '../adminResource/category/createCategory/AddCatFormikConfig';
 import { FormikAddProd } from '../adminResource/product/createProduct/AddProdFormikConfig';
 import { FormikSearch } from '../core/search/Search';
+import { FormikProfile } from '../user/profile/ProfileFormikConfig';
 
-export type formikForInput = FormikSignin | FormikSignup | FormikAddCat | FormikAddProd | FormikSearch;
+export type formikForInput = FormikSignin | FormikSignup | FormikAddCat | FormikAddProd | FormikSearch | FormikProfile;
 
 type Props = {
   value?: string | number,

@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../app/store';
+import { createAsyncThunk, createSlice, PayloadAction, } from '@reduxjs/toolkit';
+import { RootState, AppThunk } from '../../app/store';
 import { API } from '../../config';
 import http from '../../services/httpService';
 
@@ -28,15 +28,6 @@ export const getProfile = createAsyncThunk(
     return response.data;
   }
 );
-export const updateUser = createAsyncThunk(
-  'user/getProfile',
-  async (userId, data) => {
-    const url = `${API}/user/${userId}`
-    const response = await http.get(url, data);
-    // The value we return becomes the `fulfilled` action payload
-    return response.data;
-  }
-);
 
 
 const initialState: UserState = {
@@ -53,6 +44,9 @@ export const userSlice = createSlice({
     saveUser: (state, action: PayloadAction<User>) => {
       state.currentUser = action.payload;
     },
+    saveUpdatedUser: (state, action: PayloadAction<User>) => {
+      state.updatedUser = action.payload;
+    },
     removeUser: (state) => {
       state.currentUser = undefined;
     },
@@ -63,19 +57,38 @@ export const userSlice = createSlice({
         state.userStatus = 'succeeded';
         state.currentUser = action.payload;
       })
-      .addCase(updateUser.fulfilled, (state, action) => {
-        state.updatedUser = action.payload;
-      })
 
   }
 
 
 });
 
-export const { saveUser, removeUser } = userSlice.actions;
+export const { saveUser, removeUser, saveUpdatedUser } = userSlice.actions;
+
+
+export const updateUser =
+  (data: { name?: string, password?: string }): AppThunk =>
+    async (dispatch, getState) => {
+
+      const userId = getState().root.user.currentUser?._id;
+      console.log("userId: ", userId)
+
+      const url = `${API}/user/${userId}`
+      try {
+        const res = await http.put(url, data);
+
+        if (res.data)
+          dispatch(saveUpdatedUser(res.data))
+
+      } catch (error) {
+        console.log(error)
+      }
+
+    };
 
 
 export const currentUser = (state: RootState) => state.root.user.currentUser;
+export const getUpdatedUser = (state: RootState) => state.root.user.updatedUser;
 export const userStatus = (state: RootState) => state.root.user.userStatus;
 
 

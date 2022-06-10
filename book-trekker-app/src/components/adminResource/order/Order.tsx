@@ -1,43 +1,50 @@
 import React, { useState, useEffect } from 'react'
-import { Row, Container, Table } from 'react-bootstrap';
+import { Row, Container, Table, Form } from 'react-bootstrap';
 import { useAppSelector } from '../../../app/hooks';
-import { getOrders } from '../../core/apiCore';
+import { getOrders, getStatusValues, updateStatus } from '../../core/apiCore';
 import Layout from '../../core/Layout';
 import Menu from '../../core/Menu';
 import { currentUser } from '../../user/userSlice';
 import moment from 'moment'
 
 type Props = {}
+
 type Product = {
-  _id: String,
-  price: Number,
-  count: Number,
-  name: String,
-  createdAt: String,
-  updatedAt: String
+  _id: string,
+  price: number,
+  count: number,
+  name: string,
+  createdAt: string,
+  updatedAt: string
 
 }
-type OrderType = {
-  _id: String,
-  products: Product[],
-  transaction_id: String,
-  amount: Number,
-  address: String,
-  status: "Not Processed" | "Processing" | "Shipped" | "Delivered" | "Cancelled",
-  createdAt: String,
-  updatedAt: String,
-  user: {
-    name: String,
-    _id: String,
-    email: String
-  },
-  _v: Number
 
-}[] | [];
+type FetchStatus = string[];
+
+type Order = {
+  _id: string,
+  products: Product[],
+  transaction_id: string,
+  amount: number,
+  address: string,
+  status: "Not Processed" | "Processing" | "Shipped" | "Delivered" | "Cancelled",
+  createdAt: string,
+  updatedAt: string,
+  user: {
+    name: string,
+    _id: string,
+    email: string
+  },
+  _v: number
+
+}
+
+type OrderType = Order[] | [];
 
 const Order = (props: Props) => {
 
   const [orders, setOrder] = useState<OrderType>([]);
+  const [statusValues, setStatusValues] = useState<FetchStatus>([]);
   const user = useAppSelector(currentUser);
 
   const loadOrders = async () => {
@@ -45,12 +52,27 @@ const Order = (props: Props) => {
     const userId = user && user._id;
 
     if (userId) {
-      const res = await getOrders(userId);
-      console.log(res?.data);
-      setOrder(res?.data);
+      try {
+        const res = await getOrders(userId);
+        res?.data.length && setOrder(res?.data);
+      } catch (error) {
+
+      }
     }
   };
+  const loadStatus = async () => {
 
+    const userId = user && user._id;
+
+    if (userId) {
+      try {
+        const res = await getStatusValues(userId);
+        res?.data.length && setStatusValues(res?.data);
+      } catch (error) {
+
+      }
+    }
+  };
 
   const noOrders = () => {
     return orders.length < 1 ? <h4>No Orders</h4> : null;
@@ -83,8 +105,50 @@ const Order = (props: Props) => {
     )
   }
 
+  const handleStatusChange = async (status: string, orderId: string) => {
+
+    try {
+      const res = user && await updateStatus(orderId, user._id, status)
+      if (res) {
+        console.log(res.data);
+        loadOrders()
+
+      }
+    } catch (error) {
+
+    }
+
+    console.log('Status changed ', status)
+  }
+
+  const showStatus = (o: Order) => {
+    return (
+      <Form.Group className="mb-3" controlId="formBasicCheckbox">
+        <h3 className='mark mb-3 fs-4'>{ o.status }</h3>
+        <Form.Select
+          onChange={ e => handleStatusChange(e.target.value, o._id) }>
+          <option value="">Update Status...</option>
+
+          {
+            statusValues.map((s, i) => {
+              return (
+                <option
+                  value={ s }
+                  key={ i }
+                >
+                  { s }
+                </option>
+              )
+            })
+          }
+        </Form.Select>
+
+      </Form.Group>)
+  }
+
   useEffect(() => {
     loadOrders();
+    loadStatus()
 
   }, [])
 
@@ -116,7 +180,16 @@ const Order = (props: Props) => {
                   <Table bordered striped className='text-start'>
                     <tbody>
 
-                      { showTableRow("Status", o.status) }
+                      <tr>
+                        <td className='p-3 fs-5 fw-bold'>Status</td>
+
+                        <td className='p-3 fs-5'>
+
+                          { showStatus(o) }
+                        </td>
+                      </tr>
+
+                      {/* { showTableRow("Status", o.status) } */ }
                       { showTableRow("Transaction Id", `${o.transaction_id}`) }
                       { showTableRow("Amount", `$${o.amount}`) }
                       { showTableRow("Ordered By", `${o.user.name}`) }
@@ -134,6 +207,7 @@ const Order = (props: Props) => {
                   { o.products.map((p, i) => {
                     return (
                       <div
+                        key={ i }
                         style={ { border: "1px solid indigo" } }
 
                       >

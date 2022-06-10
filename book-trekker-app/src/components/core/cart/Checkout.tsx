@@ -43,6 +43,8 @@ const Checkout = ({ products, setLength }: Props) => {
     const clientToken = res?.data.clientToken;
     const success = res?.data.success;
 
+    console.log("TokenSuccess", success)
+
     if (clientToken && success)
       setData({ ...data, clientToken })
 

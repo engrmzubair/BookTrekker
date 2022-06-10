@@ -60,7 +60,9 @@ const Cart = (props: Props) => {
 
   return (
     <React.Fragment>
-      <ToastContainer />
+      <ToastContainer
+        limit={ 0 }
+      />
       <Menu />
 
       <Layout

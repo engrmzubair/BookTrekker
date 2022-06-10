@@ -60,4 +60,20 @@ export const getOrders = async (userId: string) => {
 
   }
 }
+export const getStatusValues = async (userId: string) => {
+
+  try {
+    return await http.get(`${API}/order/status-values/${userId}`)
+  } catch (error) {
+
+  }
+}
+export const updateStatus = async (orderId: string, userId: string, status: string) => {
+
+  try {
+    return await http.post(`${API}/order/${orderId}/status/${userId}`, { status })
+  } catch (error) {
+
+  }
+}
 

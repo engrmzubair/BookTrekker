@@ -71,7 +71,7 @@ export const getStatusValues = async (userId: string) => {
 export const updateStatus = async (orderId: string, userId: string, status: string) => {
 
   try {
-    return await http.post(`${API}/order/${orderId}/status/${userId}`, { status })
+    return await http.put(`${API}/order/${orderId}/status/${userId}`, { status })
   } catch (error) {
 
   }

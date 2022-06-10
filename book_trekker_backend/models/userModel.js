@@ -85,11 +85,22 @@ function validate(user) {
   });
   return schema.validate(user);
 }
+//updateUser validation
+function validateUpdateUser(user) {
+  const schema = Joi.object().keys({
+    name: Joi.string().min(5).max(32),
+    email: Joi.string()
+      .email(),
+    password: Joi.string().min(5).max(255)
+  });
+  return schema.validate(user);
+}
 
 
 
 module.exports.User = mongoose.model('User', userSchema);
 module.exports.validate = validate;
+module.exports.validateUpdateUser = validateUpdateUser;
 
 
 

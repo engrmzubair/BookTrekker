@@ -20,7 +20,7 @@ router.get('/get/:userId', [ requireSignin, isAuth, isAdmin, getOrders ]);
 
 router.get('/status-values/:userId', [ requireSignin, isAuth, isAdmin, getStatusValues ]);
 
-router.post('/:orderId/status/:userId', [ requireSignin, isAuth, isAdmin, updateOrderStatus ]);
+router.put('/:orderId/status/:userId', [ requireSignin, isAuth, isAdmin, updateOrderStatus ]);
 
 
 router.param('userId', userById)

@@ -3,18 +3,6 @@ import { RootState } from '../../app/store';
 import { API } from '../../config';
 import http from '../../services/httpService';
 
-export interface UserState {
-  currentUser: {
-
-    _id: string;
-    name: string;
-    email: string;
-    role: number,
-    history: []
-  } | undefined;
-  userStatus: 'idle' | 'succeeded';
-}
-
 
 export interface User {
   _id: string;
@@ -23,6 +11,13 @@ export interface User {
   role: number,
   history: []
 }
+
+export interface UserState {
+  currentUser: User | undefined;
+  updatedUser: User | undefined;
+  userStatus: 'idle' | 'succeeded';
+}
+
 
 export const getProfile = createAsyncThunk(
   'user/getProfile',
@@ -33,10 +28,20 @@ export const getProfile = createAsyncThunk(
     return response.data;
   }
 );
+export const updateUser = createAsyncThunk(
+  'user/getProfile',
+  async (userId, data) => {
+    const url = `${API}/user/${userId}`
+    const response = await http.get(url, data);
+    // The value we return becomes the `fulfilled` action payload
+    return response.data;
+  }
+);
 
 
 const initialState: UserState = {
   currentUser: undefined,
+  updatedUser: undefined,
   userStatus: 'idle'
 };
 
@@ -57,6 +62,9 @@ export const userSlice = createSlice({
       .addCase(getProfile.fulfilled, (state, action) => {
         state.userStatus = 'succeeded';
         state.currentUser = action.payload;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.updatedUser = action.payload;
       })
 
   }

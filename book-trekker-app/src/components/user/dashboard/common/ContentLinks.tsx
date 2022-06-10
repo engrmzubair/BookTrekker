@@ -19,7 +19,7 @@ const ContentLinks = () => {
 
   const userLinks = [
     { name: "My Cart", link: "/cart" },
-    { name: "Update Profile", link: "/profile/update" },
+    { name: "Update Profile", link: `/profile/${user?._id}` },
   ]
   const adminLinks = [
     { name: "Create Category", link: "/create/category" },

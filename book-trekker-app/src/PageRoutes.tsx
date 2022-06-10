@@ -16,7 +16,7 @@ import { getProfile, userStatus } from './components/user/userSlice';
 import { categoryStatus, fetchCategories } from './components/adminResource/category/categorySlice';
 import Product from './components/core/Product';
 import Cart from './components/core/cart/Cart';
-
+import Profile from "./components/user/profile/Profile"
 
 const PageRoutes = () => {
 
@@ -45,6 +45,11 @@ const PageRoutes = () => {
       <Route path="signin" element={ <Signin /> } />
       <Route path="signout" element={ <Signout /> } />
       <Route path="/user/dashboard" element={ <Protected /> } />
+      <Route path="/profile/:userId" element={ <Protected>
+
+        <Profile />
+      </Protected>
+      } />
       <Route path="/admin/dashboard" element={ <AdminProtected /> } />
 
       <Route path="/create/category" element={

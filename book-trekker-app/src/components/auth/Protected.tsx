@@ -1,10 +1,9 @@
-import { ReactElement } from 'react'
 import { Navigate } from "react-router-dom";
 import { useAppSelector } from '../../app/hooks'
 import { currentUser } from '../user/userSlice';
 import UserDashboard from "../user/dashboard/UserDashboard";
 
-type Props = { children?: ReactElement }
+type Props = { children?: JSX.Element }
 
 const Protected = ({ children }: Props) => {
   const user = useAppSelector(currentUser)

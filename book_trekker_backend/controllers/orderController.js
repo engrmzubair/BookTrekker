@@ -56,3 +56,16 @@ exports.updateOrderStatus = catchAsync(async (req, res, next) => {
 
 
 })
+
+//get orders by user
+exports.purchaseHistory = catchAsync(async (req, res, next) => {
+
+  const orders = await Order
+    .find({ user: req.profile._id })
+    .populate('user', 'name')
+    .sort('createdAt')
+
+  res.send(orders)
+
+
+})

@@ -1,14 +1,17 @@
-import React from 'react'
-import { useAppSelector } from '../../../../app/hooks';
+import React, { useEffect } from 'react'
+import { useAppSelector, useAppDispatch } from '../../../../app/hooks';
 import CardComponent from '../../../common/CardComponent';
 import ListGroupComp from '../../../common/ListGroupComp';
-import { currentUser } from '../../userSlice';
+import { currentUser, getPurchaseHistory, getHistory } from '../../userSlice';
+import ListGroupPurchase from './ListGroupPurchase';
 
 type Props = {}
 
 const ContentBody = (props: Props) => {
 
   const user = useAppSelector(currentUser);
+  const history = useAppSelector(getHistory)
+  const dispatch = useAppDispatch();
 
   const role = user && user.role === 1 ? "Admin" : "Registered User";
 
@@ -18,7 +21,12 @@ const ContentBody = (props: Props) => {
 
   const userInfo = (user && [user.name, user.email, role]) || []
 
-  const purchaseHistory: any[] = ["Not purchase anything yet!"];
+  console.log("History: ", history)
+
+  useEffect(() => {
+    if (user && user._id)
+      dispatch(getPurchaseHistory(user._id))
+  }, [])
 
   return (
     <React.Fragment>
@@ -39,8 +47,8 @@ const ContentBody = (props: Props) => {
         className="bg-success text-light mt-2 mb-4"
         headTextPosition='text-start'
       >
-        <ListGroupComp
-          items={ purchaseHistory }
+        <ListGroupPurchase
+          items={ history }
           variant="flush"
           className='m-2'
         />

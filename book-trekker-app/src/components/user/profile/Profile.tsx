@@ -1,12 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useAppSelector, useAppDispatch } from '../../../app/hooks'
 import { currentUser, getUpdatedUser, updateUser, getProfile } from '../userSlice';
-import { Container } from 'react-bootstrap';
 import Layout from '../../core/Layout';
 import Menu from '../../core/Menu';
 import { toast, ToastContainer } from 'react-toastify';
 import CardComponent from '../../common/CardComponent';
-import SignupForm from '../signup/SignupForm';
 import { useNavigate } from 'react-router-dom';
 import { ProfileFormikConfig, FormValues, FormikProfile } from "./ProfileFormikConfig"
 import ProfileForm from './ProfileForm';
@@ -17,28 +15,31 @@ type Props = {}
 const Profile = (props: Props) => {
   const user = useAppSelector(currentUser);
   const updatedUser = useAppSelector(getUpdatedUser)
-
   const dispatch = useAppDispatch()
 
   const navigate = useNavigate()
 
 
+
   const updateProfile = (values: FormValues) => {
 
-    dispatch(updateUser(values))
     console.log("updatedUser", updatedUser);
 
-    if (updatedUser) {
-      dispatch(getProfile())
-      toast.success("Profile updated successfully!")
+    let param: { userId: string, data: FormValues } | undefined =
+      user && { userId: user._id, data: values }
 
-      setTimeout(() => {
+    console.log("parma: ", param)
 
-        navigate('../../user/dashboard')
-      }, 5000);
+    param && dispatch(updateUser(param))
+    toast.success("Profile updated successfully!")
 
-      console.log(values)
-    }
+
+    setTimeout(() => {
+
+      dispatch(getProfile());
+      navigate('../../user/dashboard')
+    }, 5000);
+
   }
 
   //formik configuration for signup form

@@ -20,7 +20,7 @@ const ListGroupComp = ({
     <React.Fragment>
       <ListGroup className={ className }>
 
-        { items.map((item, i) => < ListGroup.Item className='py-3'
+        { items.map((item: any, i: number) => < ListGroup.Item className='py-3'
           variant={ variant }
           key={ i } >
           { item }

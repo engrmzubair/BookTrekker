@@ -15,25 +15,6 @@ exports.userById = (req, res, next, id) => {
 
 };
 
-exports.addOrderToUserHistory = catchAsync(async (req, res, next) => {
-
-  let history = [];
-
-  req.body.products.forEach(p => {
-    history.push({
-      _id: p._id,
-      name: p.name,
-      quantity: p.count,
-      transaction_id: req.body.transaction_id,
-      amount: req.body.amount,
-      address: req.body.address
-    })
-  })
-
-  await User.findOneAndUpdate({ _id: req.profile._id }, { $push: { history: history } }, { new: true });
-
-  next()
-})
 
 // router handlers for reading, writing updating and deleting user
 

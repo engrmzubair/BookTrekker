@@ -26,7 +26,7 @@ const SUPPORTED_FORMATS = [
   "image/png"
 ];
 
-const AddProdFormikConfig = ({ dispatch, user }: any) => {
+const AddProdFormikConfig = (next: any) => {
 
   const formik: FormikAddProd =
 
@@ -64,28 +64,11 @@ const AddProdFormikConfig = ({ dispatch, user }: any) => {
       }),
 
       onSubmit: values => {
-        createProd(values)
+        next(values)
       },
     });
 
-  const createProd = async (values: FormValues) => {
 
-    try {
-
-      const url = `${API}/product/create/${user?._id}`
-
-      const { data } = await http.multipartPost(values, url);
-
-      toast.success(`${data.name} product added`)
-
-      formik.resetForm();
-
-      console.log("Product: ", data);
-
-    } catch (err: any) { }
-
-
-  }
   return formik;
 }
 

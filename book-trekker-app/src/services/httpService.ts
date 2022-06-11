@@ -39,9 +39,18 @@ const multipartPost = (values: any, url: string) => {
     headers: { 'Content-Type': 'multipart/form-data' }
   })
 }
+const multipartPut = (values: any, url: string) => {
+  return axios({
+    method: 'put',
+    url,
+    data: values,
+    headers: { 'Content-Type': 'multipart/form-data' }
+  })
+}
 
 export default {
   multipartPost,
+  multipartPut,
   get: axios.get,
   post: axios.post,
   delete: axios.delete,

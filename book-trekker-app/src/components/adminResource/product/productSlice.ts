@@ -15,7 +15,7 @@ export const fetchProducts = createAsyncThunk(
 export const fetchAllProducts = createAsyncThunk(
   'category/fetchAllProducts',
   async () => {
-    const url = `${API}/product`
+    const url = `${API}/product/all`
     const { data } = await http.get(url)
     return data;
   }
@@ -141,6 +141,7 @@ export const getProductsBySearch = (state: RootState) => state.root.product.prod
 
 export const getProductsById = (state: RootState) => state.root.product.product;
 export const getRelatedProducts = (state: RootState) => state.root.product.relatedProducts;
+export const getAllProducts = (state: RootState) => state.root.product.allProducts;
 
 
 export default productSlice.reducer;

@@ -11,6 +11,7 @@ const {
   updateProduct,
   deleteProduct,
   getProducts,
+  getAllProducts,
   getRelatedProducts,
   getProductCategories,
   productsBySearch,
@@ -28,6 +29,7 @@ const commonForDelete = [ requireSignin, isAuth, isAdmin ];
 
 // routes for reading data
 router.get('/', getProducts);
+router.get('/all', getAllProducts);
 router.get('/categories', getProductCategories);
 router.get('/related/:productId', getRelatedProducts);
 router.get('/search', searchedProducts);

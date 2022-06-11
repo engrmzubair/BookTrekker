@@ -12,6 +12,14 @@ export const fetchProducts = createAsyncThunk(
     return data;
   }
 );
+export const fetchAllProducts = createAsyncThunk(
+  'category/fetchAllProducts',
+  async () => {
+    const url = `${API}/product`
+    const { data } = await http.get(url)
+    return data;
+  }
+);
 export const fetchProductById = createAsyncThunk(
   'category/fetchProductById',
   async (productId: string) => {
@@ -54,6 +62,7 @@ export interface Product {
 
 export interface ProductState {
   productsBySell: Product[] | undefined;
+  allProducts: Product[] | undefined;
   productsByArrival: Product[] | undefined;
   productsBySearch: Product[] | undefined;
   relatedProducts: Product[] | undefined;
@@ -65,6 +74,7 @@ export interface ProductState {
 
 const initialState: ProductState = {
   productsByArrival: undefined,
+  allProducts: undefined,
   productsBySell: undefined,
   productsBySearch: undefined,
   relatedProducts: undefined,
@@ -103,6 +113,9 @@ export const productSlice = createSlice({
       })
       .addCase(fetchRelatedProducts.fulfilled, (state, action) => {
         state.relatedProducts = action.payload;
+      })
+      .addCase(fetchAllProducts.fulfilled, (state, action) => {
+        state.allProducts = action.payload;
       })
 
   },

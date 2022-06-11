@@ -2,6 +2,7 @@ import http from "../../services/httpService"
 import { API } from '../../config';
 import { Filter } from "./search/Shop";
 import queryString from 'query-string'
+import { Product } from "../user/userSlice";
 
 
 export const fetchProductsBySearch = async (
@@ -14,6 +15,31 @@ export const fetchProductsBySearch = async (
   return await http.post(`${API}/product/by/search`, { filters, limit, skip })
 
 }
+
+export const fetchAllProducts = async () => {
+
+  return await http.get(`${API}/product`)
+}
+export const fetchProductById = async (productId: string) => {
+
+  return await http.get(`${API}/product/${productId}`)
+}
+
+export const deleteProduct = async (productId: string, userId: string) => {
+
+  return await http.delete(`${API}/product/${productId}/${userId}`)
+
+}
+export const updateProduct = async (productId: string, userId: string, product: Product) => {
+  const url = `${API}/product/${productId}/${userId}`
+  return await http.multipartPost(product, url)
+
+}
+
+
+
+
+
 type List = {
   search: string,
   category: string

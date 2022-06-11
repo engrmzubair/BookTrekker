@@ -17,6 +17,7 @@ import { categoryStatus, fetchCategories } from './components/adminResource/cate
 import Product from './components/core/Product';
 import Cart from './components/core/cart/Cart';
 import Profile from "./components/user/profile/Profile"
+import ManageProducts from './components/adminResource/product/ManageProducts';
 
 const PageRoutes = () => {
 
@@ -55,6 +56,10 @@ const PageRoutes = () => {
       <Route path="/create/category" element={
         <AdminProtected >
           <AddCategory />
+        </AdminProtected> } />
+      <Route path="/admin/products" element={
+        <AdminProtected >
+          <ManageProducts />
         </AdminProtected> } />
       <Route path="/admin/orders" element={
         <AdminProtected >

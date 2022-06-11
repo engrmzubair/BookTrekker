@@ -25,6 +25,7 @@ const ContentLinks = () => {
     { name: "Create Category", link: "/create/category" },
     { name: "Create Product", link: "/create/product" },
     { name: "View Orders", link: "/admin/orders" },
+    { name: "Manage Products", link: "/admin/products" },
   ]
 
   const links: Links = isAdmin ? adminLinks : userLinks;

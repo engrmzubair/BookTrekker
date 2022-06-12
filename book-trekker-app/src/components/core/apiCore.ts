@@ -3,7 +3,8 @@ import { API } from '../../config';
 import { Filter } from "./search/Shop";
 import queryString from 'query-string'
 import { Product } from "../user/userSlice";
-import { FormValues } from "../adminResource/product/createProduct/AddProdFormikConfig";
+import { FormValues as createFormValues } from "../adminResource/product/createProduct/AddProdFormikConfig";
+import { FormValues as updateFormValues } from "../adminResource/product/updateProduct/UpdateProdFormikConfig";
 
 
 export const fetchProductsBySearch = async (
@@ -31,12 +32,12 @@ export const deleteProduct = async (productId: string, userId: string) => {
   return await http.delete(`${API}/product/${productId}/${userId}`)
 
 }
-export const updateProduct = async (productId: string, userId: string, product: Product) => {
+export const updateProduct = async (productId: string, userId: string, values: updateFormValues) => {
   const url = `${API}/product/${productId}/${userId}`
-  return await http.multipartPut(product, url)
+  return await http.multipartPut(values, url)
 
 }
-export const createProduct = async (userId: string, product: FormValues) => {
+export const createProduct = async (userId: string, product: createFormValues) => {
   const url = `${API}/product/create/${userId}`
   return await http.multipartPost(product, url)
 

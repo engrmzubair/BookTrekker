@@ -21,8 +21,6 @@ const ContentBody = (props: Props) => {
 
   const userInfo = (user && [user.name, user.email, role]) || []
 
-  console.log("History: ", history)
-
   useEffect(() => {
     if (user && user._id)
       dispatch(getPurchaseHistory(user._id))

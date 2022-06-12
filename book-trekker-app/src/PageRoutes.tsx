@@ -18,6 +18,7 @@ import Product from './components/core/Product';
 import Cart from './components/core/cart/Cart';
 import Profile from "./components/user/profile/Profile"
 import ManageProducts from './components/adminResource/product/ManageProducts';
+import UpdateProduct from './components/adminResource/product/updateProduct/UpdateProduct';
 
 const PageRoutes = () => {
 
@@ -60,6 +61,10 @@ const PageRoutes = () => {
       <Route path="/admin/products" element={
         <AdminProtected >
           <ManageProducts />
+        </AdminProtected> } />
+      <Route path="/admin/product/update/:productId" element={
+        <AdminProtected >
+          <UpdateProduct />
         </AdminProtected> } />
       <Route path="/admin/orders" element={
         <AdminProtected >

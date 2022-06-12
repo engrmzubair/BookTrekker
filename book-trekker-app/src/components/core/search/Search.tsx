@@ -57,14 +57,14 @@ const Search = (props: Props) => {
   return (
     <React.Fragment>
 
-      <Container className='my-5'>
+      <Container className='mb-3 mt-5'>
         <SearchForm
           formik={ formik }
           categories={ categories }
         />
       </Container>
 
-      <Container className='my-5'>
+      <Container className='mb-3'>
 
         <SearchedProducts
           products={ products }

@@ -53,7 +53,7 @@ const ManageProducts = (props: Props) => {
       <Search />
 
       <Container>
-        <h2 className='text-center mb-4 fs-1 bg-success text-light p-2'
+        <h2 className='text-center mb-2 fs-1 bg-success text-light p-2'
           style={ { color: "white !important" } }
         >Manage Products</h2>
         <Row>

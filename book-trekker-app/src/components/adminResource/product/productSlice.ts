@@ -142,6 +142,7 @@ export const getProductsBySearch = (state: RootState) => state.root.product.prod
 export const getProductsById = (state: RootState) => state.root.product.product;
 export const getRelatedProducts = (state: RootState) => state.root.product.relatedProducts;
 export const getAllProducts = (state: RootState) => state.root.product.allProducts;
+export const getProduct = (state: RootState) => state.root.product.product;
 
 
 export default productSlice.reducer;
